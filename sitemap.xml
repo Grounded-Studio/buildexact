@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url><loc>https://buildexact.app/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://buildexact.app/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/"/>
+    <priority>1.0</priority></url>
+  <url><loc>https://buildexact.app/nl/</loc><priority>1.0</priority></url>
+
+  <url><loc>https://buildexact.app/calculators/</loc><priority>0.9</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/</loc><priority>0.9</priority></url>
+
+  <url><loc>https://buildexact.app/calculators/fence/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/tiles/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/concrete/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/insulation/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/paint/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/bricks/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/wood/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/stairs/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/drywall/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/paving/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/roof/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/perimeter/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/area/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/gravel/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/cost/</loc><priority>0.7</priority></url>
+
+  <url><loc>https://buildexact.app/nl/calculators/fence/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/tiles/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/concrete/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/insulation/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/paint/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/bricks/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/wood/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/stairs/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/drywall/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/paving/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/roof/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/perimeter/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/area/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/gravel/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/cost/</loc><priority>0.7</priority></url>
+
+  <url><loc>https://buildexact.app/features/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/pricing/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/support/</loc><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/about/</loc><priority>0.5</priority></url>
+  <url><loc>https://buildexact.app/privacy/</loc><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/terms/</loc><priority>0.3</priority></url>
+
+  <url><loc>https://buildexact.app/nl/features/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/pricing/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/support/</loc><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/nl/about/</loc><priority>0.5</priority></url>
+  <url><loc>https://buildexact.app/nl/privacy/</loc><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/nl/terms/</loc><priority>0.3</priority></url>
+
+  <url><loc>https://buildexact.app/blog/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/blog/send-quotes-invoices-whatsapp/</loc><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/offerte-versturen-via-whatsapp/</loc><priority>0.6</priority></url>
+
+</urlset>
