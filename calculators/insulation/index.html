@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insulation calculator — coming soon | BuildExact</title>
-<meta name="description" content="Insulation calculator — Layer stacking, R-value, vapour barrier and tape. Available now in the BuildExact Android app, browser version coming soon.">
+<title>Insulation calculator | BuildExact</title>
+<meta name="description" content="Insulation calculator with R-value, lambda, packs, fasteners, tape and vapour barrier.">
 <link rel="canonical" href="https://buildexact.app/calculators/insulation/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/insulation/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/insulation/">
@@ -19,30 +19,56 @@
 <div class="nav-right"><div class="lang-switch"><a href="/calculators/insulation/" class="active">EN</a><a href="/nl/calculators/insulation/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
 </nav></div></header>
 
-<section class="section">
-  <div class="container" style="text-align:center;max-width:720px;">
-    <p style="text-align:left;margin-bottom:8px;"><a href="/calculators/" class="muted">← All calculators</a></p>
-    <div style="font-size:5rem;margin:40px 0 16px;">🧊</div>
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <p><a href="/calculators/" class="muted">← All calculators</a></p>
     <h1>Insulation calculator</h1>
-    <p class="lede">Layer stacking, R-value, vapour barrier and tape.</p>
-    <div class="card" style="margin-top:40px;text-align:left;">
-      <h3>Browser demo coming soon</h3>
-      <p>We are rolling out working browser demos one by one, starting with the <a href="/calculators/fence/">Fence calculator</a>. Meanwhile, this calculator is already fully available inside the BuildExact Android app — free on the first 2 projects.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:12px;">Install BuildExact</a>
+    <p class="lede" style="margin-bottom:32px;">R-value, pack count and accessories for insulating a wall, roof or floor.</p>
+
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Inputs</h3>
+        <div class="field"><label for="area">Area (m²)</label><input type="number" id="area" value="30" min="0" step="0.1"></div>
+        <div class="field-row">
+          <div class="field"><label for="thickness">Thickness (mm)</label><input type="number" id="thickness" value="100" min="10" step="10"></div>
+          <div class="field"><label for="lambda">Lambda (W/m·K)</label><input type="number" id="lambda" value="0.035" min="0.01" step="0.001"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="coveragePack">Pack coverage (m²)</label><input type="number" id="coveragePack" value="5" min="0.1" step="0.1"></div>
+          <div class="field"><label for="waste">Waste (%)</label><input type="number" id="waste" value="10" min="0" step="1"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="fasteners">Fasteners per m²</label><input type="number" id="fasteners" value="4" min="0" step="1"></div>
+          <div class="field"><label for="tape">Tape per m² (m)</label><input type="number" id="tape" value="0.8" min="0" step="0.1"></div>
+        </div>
+        <div class="field"><label><input type="checkbox" id="vapour" style="width:auto;margin-right:8px;"> Include vapour barrier</label></div>
+      </form>
+      <aside class="calc-result">
+        <h3>Result</h3>
+        <div class="result-hero"><div class="label">R-value</div><div><span class="value" id="rR">0</span><span class="unit">m²·K/W</span></div></div>
+        <div class="result-rows">
+          <div class="result-row"><span class="k">Packs needed</span><span class="v" id="rPacks">0</span></div>
+          <div class="result-row"><span class="k">Area incl. waste</span><span class="v"><span id="rAreaInclWaste">0</span> m²</span></div>
+          <div class="result-row"><span class="k">Fasteners</span><span class="v" id="rFasteners">0</span></div>
+          <div class="result-row"><span class="k">Tape</span><span class="v"><span id="rTape">0</span> m</span></div>
+          <div class="result-row"><span class="k">Vapour barrier</span><span class="v" id="rVapour">—</span></div>
+        </div>
+        <div class="calc-note">R = thickness / lambda. For NL building regulations check actual target R-values (roof ≥ 6.3, wall ≥ 4.7, floor ≥ 3.7 for new builds).</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save & export in the app</a>
+      </aside>
     </div>
-    <p class="muted" style="margin-top:36px;font-size:.88rem;">Want to be notified when the browser version lands? <a href="mailto:support@metenisweten.app?subject=Notify%20me%20about%20Insulation%20calculator">Email us</a>.</p>
   </div>
 </section>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
 <div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><span class="brand-mark">B</span> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
-<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div>
-<div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
-<div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div>
 <div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/insulation.js"></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tegels calculator — binnenkort | BuildExact</title>
-<meta name="description" content="Tegels calculator — Oppervlak, patroon (recht, diagonaal, visgraat), voegsel en lijm. Nu beschikbaar in de BuildExact Android app, browserversie binnenkort.">
+<title>Tegel calculator | BuildExact</title>
+<meta name="description" content="Gratis tegel calculator — oppervlak, tegelmaat en snijverlies. Zelfde formules als de BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/nl/calculators/tiles/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/tiles/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/tiles/">
@@ -19,30 +19,45 @@
 <div class="nav-right"><div class="lang-switch"><a href="/calculators/tiles/">EN</a><a href="/nl/calculators/tiles/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
 </nav></div></header>
 
-<section class="section">
-  <div class="container" style="text-align:center;max-width:720px;">
-    <p style="text-align:left;margin-bottom:8px;"><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
-    <div style="font-size:5rem;margin:40px 0 16px;">🟫</div>
-    <h1>Tegels calculator</h1>
-    <p class="lede">Oppervlak, patroon (recht, diagonaal, visgraat), voegsel en lijm.</p>
-    <div class="card" style="margin-top:40px;text-align:left;">
-      <h3>Browser-versie komt eraan</h3>
-      <p>We rollen de browser-demo's één voor één uit, te beginnen met de <a href="/nl/calculators/fence/">Schutting calculator</a>. In de tussentijd is deze calculator volledig beschikbaar in de BuildExact Android app — gratis op de eerste 2 projecten.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:12px;">Installeer BuildExact</a>
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <p><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
+    <h1>Tegel calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Hoeveel tegels heb ik nodig? Vul oppervlak, tegelmaat en snijverlies in.</p>
+
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Invoer</h3>
+        <div class="field"><label for="area">Tegeloppervlak (m²)</label><input type="number" id="area" value="20" min="0" step="0.1"></div>
+        <div class="field-row">
+          <div class="field"><label for="tileW">Tegel breedte (cm)</label><input type="number" id="tileW" value="60" min="1" step="1"></div>
+          <div class="field"><label for="tileH">Tegel hoogte (cm)</label><input type="number" id="tileH" value="60" min="1" step="1"></div>
+        </div>
+        <div class="field"><label for="waste">Snijverlies (%)</label><input type="number" id="waste" value="10" min="0" step="1"><p class="hint">10% recht · 15% diagonaal · 20% visgraat</p></div>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label">Benodigde tegels</div><div><span class="value" id="rTiles">0</span><span class="unit">stuks</span></div></div>
+        <div class="result-rows">
+          <div class="result-row"><span class="k">Oppervlak incl. snijverlies</span><span class="v"><span id="rAreaInclWaste">0</span> m²</span></div>
+          <div class="result-row"><span class="k">Tegeloppervlak per stuk</span><span class="v"><span id="rTileArea">0</span> cm²</span></div>
+        </div>
+        <div class="calc-note">Tip: 15% snijverlies bij diagonaal, 20% bij visgraat. Voegsel, lijm en reservedoos zitten in de Android app.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan & exporteren in de app</a>
+      </aside>
     </div>
-    <p class="muted" style="margin-top:36px;font-size:.88rem;">Een berichtje als de browser-versie klaar is? <a href="mailto:support@metenisweten.app?subject=Hou%20me%20op%20de%20hoogte%20Tegels">Mail ons</a>.</p>
   </div>
 </section>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
 <div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><span class="brand-mark">B</span> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
-<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div>
-<div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
-<div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
 </div>
 <div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/tiles.js"></script>
 </body>
 </html>

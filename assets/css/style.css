@@ -257,6 +257,19 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .result-row .k { color: var(--muted); }
 .result-row .v { font-weight: 700; color: var(--ink); }
 
+/* Cost estimator rows */
+.cost-row {
+  display: grid; grid-template-columns: 1.6fr .7fr .9fr 1fr auto;
+  gap: 8px; align-items: center; padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.cost-row input {
+  padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 8px; background: var(--surface); font-family: inherit;
+}
+.cost-row .total { font-weight: 700; text-align: right; color: var(--ink); }
+.cost-row .remove { padding: 4px 10px; font-size: .75rem; }
+
 .calc-note {
   background: var(--blue-50); color: var(--blue-900);
   padding: 14px 16px; border-radius: 12px;

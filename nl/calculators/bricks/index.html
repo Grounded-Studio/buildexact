@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bakstenen calculator — binnenkort | BuildExact</title>
-<meta name="description" content="Bakstenen calculator — Openingen voor lateien, spouwankers, mortelvolume. Nu beschikbaar in de BuildExact Android app, browserversie binnenkort.">
+<title>Baksteen calculator | BuildExact</title>
+<meta name="description" content="Baksteenmuur calculator met openingen voor lateien, zakken mortel en spouwankers.">
 <link rel="canonical" href="https://buildexact.app/nl/calculators/bricks/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/bricks/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/bricks/">
@@ -19,30 +19,63 @@
 <div class="nav-right"><div class="lang-switch"><a href="/calculators/bricks/">EN</a><a href="/nl/calculators/bricks/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
 </nav></div></header>
 
-<section class="section">
-  <div class="container" style="text-align:center;max-width:720px;">
-    <p style="text-align:left;margin-bottom:8px;"><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
-    <div style="font-size:5rem;margin:40px 0 16px;">🧱</div>
-    <h1>Bakstenen calculator</h1>
-    <p class="lede">Openingen voor lateien, spouwankers, mortelvolume.</p>
-    <div class="card" style="margin-top:40px;text-align:left;">
-      <h3>Browser-versie komt eraan</h3>
-      <p>We rollen de browser-demo's één voor één uit, te beginnen met de <a href="/nl/calculators/fence/">Schutting calculator</a>. In de tussentijd is deze calculator volledig beschikbaar in de BuildExact Android app — gratis op de eerste 2 projecten.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:12px;">Installeer BuildExact</a>
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <p><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
+    <h1>Baksteen calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Stenen, mortel, lateien en spouwankers voor een wand met openingen.</p>
+
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Invoer</h3>
+        <div class="field-row">
+          <div class="field"><label for="length">Wandlengte (m)</label><input type="number" id="length" value="8" min="0" step="0.1"></div>
+          <div class="field"><label for="height">Wandhoogte (m)</label><input type="number" id="height" value="2.6" min="0" step="0.1"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="perM2">Stenen per m²</label><input type="number" id="perM2" value="50" min="1" step="1"></div>
+          <div class="field"><label for="waste">Snijverlies (%)</label><input type="number" id="waste" value="5" min="0" step="1"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="mortarKg">Mortel (kg/m²)</label><input type="number" id="mortarKg" value="35" min="0" step="1"></div>
+          <div class="field"><label for="bagKg">Zak mortel (kg)</label><input type="number" id="bagKg" value="25" min="1" step="1"></div>
+        </div>
+        <h3 style="margin-top:14px;">Openingen</h3>
+        <div class="field-row">
+          <div class="field"><label for="openW">Breedte opening (m)</label><input type="number" id="openW" value="1" min="0" step="0.1"></div>
+          <div class="field"><label for="openH">Hoogte opening (m)</label><input type="number" id="openH" value="2.1" min="0" step="0.1"></div>
+        </div>
+        <div class="field"><label for="openCount">Aantal openingen</label><input type="number" id="openCount" value="2" min="0" step="1"></div>
+        <div class="field"><label><input type="checkbox" id="cavity" style="width:auto;margin-right:8px;"> Spouwmuur (voegt spouwankers toe)</label></div>
+        <div class="field"><label for="tiesPerM2">Spouwankers per m²</label><input type="number" id="tiesPerM2" value="5" min="0" step="1"></div>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label">Benodigde stenen</div><div><span class="value" id="rBricks">0</span><span class="unit">stuks</span></div></div>
+        <div class="result-rows">
+          <div class="result-row"><span class="k">Netto wandoppervlak</span><span class="v"><span id="rNet">0</span> m²</span></div>
+          <div class="result-row"><span class="k">Zakken mortel</span><span class="v" id="rMortarBags">0</span></div>
+          <div class="result-row"><span class="k">Mortel (kg)</span><span class="v"><span id="rMortarKg">0</span></span></div>
+          <div class="result-row"><span class="k">Lateien nodig</span><span class="v" id="rLintels">0</span></div>
+          <div class="result-row"><span class="k">Totale latei-lengte</span><span class="v"><span id="rLintelM">0</span> m</span></div>
+          <div class="result-row"><span class="k">Spouwankers</span><span class="v" id="rTies">—</span></div>
+        </div>
+        <div class="calc-note">Latei-lengte = breedte opening + 20 cm oplegging aan beide zijden. Voor NEN 2608 constructieve lateien: raadpleeg een constructeur.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan & exporteren in de app</a>
+      </aside>
     </div>
-    <p class="muted" style="margin-top:36px;font-size:.88rem;">Een berichtje als de browser-versie klaar is? <a href="mailto:support@metenisweten.app?subject=Hou%20me%20op%20de%20hoogte%20Bakstenen">Mail ons</a>.</p>
   </div>
 </section>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
 <div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><span class="brand-mark">B</span> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
-<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div>
-<div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
-<div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
 </div>
 <div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/bricks.js"></script>
 </body>
 </html>
