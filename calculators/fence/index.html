@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fence calculator — posts, panels, gates | BuildExact</title>
-<meta name="description" content="Free fence calculator: posts, panels, pasvakken (end-cut pieces), gates, L and U corners with multi-segment lengths. Same math as the BuildExact Android app.">
+<meta name="description" content="Free fence calculator: posts, panels, end cuts, gates, L and U corners with multi-segment lengths. Same math as the BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/calculators/fence/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/fence/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/fence/">
@@ -42,7 +42,7 @@
   <div class="container">
     <p style="margin-bottom:8px;"><a href="/calculators/" class="muted">← All calculators</a></p>
     <h1 style="margin-bottom:8px;">Fence calculator</h1>
-    <p class="lede" style="margin-bottom:36px;">Enter the shape, panel width and gate count. The result shows how many posts, panels and pasvakken (end-cut pieces) you need.</p>
+    <p class="lede" style="margin-bottom:36px;">Enter the shape, panel width and gate count. The result shows how many posts, panels and end cuts you need.</p>
 
     <div class="calc-shell">
       <form class="calc-form" id="fenceForm" novalidate>
@@ -103,12 +103,12 @@
         <div class="result-rows">
           <div class="result-row"><span class="k">Posts</span><span class="v" id="rPosts">0</span></div>
           <div class="result-row"><span class="k">Full panels</span><span class="v" id="rPanels">0</span></div>
-          <div class="result-row"><span class="k">Pasvakken (end cuts)</span><span class="v" id="rCuts">0</span></div>
+          <div class="result-row"><span class="k">End cuts</span><span class="v" id="rCuts">0</span></div>
           <div class="result-row"><span class="k">Gates</span><span class="v" id="rGates">0</span></div>
           <div class="result-row"><span class="k">End posts (heavy)</span><span class="v" id="rEndPosts">0</span></div>
         </div>
         <div class="calc-note">
-          Estimate only. Formula: for each segment, usable length = segment − (end-post + corner-post + gate widths). Panels = floor(usable / panelWidth). The remainder, if ≥ 15 cm, becomes a pasvak.
+          Estimate only. Formula: for each segment, usable length = segment − (end-post + corner-post + gate widths). Panels = floor(usable / panelWidth). The remainder, if ≥ 15 cm, becomes an end cut.
         </div>
         <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save &amp; export in the app</a>
       </aside>
