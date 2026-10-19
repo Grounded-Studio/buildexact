@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Payment received — BuildExact</title>
-<meta name="description" content="Your BuildExact credit purchase was received. Check your email for the activation code.">
+<title>Activate credits — BuildExact</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://buildexact.app/credits/success/">
-<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
 <link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
 <meta name="theme-color" content="#2563EB">
@@ -16,37 +15,98 @@
 <header class="site-header"><div class="container"><nav class="nav">
 <a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a>
 <ul class="nav-links"><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
-<div class="nav-right"><div class="lang-switch"><a href="/credits/success/" class="active">EN</a><a href="/nl/credits/success/">NL</a></div></div>
+<div class="nav-right"><div class="lang-switch"><a href="/credits/success/" class="active">EN</a><a href="/nl/credits/success/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
 </nav></div></header>
 
 <section class="section">
-  <div class="container" style="max-width:600px;text-align:center;">
-    <div style="font-size:4rem;margin:40px 0 16px;">🎉</div>
-    <h1>Payment received — thanks!</h1>
-    <p class="lede">Your activation code is on its way. Check your email inbox (and spam/junk folder just in case) — it usually arrives within a few minutes.</p>
+  <div class="container" style="max-width:640px;text-align:center;">
+    <div id="emoji" style="font-size:4rem;margin:40px 0 16px;">⏳</div>
+    <h1 id="title">Activating credits…</h1>
+    <p id="status" class="lede" style="margin:24px 0;">One moment, we're verifying your payment with Mollie.</p>
 
-    <div class="card" style="margin-top:40px;text-align:left;">
-      <h3>Next steps</h3>
-      <ol style="padding-left:1.4em;color:var(--ink-2);line-height:1.8;">
-        <li>Open the email from <strong>contact@grounded-studio.app</strong></li>
-        <li>Copy the activation code (looks like <code>BEX-XXXX-XXXX</code>)</li>
-        <li>Paste it on the <a href="/credits/#redeem">Redeem page</a></li>
-        <li>Your 50 credits are added instantly — keep calculating!</li>
-      </ol>
+    <div id="balance" class="credit-chip" style="font-size:1.1rem;margin:32px auto;display:none;"></div>
+
+    <div id="actions" style="margin-top:32px;display:none;">
+      <a href="/calculators/" class="btn btn-primary btn-lg">▶ Back to calculators</a>
+      <p class="muted" style="margin-top:16px;"><a href="/credits/">Buy more credits</a></p>
     </div>
 
-    <p class="muted" style="margin-top:32px;font-size:.9rem;">No email after 15 minutes? Mail <a href="mailto:contact@grounded-studio.app?subject=Credits code%20missing">contact@grounded-studio.app</a> with the time of your payment — we'll resend.</p>
-
-    <p style="margin-top:40px;">
-      <a href="/credits/#redeem" class="btn btn-primary">Go to redeem page</a>
-      <a href="/calculators/" class="btn btn-ghost">Back to calculators</a>
-    </p>
+    <div id="failedActions" style="margin-top:32px;display:none;">
+      <p>Try reloading this page, or go back to <a href="/credits/">the credits page</a>.</p>
+      <p class="muted" style="margin-top:16px;font-size:.9rem;">Still stuck? Mail <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a> with the payment id from the URL — we'll sort it manually.</p>
+    </div>
   </div>
 </section>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-bottom" style="justify-content:center;"><span>© 2026 Grounded Studio · <a href="/" style="color:#CBD5E1;">buildexact.app</a></span></div>
 </div></footer>
+
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script>
+(async function () {
+  const API = 'https://api.buildexact.app/claim.php';
+  const emoji   = document.getElementById('emoji');
+  const title   = document.getElementById('title');
+  const status  = document.getElementById('status');
+  const balance = document.getElementById('balance');
+  const actions = document.getElementById('actions');
+  const failedActions = document.getElementById('failedActions');
+
+  function showSuccess(amount) {
+    emoji.textContent = '🎉';
+    title.textContent = '✓ Credits activated';
+    status.innerHTML = '<strong style="color:var(--ok);">' + amount + ' credits added to this device.</strong>';
+    balance.style.display = 'inline-flex';
+    balance.textContent = '🪙 New balance: ' + BE.credits.balance() + ' credits';
+    actions.style.display = 'block';
+  }
+  function showAlready() {
+    emoji.textContent = '✓';
+    title.textContent = 'Already activated';
+    status.textContent = 'This payment has already been used to add credits.';
+    balance.style.display = 'inline-flex';
+    balance.textContent = '🪙 Current balance: ' + BE.credits.balance() + ' credits';
+    actions.style.display = 'block';
+  }
+  function showError(msg) {
+    emoji.textContent = '⚠️';
+    title.textContent = 'Something went wrong';
+    status.style.color = 'var(--err)';
+    status.textContent = msg;
+    failedActions.style.display = 'block';
+  }
+
+  const url = new URL(window.location.href);
+  const paymentId = url.searchParams.get('id') || '';
+
+  if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
+    showError('No valid payment id in the URL. Open this page via the Mollie redirect or the activation email.');
+    return;
+  }
+
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: paymentId}),
+    });
+    const data = await r.json();
+    if (data.ok && data.amount) {
+      BE.credits.add(data.amount);
+      showSuccess(data.amount);
+    } else if (data.reason === 'already claimed') {
+      showAlready();
+    } else if (data.reason && data.reason.indexOf('payment status') === 0) {
+      showError('Your payment doesn\'t have status "paid" yet. Try again in a minute, or check your email for the activation link.');
+    } else {
+      showError(data.reason || 'Unknown error — please try again or contact us.');
+    }
+  } catch (e) {
+    showError('Network error — check your connection and reload this page.');
+  }
+})();
+</script>
 </body>
 </html>

@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Betaling ontvangen — BuildExact</title>
-<meta name="description" content="Je BuildExact credit-aankoop is ontvangen. Check je mailbox voor de activatiecode.">
+<title>Credits activeren — BuildExact</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://buildexact.app/nl/credits/success/">
-<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
 <link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
 <meta name="theme-color" content="#2563EB">
@@ -16,37 +15,98 @@
 <header class="site-header"><div class="container"><nav class="nav">
 <a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a>
 <ul class="nav-links"><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
-<div class="nav-right"><div class="lang-switch"><a href="/credits/success/">EN</a><a href="/nl/credits/success/" class="active">NL</a></div></div>
+<div class="nav-right"><div class="lang-switch"><a href="/credits/success/">EN</a><a href="/nl/credits/success/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
 </nav></div></header>
 
 <section class="section">
-  <div class="container" style="max-width:600px;text-align:center;">
-    <div style="font-size:4rem;margin:40px 0 16px;">🎉</div>
-    <h1>Betaling ontvangen — bedankt!</h1>
-    <p class="lede">Je activatiecode is onderweg. Check je mailbox (en de spam-map voor de zekerheid) — meestal arriveert hij binnen enkele minuten.</p>
+  <div class="container" style="max-width:640px;text-align:center;">
+    <div id="emoji" style="font-size:4rem;margin:40px 0 16px;">⏳</div>
+    <h1 id="title">Credits activeren…</h1>
+    <p id="status" class="lede" style="margin:24px 0;">Even geduld, we controleren je betaling bij Mollie.</p>
 
-    <div class="card" style="margin-top:40px;text-align:left;">
-      <h3>Volgende stappen</h3>
-      <ol style="padding-left:1.4em;color:var(--ink-2);line-height:1.8;">
-        <li>Open de mail van <strong>contact@grounded-studio.app</strong></li>
-        <li>Kopieer de activatiecode (ziet eruit als <code>BEX-XXXX-XXXX</code>)</li>
-        <li>Plak hem op de <a href="/nl/credits/#redeem">Inwisselen-pagina</a></li>
-        <li>Je 50 credits staan er direct bij — doorrekenen maar!</li>
-      </ol>
+    <div id="balance" class="credit-chip" style="font-size:1.1rem;margin:32px auto;display:none;"></div>
+
+    <div id="actions" style="margin-top:32px;display:none;">
+      <a href="/nl/calculators/" class="btn btn-primary btn-lg">▶ Terug naar calculators</a>
+      <p class="muted" style="margin-top:16px;"><a href="/nl/credits/">Nog meer credits kopen</a></p>
     </div>
 
-    <p class="muted" style="margin-top:32px;font-size:.9rem;">Geen mail na 15 minuten? Stuur een berichtje naar <a href="mailto:contact@grounded-studio.app?subject=Credits code%20mist">contact@grounded-studio.app</a> met het tijdstip van je betaling — we sturen 'm opnieuw.</p>
-
-    <p style="margin-top:40px;">
-      <a href="/nl/credits/#redeem" class="btn btn-primary">Naar inwisselen-pagina</a>
-      <a href="/nl/calculators/" class="btn btn-ghost">Terug naar calculators</a>
-    </p>
+    <div id="failedActions" style="margin-top:32px;display:none;">
+      <p>Probeer deze pagina opnieuw te laden, of ga terug naar <a href="/nl/credits/">de credits-pagina</a>.</p>
+      <p class="muted" style="margin-top:16px;font-size:.9rem;">Blijft het misgaan? Mail <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a> met je betalings-id uit de URL — we lossen 't handmatig op.</p>
+    </div>
   </div>
 </section>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-bottom" style="justify-content:center;"><span>© 2026 Grounded Studio · <a href="/nl/" style="color:#CBD5E1;">buildexact.app</a></span></div>
 </div></footer>
+
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script>
+(async function () {
+  const API = 'https://api.buildexact.app/claim.php';
+  const emoji   = document.getElementById('emoji');
+  const title   = document.getElementById('title');
+  const status  = document.getElementById('status');
+  const balance = document.getElementById('balance');
+  const actions = document.getElementById('actions');
+  const failedActions = document.getElementById('failedActions');
+
+  function showSuccess(amount) {
+    emoji.textContent = '🎉';
+    title.textContent = '✓ Credits geactiveerd';
+    status.innerHTML = '<strong style="color:var(--ok);">' + amount + ' credits toegevoegd aan dit apparaat.</strong>';
+    balance.style.display = 'inline-flex';
+    balance.textContent = '🪙 Nieuwe balans: ' + BE.credits.balance() + ' credits';
+    actions.style.display = 'block';
+  }
+  function showAlready() {
+    emoji.textContent = '✓';
+    title.textContent = 'Al eerder geactiveerd';
+    status.textContent = 'Deze betaling is al eerder gebruikt om credits toe te voegen.';
+    balance.style.display = 'inline-flex';
+    balance.textContent = '🪙 Huidige balans: ' + BE.credits.balance() + ' credits';
+    actions.style.display = 'block';
+  }
+  function showError(msg) {
+    emoji.textContent = '⚠️';
+    title.textContent = 'Er ging iets mis';
+    status.style.color = 'var(--err)';
+    status.textContent = msg;
+    failedActions.style.display = 'block';
+  }
+
+  const url = new URL(window.location.href);
+  const paymentId = url.searchParams.get('id') || '';
+
+  if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
+    showError('Geen geldige betalings-id in de URL. Open deze pagina via de Mollie-redirect of de activatie-mail.');
+    return;
+  }
+
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: paymentId}),
+    });
+    const data = await r.json();
+    if (data.ok && data.amount) {
+      BE.credits.add(data.amount);
+      showSuccess(data.amount);
+    } else if (data.reason === 'already claimed') {
+      showAlready();
+    } else if (data.reason && data.reason.indexOf('payment status') === 0) {
+      showError('Je betaling heeft nog niet de status "paid". Probeer het over een minuut opnieuw of check je mail voor de activatielink.');
+    } else {
+      showError(data.reason || 'Onbekende fout — probeer opnieuw of neem contact op.');
+    }
+  } catch (e) {
+    showError('Netwerkfout — controleer je verbinding en herlaad deze pagina.');
+  }
+})();
+</script>
 </body>
 </html>
