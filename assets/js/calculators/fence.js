@@ -44,7 +44,7 @@
     rowCornerPosts: 'Corner posts',
     rowStandardPanels: (w) => `Standard panels (${w} cm)`,
     rowLongPanels: (w) => `Long panels (${w} cm)`,
-    rowPasvak: (base) => `Pasvak (cut from ${base} cm)`,
+    rowPasvak: (base) => `End cut (from ${base} cm panel)`,
     rowCoverCaps: 'Cover caps (on panels)',
     rowGate: (i, w, b, dbl) => `${dbl ? 'Double g' : 'G'}ate ${i} (${w} cm + 2×${b} cm beam)`,
     rowGateBeam: (i) => `Top beam gate ${i}`,
