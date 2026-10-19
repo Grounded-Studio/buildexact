@@ -153,6 +153,60 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   color: var(--faint); font-weight: 600;
 }
 
+/* Fanned phone screenshots — Circuit Trace style */
+.hero-phones {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1.05;
+}
+.hero-phones::before,
+.hero-phones::after {
+  content: ''; position: absolute; border-radius: 50%;
+  filter: blur(60px); pointer-events: none; z-index: 0;
+}
+.hero-phones::before {
+  width: 60%; height: 40%; left: 5%; top: 5%;
+  background: rgba(59, 130, 246, .25);
+}
+.hero-phones::after {
+  width: 55%; height: 45%; right: 5%; bottom: 5%;
+  background: rgba(37, 99, 235, .15);
+}
+.hero-phones img {
+  position: absolute;
+  border-radius: 36px;
+  background: var(--surface-raised);
+  outline: 1px solid rgba(15,23,42,.06);
+}
+.hero-phones .ph-main {
+  width: 48%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 3;
+  box-shadow: 0 30px 60px rgba(37, 99, 235, .28);
+}
+.hero-phones .ph-side {
+  width: 42%;
+  top: 8%;
+  z-index: 2;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, .14);
+}
+.hero-phones .ph-left  { left: 0;  transform: rotate(-8deg) translateY(18px); transform-origin: top right; }
+.hero-phones .ph-right { right: 0; transform: rotate(8deg) translateY(18px);  transform-origin: top left; }
+
+@media (max-width: 900px) {
+  .hero-phones { max-width: 500px; }
+}
+@media (max-width: 560px) {
+  .hero-phones { aspect-ratio: auto; max-width: 320px; padding-top: 10px; }
+  .hero-phones::before, .hero-phones::after { display: none; }
+  .hero-phones .ph-side { display: none; }
+  .hero-phones .ph-main { position: relative; width: 100%; left: 0; transform: none; }
+}
+
 /* ---------- Sections ---------- */
 .section { padding: 72px 0; }
 .section-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
