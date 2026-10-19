@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paving calculator | BuildExact</title>
-<meta name="description" content="Paving calculator with pattern-aware waste, sub-base, bedding sand, joint sand, edge restraint.">
+<meta name="description" content="Paving stones with pattern-aware waste, sub-base, bedding sand, joint sand and edge restraint. Same engine as the BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/calculators/paving/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/paving/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/paving/">
@@ -22,46 +22,44 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <p><a href="/calculators/" class="muted">← All calculators</a></p>
+    <p><a href="/calculators/" class="muted">&larr; All calculators</a></p>
     <h1>Paving calculator</h1>
-    <p class="lede" style="margin-bottom:32px;">Stones, sub-base, bedding, joint sand and edge restraint for a terrace or path.</p>
-
+    <p class="lede" style="margin-bottom:32px;">Pattern-aware waste, buildup layers and optional edge restraint.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
-        <h3>Inputs</h3>
-        <div class="field"><label for="area">Area (m²)</label><input type="number" id="area" value="30" min="0" step="0.1"></div>
+        <h3>Dimensions</h3>
+        <div class="field"><label for="area">Area (m&sup2;)</label><input type="number" id="area" value="30" min="0" step="0.1"></div>
         <div class="field-row">
           <div class="field"><label for="stoneW">Stone width (cm)</label><input type="number" id="stoneW" value="20" min="1" step="1"></div>
-          <div class="field"><label for="stoneH">Stone height (cm)</label><input type="number" id="stoneH" value="10" min="1" step="1"></div>
+          <div class="field"><label for="stoneH">Stone length (cm)</label><input type="number" id="stoneH" value="10" min="1" step="1"></div>
         </div>
-        <h3 style="margin-top:14px;">Pattern</h3>
+
+        <h3 style="margin-top:28px;">Pattern</h3>
         <div class="chips" id="patternChips">
-          <button type="button" class="chip" data-value="block">Block</button>
-          <button type="button" class="chip active" data-value="halfbrick">Half-brick</button>
-          <button type="button" class="chip" data-value="herringbone45">Herringbone 45°</button>
-          <button type="button" class="chip" data-value="herringbone90">Herringbone 90°</button>
+          <button type="button" class="chip" data-value="block" data-waste="5">Block</button>
+          <button type="button" class="chip active" data-value="halfbrick" data-waste="7">Half-brick</button>
+          <button type="button" class="chip" data-value="herringbone45" data-waste="15">Herringbone 45&deg;</button>
+          <button type="button" class="chip" data-value="herringbone90" data-waste="10">Herringbone 90&deg;</button>
         </div>
-        <div class="field"><label for="waste">Waste (%) — auto per pattern</label><input type="number" id="waste" value="7" min="0" step="1"></div>
+        <div class="field"><label for="waste">Cut waste (%) &mdash; auto per pattern</label><input type="number" id="waste" value="7" min="0" step="1"></div>
+
+        <h3 style="margin-top:28px;">Buildup</h3>
         <div class="field-row">
           <div class="field"><label for="bedding">Bedding sand (cm)</label><input type="number" id="bedding" value="5" min="0" step="0.5"></div>
           <div class="field"><label for="subBase">Sub-base (cm)</label><input type="number" id="subBase" value="20" min="0" step="1"></div>
         </div>
-        <div class="field"><label for="jointSand">Joint sand (kg/m²)</label><input type="number" id="jointSand" value="3" min="0" step="0.5"></div>
-        <div class="field"><label><input type="checkbox" id="edge" checked style="width:auto;margin-right:8px;"> Edge restraint</label></div>
-        <div class="field"><label for="perimeter">Perimeter override (m)</label><input type="number" id="perimeter" value="0" min="0" step="0.1"><p class="hint">Leave 0 to auto-estimate as 4√area.</p></div>
+        <div class="field"><label for="jointSand">Joint sand (kg/m&sup2;)</label><input type="number" id="jointSand" value="3" min="0" step="0.5"></div>
+
+        <h3 style="margin-top:28px;">Edge restraint</h3>
+        <label class="toggle-row"><span>Include edge restraint</span><input type="checkbox" id="edge" checked></label>
+        <div class="field" id="perimField"><label for="perimeter">Perimeter override (m)</label><input type="number" id="perimeter" value="0" min="0" step="0.1"><p class="hint">Leave 0 to auto-estimate as 4&radic;area.</p></div>
       </form>
       <aside class="calc-result">
         <h3>Result</h3>
-        <div class="result-hero"><div class="label">Stones needed</div><div><span class="value" id="rStones">0</span><span class="unit">pcs</span></div></div>
-        <div class="result-rows">
-          <div class="result-row"><span class="k">Area incl. waste</span><span class="v"><span id="rAreaInclWaste">0</span> m²</span></div>
-          <div class="result-row"><span class="k">Sub-base</span><span class="v"><span id="rSubBase">0</span> m³</span></div>
-          <div class="result-row"><span class="k">Bedding sand</span><span class="v"><span id="rBedding">0</span> m³</span></div>
-          <div class="result-row"><span class="k">Joint sand</span><span class="v"><span id="rJointSand">0</span> kg</span></div>
-          <div class="result-row"><span class="k">Edge restraint</span><span class="v" id="rEdge">—</span></div>
-        </div>
-        <div class="calc-note">Pattern waste: block 5% · half-brick 7% · herringbone 45° 15% · herringbone 90° 10%. Edge auto-estimated as 4√area if no perimeter given.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save & export in the app</a>
+        <div class="result-hero"><div class="label">Stones needed</div><div><span class="value" id="heroValue">0</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Pattern waste: block 5% - half-brick 7% - herringbone 45&deg; 15% - herringbone 90&deg; 10%.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save &amp; export in the app</a>
       </aside>
     </div>
   </div>
@@ -69,10 +67,10 @@
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
-<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">&#9654; Google Play</a></div>
 <div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div>
-<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>

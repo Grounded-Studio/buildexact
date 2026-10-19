@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hout calculator | BuildExact</title>
-<meta name="description" content="Hout calculator — volume-, planken- of balken-modus met afwerking.">
+<meta name="description" content="Hout calculator met 3 modi: ruw volume, planken (aantal naar doelvolume), of balken (constructie met schroeven). Zelfde engine als de BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/nl/calculators/wood/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/wood/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/wood/">
@@ -22,64 +22,64 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <p><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
+    <p><a href="/nl/calculators/" class="muted">&larr; Alle calculators</a></p>
     <h1>Hout calculator</h1>
-    <p class="lede" style="margin-bottom:32px;">Drie modi: ruw volume, aantal planken, of balken met strekkende meter en schroeven.</p>
-
+    <p class="lede" style="margin-bottom:32px;">Drie modi: ruw volume, planken naar doelvolume, of balken-constructie met schroeven.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
-        <h3>Invoer</h3>
-        <h3>Modus</h3>
+        <h3>Soort berekening</h3>
         <div class="chips" id="modeChips">
           <button type="button" class="chip active" data-value="volume">Volume</button>
           <button type="button" class="chip" data-value="planks">Planken</button>
           <button type="button" class="chip" data-value="beams">Balken</button>
         </div>
-        <div id="volumeFields">
+
+        <div id="volumeMode">
+          <h3 style="margin-top:28px;">Afmetingen</h3>
           <div class="field-row">
-            <div class="field"><label for="length">Lengte (m)</label><input type="number" id="length" value="2.4" min="0" step="0.1"></div>
-            <div class="field"><label for="vwidth">Breedte (m)</label><input type="number" id="vwidth" value="0.14" min="0" step="0.01"></div>
+            <div class="field"><label for="vl">Lengte (m)</label><input type="number" id="vl" value="2.4" min="0" step="0.1"></div>
+            <div class="field"><label for="vw">Breedte (m)</label><input type="number" id="vw" value="0.14" min="0" step="0.01"></div>
           </div>
-          <div class="field"><label for="vheight">Hoogte (m)</label><input type="number" id="vheight" value="0.018" min="0" step="0.001"></div>
+          <div class="field"><label for="vh">Hoogte (m)</label><input type="number" id="vh" value="0.018" min="0" step="0.001"></div>
         </div>
-        <div id="planksFields" style="display:none;">
-          <div class="field"><label for="target">Doelvolume (m³)</label><input type="number" id="target" value="0.5" min="0" step="0.01"></div>
+
+        <div id="planksMode" style="display:none;">
+          <h3 style="margin-top:28px;">Doelvolume</h3>
+          <div class="field"><label for="target">Doelvolume (m&sup3;)</label><input type="number" id="target" value="0.5" min="0" step="0.01"></div>
+          <h3 style="margin-top:20px;">Planken-maat</h3>
           <div class="field-row">
-            <div class="field"><label for="plankT">Dikte plank (mm)</label><input type="number" id="plankT" value="18" min="1" step="1"></div>
-            <div class="field"><label for="plankW">Breedte plank (mm)</label><input type="number" id="plankW" value="140" min="1" step="1"></div>
+            <div class="field"><label for="pT">Dikte (mm)</label><input type="number" id="pT" value="18" min="1" step="1"></div>
+            <div class="field"><label for="pW">Breedte (mm)</label><input type="number" id="pW" value="140" min="1" step="1"></div>
           </div>
-          <div class="field"><label for="plankL">Lengte plank (m)</label><input type="number" id="plankL" value="2.4" min="0" step="0.1"></div>
+          <div class="field"><label for="pL">Lengte plank (m)</label><input type="number" id="pL" value="2.4" min="0" step="0.1"></div>
         </div>
-        <div id="beamsFields" style="display:none;">
+
+        <div id="beamsMode" style="display:none;">
+          <h3 style="margin-top:28px;">Balken</h3>
           <div class="field-row">
-            <div class="field"><label for="beamCount">Aantal balken</label><input type="number" id="beamCount" value="10" min="0" step="1"></div>
-            <div class="field"><label for="beamL">Lengte (m)</label><input type="number" id="beamL" value="3" min="0" step="0.1"></div>
+            <div class="field"><label for="bCount">Aantal balken</label><input type="number" id="bCount" value="10" min="0" step="1"></div>
+            <div class="field"><label for="bLen">Lengte (m)</label><input type="number" id="bLen" value="3" min="0" step="0.1"></div>
           </div>
           <div class="field-row">
-            <div class="field"><label for="beamW">Breedte (mm)</label><input type="number" id="beamW" value="70" min="1" step="1"></div>
-            <div class="field"><label for="beamH">Hoogte (mm)</label><input type="number" id="beamH" value="170" min="1" step="1"></div>
+            <div class="field"><label for="bW">Breedte (mm)</label><input type="number" id="bW" value="70" min="1" step="1"></div>
+            <div class="field"><label for="bH">Hoogte (mm)</label><input type="number" id="bH" value="170" min="1" step="1"></div>
           </div>
-          <div class="field"><label for="screwsPerBeam">Schroeven per balk</label><input type="number" id="screwsPerBeam" value="4" min="0" step="1"></div>
+          <div class="field"><label for="bScrews">Schroeven per balk</label><input type="number" id="bScrews" value="4" min="0" step="1"></div>
         </div>
-        <h3 style="margin-top:14px;">Afwerking</h3>
-        <div class="field"><label><input type="checkbox" id="finish" style="width:auto;margin-right:8px;"> Beits / lak toepassen</label></div>
-        <div class="field-row">
-          <div class="field"><label for="finishCov">Dekking (m²/L)</label><input type="number" id="finishCov" value="10" min="1" step="0.5"></div>
+
+        <h3 style="margin-top:28px;">Afwerking (optioneel)</h3>
+        <label class="toggle-row"><span>Beits of vernis meeberekenen</span><input type="checkbox" id="finish"></label>
+        <div class="field-row" id="finishFields" style="display:none;">
+          <div class="field"><label for="finishCov">Dekking (m&sup2;/L)</label><input type="number" id="finishCov" value="10" min="1" step="0.5"></div>
           <div class="field"><label for="finishCoats">Lagen</label><input type="number" id="finishCoats" value="2" min="1" step="1"></div>
         </div>
       </form>
       <aside class="calc-result">
         <h3>Resultaat</h3>
-        <div class="result-hero"><div class="label">Volume</div><div><span class="value" id="rVolume">0</span><span class="unit">m³</span></div></div>
-        <div class="result-rows">
-          <div class="result-row"><span class="k">Aantal</span><span class="v" id="rCount">—</span></div>
-          <div class="result-row"><span class="k">Strekkende meter</span><span class="v"><span id="rMeters">0</span> m</span></div>
-          <div class="result-row"><span class="k">Oppervlak</span><span class="v"><span id="rSurface">0</span> m²</span></div>
-          <div class="result-row"><span class="k">Schroeven</span><span class="v" id="rScrews">—</span></div>
-          <div class="result-row"><span class="k">Afwerking</span><span class="v" id="rFinish">—</span></div>
-        </div>
-        <div class="calc-note">Balken-modus is handig voor pergola, vlonder en dakconstructie — geeft ook het afwerk-oppervlak voor beits of lak.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan & exporteren in de app</a>
+        <div class="result-hero"><div class="label">Resultaat</div><div><span class="value" id="heroValue">0,000 m&sup3;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Balken-modus is handig voor pergola, vlonder en dakconstructie. Afwerk-oppervlak auto-berekend.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan &amp; exporteren in de app</a>
       </aside>
     </div>
   </div>
@@ -87,10 +87,10 @@
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
-<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">&#9654; Google Play</a></div>
 <div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
 </div>
-<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>

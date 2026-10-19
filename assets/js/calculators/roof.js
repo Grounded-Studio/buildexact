@@ -1,43 +1,62 @@
 (function () {
+  const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  const STR = isNl ? {
+    rowSlopePct: 'Helling %', rowSlopeM: 'Zijde-lengte', rowArea: 'Dak-oppervlak',
+    rowAreaWaste: 'Oppervlak incl. snijverlies',
+    rowTiles: 'Pannen', rowBattens: 'Panlatten', rowRidge: 'Nokvorsten',
+    rowMembrane: 'Membraan nodig',
+  } : {
+    rowSlopePct: 'Slope %', rowSlopeM: 'Slope length per side', rowArea: 'Roof area',
+    rowAreaWaste: 'Area incl. waste',
+    rowTiles: 'Roof tiles', rowBattens: 'Battens', rowRidge: 'Ridge caps',
+    rowMembrane: 'Membrane needed',
+  };
+  function fmt(v, d) { d = d == null ? 2 : d; return isNl ? v.toFixed(d).replace('.', ',') : v.toFixed(d); }
+
   function recalc() {
-    const riseCm = BE.v('rise', 0);
-    const runCm = BE.v('run', 0);
+    const rise = BE.v('rise', 0);
+    const run = BE.v('run', 0);
     const widthM = BE.v('rwidth', 0);
-    const ridgeM = BE.v('ridge', 0);
-    const tilesPerM2 = BE.v('tilesPerM2', 10);
-    const battenCm = BE.v('batten', 32);
     const waste = BE.v('waste', 10);
     const material = BE.activeChip('materialChips') || 'tiles';
+    const hero = document.getElementById('heroValue');
+    const rows = document.getElementById('resultRows');
+    document.getElementById('tileFields').style.display = material === 'tiles' ? '' : 'none';
 
-    const angleDeg = runCm > 0 ? Math.atan(riseCm / runCm) * 180 / Math.PI : 0;
-    const slopePct = runCm > 0 ? (riseCm / runCm) * 100 : 0;
-    const slopeM = Math.sqrt(Math.pow(riseCm / 100, 2) + Math.pow(runCm / 100, 2));
+    if (rise <= 0 || run <= 0) { hero.textContent = '0°'; rows.innerHTML = ''; return; }
+    const angleDeg = Math.atan(rise / run) * 180 / Math.PI;
+    const slopePct = (rise / run) * 100;
+    const slopeM = Math.sqrt(Math.pow(rise / 100, 2) + Math.pow(run / 100, 2));
     const areaM2 = slopeM * widthM;
-    const areaInclWaste = areaM2 * (1 + waste / 100);
+    const areaWaste = areaM2 * (1 + waste / 100);
 
-    BE.set('rAngle', angleDeg, 1);
-    BE.set('rSlopePct', slopePct, 1);
-    BE.set('rSlopeM', slopeM, 2);
-    BE.set('rArea', areaM2, 2);
-    BE.set('rAreaInclWaste', areaInclWaste, 2);
-
-    const tilesRows = document.getElementById('tilesRows');
-    const membraneRow = document.getElementById('membraneRow');
-    if (material === 'tiles') {
-      tilesRows.style.display = '';
-      membraneRow.style.display = 'none';
-      const tiles = Math.ceil(areaInclWaste * tilesPerM2);
-      const battensM = battenCm > 0 ? widthM * Math.ceil((slopeM * 100) / battenCm) : 0;
-      const ridgeCaps = Math.ceil(ridgeM * 3);
-      BE.set('rTiles', tiles);
-      BE.set('rBattens', battensM, 2);
-      BE.set('rRidgeCaps', ridgeCaps);
-    } else {
-      tilesRows.style.display = 'none';
-      membraneRow.style.display = '';
-      BE.set('rMembrane', areaInclWaste, 2);
+    hero.textContent = fmt(angleDeg, 1) + '°';
+    const parts = [
+      `<div class="result-row"><span class="k">${STR.rowSlopePct}</span><span class="v">${fmt(slopePct, 1)}%</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowSlopeM}</span><span class="v">${fmt(slopeM)} m</span></div>`,
+    ];
+    if (widthM > 0) {
+      parts.push(`<div class="result-row"><span class="k">${STR.rowArea}</span><span class="v">${fmt(areaM2)} m²</span></div>`);
+      parts.push(`<div class="result-row"><span class="k">${STR.rowAreaWaste}</span><span class="v">${fmt(areaWaste)} m²</span></div>`);
+      if (material === 'tiles') {
+        const tilesPerM2 = BE.v('tilesPerM2', 10);
+        const battenCm = BE.v('batten', 32);
+        const ridgeM = BE.v('ridge', 0);
+        const tiles = Math.ceil(areaWaste * tilesPerM2);
+        const battensM = battenCm > 0 ? widthM * Math.ceil((slopeM * 100) / battenCm) : 0;
+        const ridgeCaps = Math.ceil(ridgeM * 3);
+        parts.push(`<div class="result-row"><span class="k">${STR.rowTiles}</span><span class="v">${tiles}</span></div>`);
+        if (battensM > 0) parts.push(`<div class="result-row"><span class="k">${STR.rowBattens}</span><span class="v">${fmt(battensM)} m</span></div>`);
+        if (ridgeCaps > 0) parts.push(`<div class="result-row"><span class="k">${STR.rowRidge}</span><span class="v">${ridgeCaps}</span></div>`);
+      } else {
+        parts.push(`<div class="result-row"><span class="k">${STR.rowMembrane}</span><span class="v">${fmt(areaWaste)} m²</span></div>`);
+      }
     }
+    rows.innerHTML = parts.join('');
   }
-  BE.chip('materialChips', recalc);
-  BE.bindAll(['rise','run','rwidth','ridge','tilesPerM2','batten','waste'], recalc);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    BE.chip('materialChips', recalc);
+    BE.bindAll(['rise', 'run', 'rwidth', 'waste', 'tilesPerM2', 'batten', 'ridge'], recalc);
+  });
 })();

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roof calculator | BuildExact</title>
-<meta name="description" content="Roof pitch calculator — slope, area, tiles, battens, ridge caps, membrane for bitumen/EPDM/metal.">
+<title>Roof pitch calculator | BuildExact</title>
+<meta name="description" content="Roof pitch to tiles, battens, ridge caps or membrane (bitumen/EPDM/metal). Same engine as the BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/calculators/roof/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/roof/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/roof/">
@@ -22,57 +22,41 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <p><a href="/calculators/" class="muted">← All calculators</a></p>
-    <h1>Roof calculator</h1>
-    <p class="lede" style="margin-bottom:32px;">Pitch area and material estimates for tiles, bitumen, EPDM or metal roofs.</p>
-
+    <p><a href="/calculators/" class="muted">&larr; All calculators</a></p>
+    <h1>Roof pitch calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Pitch angle plus material estimates for tiles, bitumen, EPDM or metal.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
-        <h3>Inputs</h3>
+        <h3>Pitch</h3>
         <div class="field-row">
           <div class="field"><label for="rise">Rise (cm)</label><input type="number" id="rise" value="300" min="0" step="1"></div>
           <div class="field"><label for="run">Run (cm)</label><input type="number" id="run" value="500" min="0" step="1"></div>
         </div>
-        <div class="field-row">
-          <div class="field"><label for="rwidth">Roof width (m)</label><input type="number" id="rwidth" value="8" min="0" step="0.1"></div>
-          <div class="field"><label for="waste">Waste (%)</label><input type="number" id="waste" value="10" min="0" step="1"></div>
-        </div>
-        <h3 style="margin-top:14px;">Material</h3>
+        <div class="field"><label for="rwidth">Roof width (m)</label><input type="number" id="rwidth" value="8" min="0" step="0.1"></div>
+
+        <h3 style="margin-top:28px;">Material</h3>
         <div class="chips" id="materialChips">
           <button type="button" class="chip active" data-value="tiles">Tiles</button>
           <button type="button" class="chip" data-value="bitumen">Bitumen</button>
           <button type="button" class="chip" data-value="epdm">EPDM</button>
           <button type="button" class="chip" data-value="metal">Metal</button>
         </div>
-        <div class="field-row">
-          <div class="field"><label for="tilesPerM2">Tiles per m²</label><input type="number" id="tilesPerM2" value="10" min="1" step="0.5"></div>
-          <div class="field"><label for="batten">Batten spacing (cm)</label><input type="number" id="batten" value="32" min="10" step="1"></div>
+        <div class="field"><label for="waste">Cut waste (%)</label><input type="number" id="waste" value="10" min="0" step="1"></div>
+
+        <div id="tileFields">
+          <div class="field-row">
+            <div class="field"><label for="tilesPerM2">Tiles per m&sup2;</label><input type="number" id="tilesPerM2" value="10" min="1" step="0.5"></div>
+            <div class="field"><label for="batten">Batten spacing (cm)</label><input type="number" id="batten" value="32" min="10" step="1"></div>
+          </div>
+          <div class="field"><label for="ridge">Ridge length (m)</label><input type="number" id="ridge" value="8" min="0" step="0.1"></div>
         </div>
-        <div class="field"><label for="ridge">Ridge length (m)</label><input type="number" id="ridge" value="8" min="0" step="0.1"></div>
       </form>
       <aside class="calc-result">
         <h3>Result</h3>
-        <div class="result-hero"><div class="label">Roof area</div><div><span class="value" id="rArea">0</span><span class="unit">m²</span></div></div>
-        <div class="result-rows">
-          <div class="result-row"><span class="k">Slope angle</span><span class="v"><span id="rAngle">0</span>°</span></div>
-          <div class="result-row"><span class="k">Slope %</span><span class="v"><span id="rSlopePct">0</span>%</span></div>
-          <div class="result-row"><span class="k">Slope length per side</span><span class="v"><span id="rSlopeM">0</span> m</span></div>
-          <div class="result-row"><span class="k">Area incl. waste</span><span class="v"><span id="rAreaInclWaste">0</span> m²</span></div>
-        </div>
-        <div id="tilesRows">
-          <div class="result-rows" style="margin-top:12px;">
-            <div class="result-row"><span class="k">Tiles</span><span class="v" id="rTiles">0</span></div>
-            <div class="result-row"><span class="k">Battens</span><span class="v"><span id="rBattens">0</span> m</span></div>
-            <div class="result-row"><span class="k">Ridge caps</span><span class="v" id="rRidgeCaps">0</span></div>
-          </div>
-        </div>
-        <div id="membraneRow" style="display:none;margin-top:12px;">
-          <div class="result-rows">
-            <div class="result-row"><span class="k">Membrane needed</span><span class="v"><span id="rMembrane">0</span> m²</span></div>
-          </div>
-        </div>
-        <div class="calc-note">Rise = vertical, run = horizontal. For double-pitched roofs, apply this calculation per side and sum the areas.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save & export in the app</a>
+        <div class="result-hero"><div class="label">Slope angle</div><div><span class="value" id="heroValue">0&deg;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">For double-pitched roofs: calculate each side and add the areas.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save &amp; export in the app</a>
       </aside>
     </div>
   </div>
@@ -80,10 +64,10 @@
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
-<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">&#9654; Google Play</a></div>
 <div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div>
-<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>

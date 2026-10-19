@@ -1,44 +1,65 @@
 (function () {
+  const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  const STR = isNl ? {
+    heroEmpty: 'Vul oppervlak in', heroBoards: (n) => `${n} platen`,
+    rowAreaWaste: 'Oppervlak incl. snijverlies', rowScrews: 'Schroeven',
+    rowCompound: 'Voegsel', rowTape: 'Voegband',
+    rowStuds: 'Verticale profielen', rowTracks: 'Horizontale rails',
+  } : {
+    heroEmpty: 'Enter area', heroBoards: (n) => `${n} boards`,
+    rowAreaWaste: 'Area incl. waste', rowScrews: 'Screws',
+    rowCompound: 'Joint compound', rowTape: 'Joint tape',
+    rowStuds: 'Vertical studs', rowTracks: 'Horizontal tracks',
+  };
+  function fmt(v, d) { d = d == null ? 2 : d; return isNl ? v.toFixed(d).replace('.', ',') : v.toFixed(d); }
+
   function recalc() {
     const mode = BE.activeChip('modeChips') || 'ceiling';
     const area = BE.v('area', 0);
     const bw = BE.v('boardW', 120);
     const bh = BE.v('boardH', 260);
     const waste = BE.v('waste', 10);
-    const screwsPerBoard = BE.v('screws', 32);
-    const compoundKgM2 = BE.v('compound', 0.6);
-    const tapePerM2 = BE.v('tape', 1.5);
     const twoLayers = BE.checked('twoLayers');
+    const screwsPerBoard = BE.v('screws', 32);
+    const compoundKg = BE.v('compound', 0.6);
+    const tape = BE.v('tape', 1.5);
+    const hero = document.getElementById('heroValue');
+    const rows = document.getElementById('resultRows');
 
+    document.getElementById('partitionSection').style.display = mode === 'partition' ? '' : 'none';
+
+    if (area <= 0 || bw <= 0 || bh <= 0) { hero.textContent = STR.heroEmpty; rows.innerHTML = ''; return; }
     const boardArea = (bw / 100) * (bh / 100);
-    const areaInclWaste = area * (1 + waste / 100);
+    const areaWaste = area * (1 + waste / 100);
     const layerMul = twoLayers ? 2 : 1;
-    const boards = boardArea > 0 ? Math.ceil((area / boardArea) * (1 + waste / 100) * layerMul) : 0;
+    const boards = Math.ceil((area / boardArea) * (1 + waste / 100) * layerMul);
     const screws = boards * screwsPerBoard;
-    const compoundKg = areaInclWaste * compoundKgM2;
-    const tapeM = areaInclWaste * tapePerM2;
+    const compoundTotal = areaWaste * compoundKg;
+    const tapeTotal = areaWaste * tape;
 
-    BE.set('rBoards', boards);
-    BE.set('rAreaInclWaste', areaInclWaste, 2);
-    BE.set('rScrews', screws);
-    BE.set('rCompound', compoundKg, 1);
-    BE.set('rTape', tapeM, 1);
-
-    const partitionFields = document.getElementById('partitionFields');
-    if (partitionFields) partitionFields.style.display = mode === 'partition' ? '' : 'none';
-    const partitionResults = document.getElementById('partitionResults');
-    if (partitionResults) partitionResults.style.display = mode === 'partition' ? '' : 'none';
-
+    hero.textContent = STR.heroBoards(boards);
+    const parts = [
+      `<div class="result-row"><span class="k">${STR.rowAreaWaste}</span><span class="v">${fmt(areaWaste)} m²</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowScrews}</span><span class="v">${screws}</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowCompound}</span><span class="v">${fmt(compoundTotal, 1)} kg</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowTape}</span><span class="v">${fmt(tapeTotal, 1)} m</span></div>`,
+    ];
     if (mode === 'partition') {
       const wallLen = BE.v('wallLen', 0);
-      const studSpacing = BE.v('studSpacing', 60);
-      const studs = studSpacing > 0 ? Math.ceil((wallLen * 100) / studSpacing) + 1 : 0;
-      const tracks = wallLen * 2;
-      BE.set('rStuds', studs);
-      BE.set('rTracks', tracks, 2);
+      const spacing = BE.v('studSpacing', 60);
+      if (wallLen > 0 && spacing > 0) {
+        const studs = Math.ceil((wallLen * 100) / spacing) + 1;
+        const tracks = wallLen * 2;
+        parts.push(`<div class="result-row"><span class="k">${STR.rowStuds}</span><span class="v">${studs}</span></div>`);
+        parts.push(`<div class="result-row"><span class="k">${STR.rowTracks}</span><span class="v">${fmt(tracks)} m</span></div>`);
+      }
     }
+    rows.innerHTML = parts.join('');
   }
-  BE.chip('modeChips', recalc);
-  BE.bindAll(['area', 'boardW', 'boardH', 'waste', 'screws', 'compound', 'tape', 'wallLen', 'studSpacing'], recalc);
-  document.getElementById('twoLayers').addEventListener('change', recalc);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    BE.chip('modeChips', recalc);
+    BE.bindAll(['area', 'boardW', 'boardH', 'waste', 'screws', 'compound', 'tape', 'wallLen', 'wallHt', 'studSpacing'], recalc);
+    document.getElementById('twoLayers').addEventListener('change', recalc);
+  });
 })();
