@@ -66,26 +66,13 @@
 <script>
 (function () {
   const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  // Let op: echte codes staan NIET in de client — die worden server-side
+  // gevalideerd door de Strato PHP backend (api.buildexact.app) zodra er
+  // een betaling binnenkomt. De twee test-codes hieronder zijn alleen
+  // voor interne QA van de UI-flow.
   const CODES = {
     'BEX-TEST-5050': 50,
     'BEX-WELCOME-25': 25,
-    'BEX-GFZV-L2GA': 50, 'BEX-QFZ8-QWTK': 50, 'BEX-JZV9-FRST': 50,
-    'BEX-P5XY-AS3A': 50, 'BEX-DH3Q-GFPM': 50, 'BEX-FG9Q-HBLX': 50,
-    'BEX-N7JK-D32Z': 50, 'BEX-XFGR-CSA8': 50, 'BEX-NY5H-4DDD': 50,
-    'BEX-LJ39-SCLM': 50, 'BEX-TAKC-HR7K': 50, 'BEX-QC2B-88JX': 50,
-    'BEX-GBCS-GD4K': 50, 'BEX-4F94-A3HV': 50, 'BEX-558C-G8Y6': 50,
-    'BEX-3T22-LCFM': 50, 'BEX-9E2Q-93FQ': 50, 'BEX-FAHC-SDKW': 50,
-    'BEX-5FFD-AGQH': 50, 'BEX-LFZW-LC82': 50, 'BEX-AV46-B2VB': 50,
-    'BEX-XS7G-YVNX': 50, 'BEX-JD7E-6BM3': 50, 'BEX-XSE4-BTDC': 50,
-    'BEX-BRC6-JPVC': 50, 'BEX-UDPS-JHTY': 50, 'BEX-2BMH-F458': 50,
-    'BEX-JBGS-W29E': 50, 'BEX-N4FG-TSP5': 50, 'BEX-R4U2-W4SP': 50,
-    'BEX-9PBA-F67H': 50, 'BEX-WDVH-GDQ3': 50, 'BEX-DKDQ-CMFJ': 50,
-    'BEX-WSZM-HCLP': 50, 'BEX-S2TG-Z99S': 50, 'BEX-77UQ-6GWN': 50,
-    'BEX-M2WL-ZCMV': 50, 'BEX-J2NW-FT9T': 50, 'BEX-3GZQ-UJCE': 50,
-    'BEX-KVSE-3YNP': 50, 'BEX-6L9R-P9YP': 50, 'BEX-P788-VLMM': 50,
-    'BEX-8AXY-RG4D': 50, 'BEX-YSBD-TG4T': 50, 'BEX-N824-TSD3': 50,
-    'BEX-RKBX-KES9': 50, 'BEX-JEG2-BY8X': 50, 'BEX-S626-8V5G': 50,
-    'BEX-CPTX-TS3Q': 50, 'BEX-65GF-FE3U': 50,
   };
   function render() {
     const bal = BE.credits.balance();
