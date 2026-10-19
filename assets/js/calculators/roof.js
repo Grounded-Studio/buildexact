@@ -57,6 +57,6 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     BE.chip('materialChips', recalc);
-    BE.bindAll(['rise', 'run', 'rwidth', 'waste', 'tilesPerM2', 'batten', 'ridge'], recalc);
+    BE.wireCalc(recalc, ['rise', 'run', 'rwidth', 'waste', 'tilesPerM2', 'batten', 'ridge']); BE.markStaleOn("input,select,.chip,.toggle-row input");
   });
 })();

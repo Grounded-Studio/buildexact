@@ -59,7 +59,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     BE.chip('modeChips', recalc);
-    BE.bindAll(['area', 'boardW', 'boardH', 'waste', 'screws', 'compound', 'tape', 'wallLen', 'wallHt', 'studSpacing'], recalc);
+    BE.wireCalc(recalc, ['area', 'boardW', 'boardH', 'waste', 'screws', 'compound', 'tape', 'wallLen', 'wallHt', 'studSpacing']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('twoLayers').addEventListener('change', recalc);
   });
 })();

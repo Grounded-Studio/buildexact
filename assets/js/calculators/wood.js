@@ -83,7 +83,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     BE.chip('modeChips', recalc);
-    BE.bindAll(['vl', 'vw', 'vh', 'target', 'pT', 'pW', 'pL', 'bCount', 'bLen', 'bW', 'bH', 'bScrews', 'finishCov', 'finishCoats'], recalc);
+    BE.wireCalc(recalc, ['vl', 'vw', 'vh', 'target', 'pT', 'pW', 'pL', 'bCount', 'bLen', 'bW', 'bH', 'bScrews', 'finishCov', 'finishCoats']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('finish').addEventListener('change', recalc);
   });
 })();

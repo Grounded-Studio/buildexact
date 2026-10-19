@@ -66,6 +66,6 @@
       document.getElementById('primerField').style.display = BE.checked('primer') ? '' : 'none';
       recalc();
     });
-    BE.bindAll(['area', 'coats', 'coverage', 'primerCov', 'waste'], recalc);
+    BE.wireCalc(recalc, ['area', 'coats', 'coverage', 'primerCov', 'waste']); BE.markStaleOn("input,select,.chip,.toggle-row input");
   });
 })();

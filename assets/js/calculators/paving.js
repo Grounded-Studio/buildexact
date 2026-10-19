@@ -50,7 +50,7 @@
       if (btn && btn.dataset.waste) document.getElementById('waste').value = btn.dataset.waste;
       recalc();
     });
-    BE.bindAll(['area', 'stoneW', 'stoneH', 'waste', 'bedding', 'subBase', 'jointSand', 'perimeter'], recalc);
+    BE.wireCalc(recalc, ['area', 'stoneW', 'stoneH', 'waste', 'bedding', 'subBase', 'jointSand', 'perimeter']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('edge').addEventListener('change', () => {
       document.getElementById('perimField').style.display = BE.checked('edge') ? '' : 'none';
       recalc();

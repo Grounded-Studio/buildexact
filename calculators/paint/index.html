@@ -44,15 +44,23 @@
           <button type="button" class="chip" data-value="spray" data-waste="25">Spray</button>
         </div>
         <div class="field"><label for="waste">Waste (%)</label><input type="number" id="waste" value="5" min="0" step="1"><p class="hint">Auto-set to 5% brush/roller or 25% spray.</p></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Calculate (&minus;1 credit)</button>
       </form>
       <aside class="calc-result">
         <h3>Result</h3>
         <div class="result-hero"><div class="label">Paint needed</div><div><span class="value" id="heroValue">0.0 L</span></div></div>
         <div class="result-rows" id="resultRows"></div>
         <div class="calc-note">Spray adds ~25% waste; brush and roller stay around 5%.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Save &amp; export in the app</a>
+        
       </aside>
     </div>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Want unlimited + branded PDF quotes? Install BuildExact (one-off &euro;5.99 in the app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Install on Google Play</a>
   </div>
 </section>
 

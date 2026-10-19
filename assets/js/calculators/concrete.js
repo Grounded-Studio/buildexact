@@ -66,7 +66,7 @@
       recalc();
     });
     BE.chip('supplyChips', recalc);
-    BE.bindAll(['length', 'width', 'depth', 'waste', 'rebar', 'barLen'], recalc);
+    BE.wireCalc(recalc, ['length', 'width', 'depth', 'waste', 'rebar', 'barLen']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('formwork').addEventListener('change', recalc);
   });
 })();

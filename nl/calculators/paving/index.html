@@ -53,15 +53,23 @@
         <h3 style="margin-top:28px;">Kantopsluiting</h3>
         <label class="toggle-row"><span>Kantopsluiting meeberekenen</span><input type="checkbox" id="edge" checked></label>
         <div class="field" id="perimField"><label for="perimeter">Omtrek (m)</label><input type="number" id="perimeter" value="0" min="0" step="0.1"><p class="hint">Laat 0 om te schatten als 4&radic;oppervlak.</p></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Bereken (&minus;1 credit)</button>
       </form>
       <aside class="calc-result">
         <h3>Resultaat</h3>
         <div class="result-hero"><div class="label">Stenen nodig</div><div><span class="value" id="heroValue">0</span></div></div>
         <div class="result-rows" id="resultRows"></div>
         <div class="calc-note">Snijverlies per patroon: blok 5% - halfsteens 7% - visgraat 45&deg; 15% - visgraat 90&deg; 10%.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan &amp; exporteren in de app</a>
+        
       </aside>
     </div>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;5,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
   </div>
 </section>
 

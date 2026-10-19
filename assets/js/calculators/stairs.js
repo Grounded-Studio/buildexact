@@ -56,7 +56,7 @@
       if (btn && btn.dataset.stringers) document.getElementById('stringers').value = btn.dataset.stringers;
       recalc();
     });
-    BE.bindAll(['height', 'riser', 'tread', 'swidth', 'stringers', 'handrailM', 'baluster'], recalc);
+    BE.wireCalc(recalc, ['height', 'riser', 'tread', 'swidth', 'stringers', 'handrailM', 'baluster']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('includeRisers').addEventListener('change', recalc);
     document.getElementById('handrail').addEventListener('change', recalc);
   });

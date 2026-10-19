@@ -61,7 +61,7 @@
       document.getElementById('waste').value = waste;
       recalc();
     });
-    BE.bindAll(['area', 'tileW', 'tileH', 'groutMm', 'waste', 'perBox', 'adhesive', 'bagKg', 'edgeM'], recalc);
+    BE.wireCalc(recalc, ['area', 'tileW', 'tileH', 'groutMm', 'waste', 'perBox', 'adhesive', 'bagKg', 'edgeM']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('spareBox').addEventListener('change', recalc);
   });
 })();

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buy credits — BuildExact</title>
+<meta name="description" content="Top up your BuildExact calculator credits. One-off purchase, no subscription.">
+<link rel="canonical" href="https://buildexact.app/credits/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/credits/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/credits/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a>
+<ul class="nav-links"><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/credits/" class="active">EN</a><a href="/nl/credits/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+
+<section class="section">
+  <div class="container" style="max-width:720px;">
+    <p><a href="/calculators/" class="muted">← All calculators</a></p>
+    <h1>Top up credits</h1>
+    <p class="lede">Every calculation on the website costs 1 credit. You get 5 free credits — top up with a one-off purchase to keep going. Credits never expire.</p>
+
+    <div id="currentBalance" class="credit-chip" style="font-size:1rem;margin:24px 0;">🪙 Checking balance…</div>
+
+    <div class="card" style="border:2px solid var(--blue-600);box-shadow:var(--shadow-lg);padding:28px;">
+      <span class="badge">One-off · no subscription</span>
+      <h2 style="margin-top:12px;">50 credits</h2>
+      <p style="font-size:2.4rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€ 2,99</p>
+      <p class="muted">Enough for a typical fencing or renovation estimate across several calculators. No sign-up required.</p>
+      <button type="button" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;opacity:.6;cursor:not-allowed;" disabled>Payment coming soon</button>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Need a test code to try it now? <a href="mailto:contact@grounded-studio.app?subject=Credit test code">Email us</a> and we'll send one.</p>
+    </div>
+
+    <h2 id="redeem" style="margin-top:48px;">Redeem a code</h2>
+    <p class="muted">Paste the code from your purchase email below.</p>
+    <div class="field-row" style="align-items:end;">
+      <div class="field" style="flex:1;"><label for="codeInput">Code</label><input type="text" id="codeInput" placeholder="e.g. BEX-ABCD-1234" style="text-transform:uppercase;letter-spacing:0.1em;"></div>
+      <button type="button" id="redeemBtn" class="btn btn-primary btn-lg">Redeem</button>
+    </div>
+    <p id="redeemMsg" style="margin-top:16px;font-weight:600;"></p>
+
+    <h2 style="margin-top:48px;">Prefer unlimited?</h2>
+    <p>The BuildExact Android app gives you <strong>unlimited calculations</strong>, plus saved projects, branded PDF quotes, invoices and client manager — all for a <strong>one-off €5.99</strong> in-app purchase. No subscription either.</p>
+    <p style="margin-top:16px;"><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost">▶ Install BuildExact on Google Play</a></p>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div>
+<div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
+<div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+</div></footer>
+
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script>
+(function () {
+  const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  // Simple hardcoded test codes — map to credit amount. In Phase 2 these
+  // get generated server-side after Stripe/Mollie payment.
+  const CODES = {
+    'BEX-TEST-5050': 50,
+    'BEX-WELCOME-25': 25,
+  };
+  function render() {
+    const bal = BE.credits.balance();
+    const el = document.getElementById('currentBalance');
+    if (bal > 0) {
+      el.textContent = '🪙 ' + (isNl ? `Je hebt nu ${bal} credit${bal === 1 ? '' : 's'}` : `You currently have ${bal} credit${bal === 1 ? '' : 's'}`);
+      el.classList.remove('exhausted');
+    } else {
+      el.textContent = '🚫 ' + (isNl ? 'Je hebt geen credits meer' : 'You have no credits left');
+      el.classList.add('exhausted');
+    }
+  }
+  render();
+  document.getElementById('redeemBtn').addEventListener('click', () => {
+    const input = document.getElementById('codeInput');
+    const code = input.value.trim().toUpperCase();
+    const msg = document.getElementById('redeemMsg');
+    const amt = CODES[code];
+    if (amt) {
+      BE.credits.add(amt);
+      msg.style.color = 'var(--ok)';
+      msg.textContent = isNl ? `✓ ${amt} credits toegevoegd! Nieuwe balans: ${BE.credits.balance()}.` : `✓ ${amt} credits added! New balance: ${BE.credits.balance()}.`;
+      input.value = '';
+      render();
+    } else {
+      msg.style.color = 'var(--err)';
+      msg.textContent = isNl ? '✗ Code onbekend of al gebruikt. Controleer of de letters/cijfers kloppen.' : '✗ Code not recognised or already used. Check for typos.';
+    }
+  });
+})();
+</script>
+</body>
+</html>

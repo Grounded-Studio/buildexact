@@ -82,7 +82,7 @@
       renderLayers();
       recalc();
     });
-    BE.bindAll(['area', 'waste', 'fasteners', 'tape'], recalc);
+    BE.wireCalc(recalc, ['area', 'waste', 'fasteners', 'tape']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('vapour').addEventListener('change', recalc);
   });
 })();

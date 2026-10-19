@@ -95,6 +95,6 @@
       document.getElementById('tiesField').style.display = BE.checked('cavity') ? '' : 'none';
       recalc();
     });
-    BE.bindAll(['length', 'height', 'perM2', 'waste', 'mortarKg', 'bagKg', 'tiesPerM2'], recalc);
+    BE.wireCalc(recalc, ['length', 'height', 'perM2', 'waste', 'mortarKg', 'bagKg', 'tiesPerM2']); BE.markStaleOn("input,select,.chip,.toggle-row input");
   });
 })();
