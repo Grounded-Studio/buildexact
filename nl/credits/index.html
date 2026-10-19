@@ -65,41 +65,63 @@
 <script src="/assets/js/calculators/_helpers.js"></script>
 <script>
 (function () {
-  const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
-  // Let op: echte codes staan NIET in de client — die worden server-side
-  // gevalideerd door de Strato PHP backend (api.buildexact.app) zodra er
-  // een betaling binnenkomt. De twee test-codes hieronder zijn alleen
-  // voor interne QA van de UI-flow.
-  const CODES = {
-    'BEX-TEST-5050': 50,
-    'BEX-WELCOME-25': 25,
-  };
+  const API = 'https://api.buildexact.app/redeem.php';
   function render() {
     const bal = BE.credits.balance();
     const el = document.getElementById('currentBalance');
     if (bal > 0) {
-      el.textContent = '🪙 ' + (isNl ? `Je hebt nu ${bal} credit${bal === 1 ? '' : 's'}` : `You currently have ${bal} credit${bal === 1 ? '' : 's'}`);
+      el.textContent = '🪙 Je hebt nu ' + bal + ' credit' + (bal === 1 ? '' : 's');
       el.classList.remove('exhausted');
     } else {
-      el.textContent = '🚫 ' + (isNl ? 'Je hebt geen credits meer' : 'You have no credits left');
+      el.textContent = '🚫 Je hebt geen credits meer';
       el.classList.add('exhausted');
     }
   }
   render();
-  document.getElementById('redeemBtn').addEventListener('click', () => {
+  const btn = document.getElementById('redeemBtn');
+  btn.addEventListener('click', async () => {
     const input = document.getElementById('codeInput');
     const code = input.value.trim().toUpperCase();
     const msg = document.getElementById('redeemMsg');
-    const amt = CODES[code];
-    if (amt) {
-      BE.credits.add(amt);
-      msg.style.color = 'var(--ok)';
-      msg.textContent = isNl ? `✓ ${amt} credits toegevoegd! Nieuwe balans: ${BE.credits.balance()}.` : `✓ ${amt} credits added! New balance: ${BE.credits.balance()}.`;
-      input.value = '';
-      render();
-    } else {
+    if (!/^BEX-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
       msg.style.color = 'var(--err)';
-      msg.textContent = isNl ? '✗ Code onbekend of al gebruikt. Controleer op typos.' : '✗ Code not recognised or already used. Check for typos.';
+      msg.textContent = '✗ Ongeldige code — verwacht BEX-XXXX-XXXX.';
+      return;
+    }
+    btn.disabled = true;
+    const originalText = btn.textContent;
+    btn.textContent = 'Controleren…';
+    msg.style.color = 'var(--muted)';
+    msg.textContent = '';
+    try {
+      const r = await fetch(API, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({code}),
+      });
+      const data = await r.json();
+      if (data.ok && data.amount) {
+        BE.credits.add(data.amount);
+        msg.style.color = 'var(--ok)';
+        msg.textContent = '✓ ' + data.amount + ' credits toegevoegd! Nieuwe balans: ' + BE.credits.balance() + '.';
+        input.value = '';
+        render();
+      } else {
+        msg.style.color = 'var(--err)';
+        const map = {
+          'code not recognised': 'Code onbekend. Controleer op typefouten.',
+          'already redeemed': 'Deze code is al gebruikt.',
+          'invalid code format': 'Ongeldige code — verwacht BEX-XXXX-XXXX.',
+          'Too many attempts, try again in a few minutes': 'Te veel pogingen — wacht een paar minuten.',
+        };
+        msg.textContent = '✗ ' + (map[data.reason] || data.reason || 'Er ging iets mis.');
+      }
+    } catch (e) {
+      msg.style.color = 'var(--err)';
+      msg.textContent = '✗ Netwerkfout — controleer je verbinding.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
     }
   });
 })();
