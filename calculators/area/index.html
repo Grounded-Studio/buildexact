@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Area calculator | BuildExact</title>
-<meta name="description" content="Simple area calculator — length × width in metres gives square metres.">
+<meta name="description" content="Rectangular area in m2 - length times width. Same simple tool as the BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/calculators/area/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/area/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/area/">
@@ -22,23 +22,22 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <p><a href="/calculators/" class="muted">← All calculators</a></p>
-    <h1>Area calculator</h1>
-    <p class="lede" style="margin-bottom:32px;">Length × width → area in square metres.</p>
-
+    <p><a href="/calculators/" class="muted">&larr; All calculators</a></p>
+    <h1>Area (m&sup2;)</h1>
+    <p class="lede" style="margin-bottom:32px;">Length x width. For L-shapes, triangles or circles, use the Android app and stack them in one project.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
-        <h3>Inputs</h3>
+        <h3>Dimensions</h3>
         <div class="field-row">
           <div class="field"><label for="length">Length (m)</label><input type="number" id="length" value="5" min="0" step="0.1"></div>
           <div class="field"><label for="width">Width (m)</label><input type="number" id="width" value="4" min="0" step="0.1"></div>
         </div>
       </form>
-      <aside class="calc-result">
+      <aside class="calc-result" data-no-lock="true">
         <h3>Result</h3>
-        <div class="result-hero"><div class="label">Area</div><div><span class="value" id="rArea">0</span><span class="unit">m²</span></div></div>
-        <div class="calc-note">For L-shapes, triangles or circles — use the BuildExact Android app. Multiple shapes stackable into one project.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Try the app for complex shapes</a>
+        <div class="result-hero"><div class="label">Area</div><div><span class="value" id="heroValue">0.00 m&sup2;</span></div></div>
+        <div class="calc-note">Save multiple shapes into one project in the BuildExact Android app.</div>
+        
       </aside>
     </div>
   </div>
@@ -46,10 +45,10 @@
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
-<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">&#9654; Google Play</a></div>
 <div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div>
-<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>

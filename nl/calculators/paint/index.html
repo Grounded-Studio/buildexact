@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Verf calculator | BuildExact</title>
-<meta name="description" content="Gratis verf calculator — liters per m², primer, kwast vs spuit, blik-indeling.">
+<meta name="description" content="Volledige verf calculator - grondverf, lagen, dekking, blik-indeling en snijverlies per methode. Zelfde engine als de BuildExact Android app.">
 <link rel="canonical" href="https://buildexact.app/nl/calculators/paint/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/paint/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/paint/">
@@ -22,36 +22,35 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <p><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
+    <p><a href="/nl/calculators/" class="muted">&larr; Alle calculators</a></p>
     <h1>Verf calculator</h1>
-    <p class="lede" style="margin-bottom:32px;">Hoeveel liter verf heb ik nodig? Met primer, aantal lagen en applicatiemethode.</p>
-
+    <p class="lede" style="margin-bottom:32px;">Grondverf, lagen, dekking en blik-indeling.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
-        <h3>Invoer</h3>
-        <div class="field"><label for="area">Te verven oppervlak (m²)</label><input type="number" id="area" value="40" min="0" step="0.1"></div>
-        <h3 style="margin-top:14px;">Toepassing</h3>
-        <div class="chips" id="methodChips">
-          <button type="button" class="chip active" data-value="brush">Kwast / roller</button>
-          <button type="button" class="chip" data-value="spray">Spuit</button>
-        </div>
+        <h3>Afmetingen</h3>
+        <div class="field"><label for="area">Te verven oppervlak (m&sup2;)</label><input type="number" id="area" value="40" min="0" step="0.1"></div>
         <div class="field-row">
-          <div class="field"><label for="coverage">Dekking (m²/L)</label><input type="number" id="coverage" value="10" min="1" step="0.5"></div>
           <div class="field"><label for="coats">Lagen</label><input type="number" id="coats" value="2" min="1" step="1"></div>
+          <div class="field"><label for="coverage">Dekking (m&sup2;/L)</label><input type="number" id="coverage" value="10" min="1" step="0.5"></div>
         </div>
-        <div class="field"><label><input type="checkbox" id="primer" style="width:auto;margin-right:8px;"> Primer meenemen</label></div>
-        <div class="field"><label for="primerCoverage">Dekking primer (m²/L)</label><input type="number" id="primerCoverage" value="10" min="1" step="0.5"></div>
+
+        <h3 style="margin-top:28px;">Grondverf (optioneel)</h3>
+        <label class="toggle-row"><span>Grondlaag meeberekenen</span><input type="checkbox" id="primer"></label>
+        <div class="field" id="primerField" style="display:none;"><label for="primerCov">Dekking primer (m&sup2;/L)</label><input type="number" id="primerCov" value="10" min="1" step="0.5"></div>
+
+        <h3 style="margin-top:28px;">Toepassing</h3>
+        <div class="chips" id="methodChips">
+          <button type="button" class="chip active" data-value="brush" data-waste="5">Kwast / roller</button>
+          <button type="button" class="chip" data-value="spray" data-waste="25">Spuiten</button>
+        </div>
+        <div class="field"><label for="waste">Snijverlies (%)</label><input type="number" id="waste" value="5" min="0" step="1"><p class="hint">Automatisch 5% bij kwast/roller, 25% bij spuiten.</p></div>
       </form>
       <aside class="calc-result">
         <h3>Resultaat</h3>
-        <div class="result-hero"><div class="label">Verf nodig</div><div><span class="value" id="rPaint">0</span><span class="unit">L</span></div></div>
-        <div class="result-rows">
-          <div class="result-row"><span class="k">Primer</span><span class="v"><span id="rPrimer">0</span> L</span></div>
-          <div class="result-row"><span class="k">Toegepast snijverlies</span><span class="v"><span id="rWaste">0</span>%</span></div>
-          <div class="result-row" id="rCans"><span class="k">—</span><span class="v">0</span></div>
-        </div>
-        <div class="calc-note">Spuiten geeft ~25% overspray; kwast en roller blijven rond 5%. De blik-indeling helpt je om de voordeligste maten te kiezen.</div>
-        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan & exporteren in de app</a>
+        <div class="result-hero"><div class="label">Verf nodig</div><div><span class="value" id="heroValue">0,0 L</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Spuiten geeft ~25% overspray; kwast en roller blijven rond 5%.</div>
+        <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">Opslaan &amp; exporteren in de app</a>
       </aside>
     </div>
   </div>
@@ -59,10 +58,10 @@
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
-<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first meten, offertes en facturen voor Nederlandse en Belgische bouwers.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">&#9654; Google Play</a></div>
 <div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
 </div>
-<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
 </div></footer>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>
