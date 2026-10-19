@@ -339,6 +339,77 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .cost-row .total { font-weight: 700; text-align: right; color: var(--ink); }
 .cost-row .remove { padding: 4px 10px; font-size: .75rem; }
 
+/* Toggle rows (switch-style within forms) */
+.toggle-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; cursor: pointer;
+  font-size: .95rem; color: var(--ink-2);
+}
+.toggle-row > span:first-child { flex: 1; }
+.toggle-row input[type="checkbox"] {
+  width: auto; margin: 0; cursor: pointer;
+  transform: scale(1.1);
+}
+.toggle-stacked { display: flex; flex-direction: column; gap: 2px; }
+.toggle-sub { font-size: .8rem; color: var(--muted); font-weight: 400; }
+
+/* Stepper (for corner count) */
+.stepper-row { align-items: flex-start; }
+.stepper-label { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.stepper-title { font-weight: 600; color: var(--ink-2); }
+.stepper-sub { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+.stepper {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 4px;
+}
+.stepper-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 0; background: var(--surface-raised); color: var(--blue-600);
+  font-size: 1.2rem; font-weight: 700; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .15s ease;
+}
+.stepper-btn:hover { background: var(--blue-50); }
+.stepper-value {
+  min-width: 24px; text-align: center;
+  font-weight: 700; color: var(--ink);
+}
+
+/* Gate card (one per gate in Gates section) */
+.gate-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.gate-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.gate-title { font-weight: 700; color: var(--ink); font-size: .95rem; }
+.gate-remove {
+  background: transparent; border: 0; cursor: pointer;
+  color: var(--muted); font-size: 1rem; width: 28px; height: 28px;
+  border-radius: 6px;
+}
+.gate-remove:hover { background: var(--surface-tint); color: var(--err); }
+
+/* Result row: error variant (unfilled gap warning) */
+.result-row.err { color: var(--err); }
+.result-row.err .v { color: var(--err); }
+
+/* Daily-credit counter chip (above result card) */
+.credit-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--blue-50); color: var(--blue-700);
+  padding: 6px 12px; border-radius: 999px;
+  font-size: .78rem; font-weight: 600;
+  margin-bottom: 14px;
+}
+.credit-chip.exhausted {
+  background: #FEF2F2; color: #B91C1C;
+}
+
 /* Freemium lock: blurred detail breakdown + unlock overlay */
 .locked-section {
   position: relative;
