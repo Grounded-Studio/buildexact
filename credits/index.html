@@ -33,7 +33,8 @@
       <h2 style="margin-top:12px;">50 credits</h2>
       <p style="font-size:2.4rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€ 2,99</p>
       <p class="muted">Enough for a typical fencing or renovation estimate across several calculators. No sign-up required.</p>
-      <a href="https://payment-links.mollie.com/payment/pAts3BfwFCFijcwz86Atu" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Buy now — iDEAL / card</a>
+      <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Buy now — iDEAL / card</button>
+      <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
       <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">After payment you'll receive your activation code by email, usually within a few minutes.</p>
     </div>
 
@@ -66,6 +67,39 @@
 <script>
 (function () {
   const API = 'https://api.buildexact.app/redeem.php';
+  const CHECKOUT_API = 'https://api.buildexact.app/checkout.php';
+  const PENDING_KEY = 'be_pending_payment';
+
+  const buyBtn = document.getElementById('buyBtn');
+  const buyMsg = document.getElementById('buyMsg');
+  if (buyBtn) {
+    buyBtn.addEventListener('click', async () => {
+      buyBtn.disabled = true;
+      const original = buyBtn.textContent;
+      buyBtn.textContent = 'One moment…';
+      buyMsg.style.display = 'none';
+      try {
+        const r = await fetch(CHECKOUT_API, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: '{}',
+        });
+        const data = await r.json();
+        if (data.ok && data.id && data.checkoutUrl) {
+          try { localStorage.setItem(PENDING_KEY, data.id); } catch (_) {}
+          window.location.href = data.checkoutUrl;
+          return;
+        }
+        throw new Error(data.reason || 'checkout failed');
+      } catch (e) {
+        buyBtn.disabled = false;
+        buyBtn.textContent = original;
+        buyMsg.textContent = '✗ Could not start payment — please try again or contact us.';
+        buyMsg.style.display = 'block';
+      }
+    });
+  }
+
   function render() {
     const bal = BE.credits.balance();
     const el = document.getElementById('currentBalance');

@@ -78,11 +78,14 @@
     failedActions.style.display = 'block';
   }
 
+  const PENDING_KEY = 'be_pending_payment';
   const url = new URL(window.location.href);
-  const paymentId = url.searchParams.get('id') || '';
-
+  let paymentId = url.searchParams.get('id') || '';
   if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
-    showError('No valid payment id in the URL. Open this page via the Mollie redirect or the activation email.');
+    try { paymentId = localStorage.getItem(PENDING_KEY) || ''; } catch (_) {}
+  }
+  if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
+    showError('No valid payment id found. Open this page via the Mollie redirect or the activation email.');
     return;
   }
 
@@ -95,8 +98,10 @@
     const data = await r.json();
     if (data.ok && data.amount) {
       BE.credits.add(data.amount);
+      try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showSuccess(data.amount);
     } else if (data.reason === 'already claimed') {
+      try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showAlready();
     } else if (data.reason && data.reason.indexOf('payment status') === 0) {
       showError('Your payment doesn\'t have status "paid" yet. Try again in a minute, or check your email for the activation link.');

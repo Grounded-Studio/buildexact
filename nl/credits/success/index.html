@@ -78,11 +78,14 @@
     failedActions.style.display = 'block';
   }
 
+  const PENDING_KEY = 'be_pending_payment';
   const url = new URL(window.location.href);
-  const paymentId = url.searchParams.get('id') || '';
-
+  let paymentId = url.searchParams.get('id') || '';
   if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
-    showError('Geen geldige betalings-id in de URL. Open deze pagina via de Mollie-redirect of de activatie-mail.');
+    try { paymentId = localStorage.getItem(PENDING_KEY) || ''; } catch (_) {}
+  }
+  if (!/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
+    showError('Geen geldige betalings-id gevonden. Open deze pagina via de Mollie-redirect of de activatie-mail.');
     return;
   }
 
@@ -95,8 +98,10 @@
     const data = await r.json();
     if (data.ok && data.amount) {
       BE.credits.add(data.amount);
+      try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showSuccess(data.amount);
     } else if (data.reason === 'already claimed') {
+      try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showAlready();
     } else if (data.reason && data.reason.indexOf('payment status') === 0) {
       showError('Je betaling heeft nog niet de status "paid". Probeer het over een minuut opnieuw of check je mail voor de activatielink.');
