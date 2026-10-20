@@ -585,6 +585,14 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   .field-row { grid-template-columns: 1fr; }
 }
 
+/* ─── Pricing page sections (website vs app) ─────────── */
+.pricing-section { max-width: 1000px; margin: 0 auto; }
+.pricing-section-title {
+  text-align: center; font-size: 1.6rem; margin: 0 0 10px;
+  color: var(--ink);
+}
+.pricing-section-title .muted { font-weight: 500; font-size: .9em; }
+
 /* ─── AI Shopping List trigger (on calc page) ─────────── */
 .ai-shop-trigger { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border); text-align: center; }
 .ai-shop-btn { font-weight: 600; }
