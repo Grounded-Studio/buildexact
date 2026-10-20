@@ -283,7 +283,7 @@ window.BE = {
     btnBusy:    'Lijst wordt gemaakt…',
     needCredits: `Je hebt ${AI_SHOP_COST} credits nodig voor een shoppinglist.`,
     modalTitle: 'Je boodschappenlijst',
-    modalIntro: 'Praktische lijst voor de bouwmarkt. Klik een item om 't bij Praxis / Gamma / Hornbach op te zoeken.',
+    modalIntro: 'Praktische lijst voor de bouwmarkt. Klik een item om het bij Praxis / Gamma / Hornbach op te zoeken.',
     tipsTitle:  'Tips voor deze klus',
     close:      'Sluiten',
     copy:       '📋 Kopiëren',
