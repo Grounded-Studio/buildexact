@@ -652,7 +652,12 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .shoplist-tips li { margin-bottom: 8px; font-size: .95rem; line-height: 1.5; }
 
 .shoplist-empty { text-align: center; padding: 60px 20px; }
-.shoplist-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+.shoplist-footer {
+  margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+}
+.btn-danger { color: var(--err, #DC2626); border-color: rgba(220, 38, 38, .3); }
+.btn-danger:hover { background: var(--err, #DC2626); color: #fff; border-color: var(--err, #DC2626); }
 
 /* Print view: minimal, no colors, maximum readability */
 @media print {

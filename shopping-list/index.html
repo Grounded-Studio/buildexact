@@ -54,7 +54,8 @@
     </div>
 
     <div class="shoplist-footer no-print" id="shoplistFooter" style="display:none;">
-      <button type="button" id="deleteBtn" class="muted" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:.85rem;">Delete list</button>
+      <a href="/calculators/" class="btn btn-primary">▶ New calculation</a>
+      <button type="button" id="deleteBtn" class="btn btn-ghost btn-danger">🗑 Delete list</button>
     </div>
   </div>
 </section>
@@ -131,8 +132,9 @@
       return;
     }
     titleEl.textContent = data.title || 'Shopping list';
+    const prettyType = data.calcType ? data.calcType.charAt(0).toUpperCase() + data.calcType.slice(1) : '';
     subtitleEl.textContent = data.calcType
-      ? `Generated on ${new Date(data.createdAt || Date.now()).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})} · ${data.calcType} calculator`
+      ? `Generated on ${new Date(data.createdAt || Date.now()).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})} · ${prettyType} calculator`
       : '';
     footerEl.style.display = 'block';
 
