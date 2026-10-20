@@ -585,48 +585,83 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   .field-row { grid-template-columns: 1fr; }
 }
 
-/* ─── AI Shopping List ────────────────────────────────── */
+/* ─── AI Shopping List trigger (on calc page) ─────────── */
 .ai-shop-trigger { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border); text-align: center; }
 .ai-shop-btn { font-weight: 600; }
 .ai-shop-msg { margin-top: 10px; font-size: .9rem; font-weight: 600; }
 
-.ai-shop-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.ai-shop-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, .6); backdrop-filter: blur(4px); }
-.ai-shop-dialog {
-  position: relative; background: var(--surface-raised); border-radius: 14px;
-  padding: 28px; max-width: 640px; width: 100%; max-height: 86vh; overflow-y: auto;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, .35);
+/* ─── Shopping list PAGE ─────────────────────────────── */
+.shoplist-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
 }
-.ai-shop-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.ai-shop-head h3 { margin: 0; font-size: 1.4rem; }
-.ai-shop-close {
-  background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--muted);
-  width: 32px; height: 32px; border-radius: 50%;
+.shoplist-header h1 { font-size: 1.6rem; }
+.shoplist-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.shoplist-progress {
+  margin: 16px 0 32px; padding: 16px 20px;
+  background: var(--surface-raised); border-radius: 10px; border: 1px solid var(--border);
 }
-.ai-shop-close:hover { background: var(--border); color: var(--ink); }
-.ai-shop-intro { color: var(--muted); font-size: .9rem; margin: 0 0 20px; }
+.shoplist-progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.shoplist-progress-fill { height: 100%; background: var(--ok, #10B981); transition: width .25s ease; }
 
-.ai-shop-items { list-style: none; padding: 0; margin: 0; }
-.ai-shop-item {
-  padding: 14px 0; border-bottom: 1px solid var(--border);
+.shoplist-items { list-style: none; padding: 0; margin: 0; }
+.shoplist-item {
+  display: flex; gap: 14px; padding: 16px; margin-bottom: 10px;
+  background: var(--surface-raised); border: 1px solid var(--border); border-radius: 10px;
+  transition: opacity .2s ease;
 }
-.ai-shop-item:last-child { border-bottom: none; }
-.ai-shop-main { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.ai-shop-main strong { color: var(--ink); font-size: 1rem; }
-.ai-shop-qty { color: var(--blue-600); font-weight: 600; font-size: .95rem; white-space: nowrap; }
-.ai-shop-links { margin-top: 6px; font-size: .85rem; color: var(--muted); }
-.ai-shop-search { margin-right: 6px; }
-.ai-shop-links a { color: var(--blue-600); text-decoration: none; font-weight: 500; }
-.ai-shop-links a:hover { text-decoration: underline; }
-.ai-shop-notes { margin: 8px 0 0; color: var(--muted); font-size: .85rem; font-style: italic; }
+.shoplist-item.is-done { opacity: .5; }
+.shoplist-item.is-done .shoplist-mat { text-decoration: line-through; }
 
-.ai-shop-tips { margin-top: 24px; padding: 16px; background: var(--blue-50, #EFF6FF); border-radius: 10px; }
-.ai-shop-tips h4 { margin: 0 0 10px; font-size: 1rem; color: var(--blue-600); }
-.ai-shop-tips ul { margin: 0; padding-left: 20px; color: var(--ink-2); }
-.ai-shop-tips li { margin-bottom: 6px; font-size: .9rem; line-height: 1.5; }
+.shoplist-check {
+  display: flex; align-items: flex-start; padding-top: 2px; cursor: pointer; flex-shrink: 0;
+}
+.shoplist-check input { position: absolute; opacity: 0; pointer-events: none; }
+.shoplist-checkmark {
+  display: block; width: 24px; height: 24px; border: 2px solid var(--border);
+  border-radius: 6px; background: var(--surface, #fff); transition: all .15s ease; position: relative;
+}
+.shoplist-check:hover .shoplist-checkmark { border-color: var(--blue-600); }
+.shoplist-check input:checked + .shoplist-checkmark {
+  background: var(--ok, #10B981); border-color: var(--ok, #10B981);
+}
+.shoplist-check input:checked + .shoplist-checkmark::after {
+  content: ''; position: absolute; left: 6px; top: 2px;
+  width: 7px; height: 12px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg);
+}
 
-.ai-shop-foot { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
-@media (max-width: 560px) {
-  .ai-shop-dialog { padding: 20px; }
-  .ai-shop-main { flex-direction: column; align-items: flex-start; gap: 4px; }
+.shoplist-content { flex: 1; min-width: 0; }
+.shoplist-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.shoplist-mat { font-size: 1.05rem; color: var(--ink); }
+.shoplist-qty { color: var(--blue-600); font-weight: 600; font-size: .95rem; white-space: nowrap; }
+.shoplist-notes { margin: 8px 0 0; color: var(--muted); font-size: .9rem; font-style: italic; }
+
+.shoplist-stores { margin-top: 10px; font-size: .85rem; }
+.shoplist-search { color: var(--muted); margin-right: 8px; }
+.shoplist-stores a {
+  display: inline-block; margin-right: 6px; padding: 3px 10px;
+  background: var(--blue-50, #EFF6FF); color: var(--blue-600);
+  border-radius: 999px; text-decoration: none; font-weight: 500; font-size: .8rem;
+}
+.shoplist-stores a:hover { background: var(--blue-600); color: #fff; }
+
+.shoplist-tips { margin-top: 32px; padding: 20px; background: var(--blue-50, #EFF6FF); border-radius: 10px; }
+.shoplist-tips h3 { margin: 0 0 12px; font-size: 1.05rem; color: var(--blue-600); }
+.shoplist-tips ul { margin: 0; padding-left: 20px; color: var(--ink-2); }
+.shoplist-tips li { margin-bottom: 8px; font-size: .95rem; line-height: 1.5; }
+
+.shoplist-empty { text-align: center; padding: 60px 20px; }
+.shoplist-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+
+/* Print view: minimal, no colors, maximum readability */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+  .shoplist-item { break-inside: avoid; border-color: #ccc; background: #fff; margin-bottom: 8px; }
+  .shoplist-mat { color: #000; }
+  .shoplist-qty { color: #000; font-weight: 700; }
+  .shoplist-checkmark { border-color: #000 !important; background: #fff !important; }
+  .shoplist-check input:checked + .shoplist-checkmark { background: #fff !important; }
+  .shoplist-check input:checked + .shoplist-checkmark::after { border-color: #000 !important; }
 }

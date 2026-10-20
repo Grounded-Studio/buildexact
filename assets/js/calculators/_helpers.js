@@ -279,128 +279,23 @@ window.BE = {
   const AI_SHOP_COST = 3;
 
   const AI_STR = isNl ? {
-    btn:        `🛒 Boodschappenlijst (−${AI_SHOP_COST} credits)`,
-    btnBusy:    'Lijst wordt gemaakt…',
-    needCredits: `Je hebt ${AI_SHOP_COST} credits nodig voor een shoppinglist.`,
-    modalTitle: 'Je boodschappenlijst',
-    modalIntro: 'Praktische lijst voor de bouwmarkt. Klik een item om het bij Praxis / Gamma / Hornbach op te zoeken.',
-    tipsTitle:  'Tips voor deze klus',
-    close:      'Sluiten',
-    copy:       '📋 Kopiëren',
-    copied:     '✓ Gekopieerd',
-    error:      'Kon de lijst niet maken. Probeer het later opnieuw.',
-    searchAt:   'Zoek bij',
+    btn:         `🛒 Boodschappenlijst (−${AI_SHOP_COST} credits)`,
+    btnBusy:     'Lijst wordt gemaakt…',
+    needCredits: `Je hebt ${AI_SHOP_COST} credits nodig voor een boodschappenlijst.`,
+    error:       'Kon de lijst niet maken. Probeer het later opnieuw.',
   } : {
-    btn:        `🛒 Shopping list (−${AI_SHOP_COST} credits)`,
-    btnBusy:    'Generating list…',
+    btn:         `🛒 Shopping list (−${AI_SHOP_COST} credits)`,
+    btnBusy:     'Generating list…',
     needCredits: `You need ${AI_SHOP_COST} credits for a shopping list.`,
-    modalTitle: 'Your shopping list',
-    modalIntro: 'A practical list for the DIY store. Click any item to search for it.',
-    tipsTitle:  'Tips for this job',
-    close:      'Close',
-    copy:       '📋 Copy',
-    copied:     '✓ Copied',
-    error:      "Couldn't create the list. Please try again later.",
-    searchAt:   'Search at',
+    error:       "Couldn't create the list. Please try again later.",
   };
 
-  function storesForQuery(q) {
-    // Google-search per winkel: werkt altijd, geen gedoe met store URL changes
-    const enc = encodeURIComponent(q);
-    return [
-      { name: 'Praxis',   url: `https://www.google.com/search?q=${enc}+site%3Apraxis.nl` },
-      { name: 'Gamma',    url: `https://www.google.com/search?q=${enc}+site%3Agamma.nl` },
-      { name: 'Hornbach', url: `https://www.google.com/search?q=${enc}+site%3Ahornbach.nl` },
-    ];
-  }
+  const SHOPLIST_KEY_PREFIX = 'be_shoplist_v1_';
+  const SHOPLIST_PAGE = isNl ? '/nl/shopping-list/' : '/shopping-list/';
 
-  function renderModal(data) {
-    const existing = document.getElementById('aiShopModal');
-    if (existing) existing.remove();
-
-    const modal = document.createElement('div');
-    modal.id = 'aiShopModal';
-    modal.className = 'ai-shop-modal';
-    modal.innerHTML = `
-      <div class="ai-shop-backdrop"></div>
-      <div class="ai-shop-dialog" role="dialog" aria-labelledby="aiShopTitle">
-        <header class="ai-shop-head">
-          <h3 id="aiShopTitle">🛒 ${AI_STR.modalTitle}</h3>
-          <button type="button" class="ai-shop-close" aria-label="${AI_STR.close}">✕</button>
-        </header>
-        <p class="ai-shop-intro">${AI_STR.modalIntro}</p>
-        <ol class="ai-shop-items"></ol>
-        <div class="ai-shop-tips" style="display:none;">
-          <h4>💡 ${AI_STR.tipsTitle}</h4>
-          <ul></ul>
-        </div>
-        <footer class="ai-shop-foot">
-          <button type="button" class="btn btn-ghost ai-shop-copy">${AI_STR.copy}</button>
-          <button type="button" class="btn btn-primary ai-shop-close-btn">${AI_STR.close}</button>
-        </footer>
-      </div>
-    `;
-    const itemsEl = modal.querySelector('.ai-shop-items');
-    (data.items || []).forEach(it => {
-      const li = document.createElement('li');
-      li.className = 'ai-shop-item';
-      const stores = storesForQuery(it.searchQuery || it.material);
-      li.innerHTML = `
-        <div class="ai-shop-row">
-          <div class="ai-shop-main">
-            <strong>${escapeHtml(it.material)}</strong>
-            <span class="ai-shop-qty">${escapeHtml(it.quantity || '')}</span>
-          </div>
-          <div class="ai-shop-links">
-            <span class="ai-shop-search">${AI_STR.searchAt}:</span>
-            ${stores.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`).join(' · ')}
-          </div>
-          ${it.notes ? `<p class="ai-shop-notes">${escapeHtml(it.notes)}</p>` : ''}
-        </div>
-      `;
-      itemsEl.appendChild(li);
-    });
-
-    if (Array.isArray(data.tips) && data.tips.length) {
-      const tipsBlock = modal.querySelector('.ai-shop-tips');
-      tipsBlock.style.display = 'block';
-      const ul = tipsBlock.querySelector('ul');
-      data.tips.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = t;
-        ul.appendChild(li);
-      });
-    }
-
-    const close = () => modal.remove();
-    modal.querySelector('.ai-shop-backdrop').addEventListener('click', close);
-    modal.querySelector('.ai-shop-close').addEventListener('click', close);
-    modal.querySelector('.ai-shop-close-btn').addEventListener('click', close);
-
-    modal.querySelector('.ai-shop-copy').addEventListener('click', (ev) => {
-      const lines = [AI_STR.modalTitle, ''];
-      (data.items || []).forEach(it => {
-        lines.push(`• ${it.material} — ${it.quantity}`);
-        if (it.notes) lines.push(`  (${it.notes})`);
-      });
-      if (data.tips && data.tips.length) {
-        lines.push('', AI_STR.tipsTitle);
-        data.tips.forEach(t => lines.push(`- ${t}`));
-      }
-      try {
-        navigator.clipboard.writeText(lines.join('\n'));
-        ev.target.textContent = AI_STR.copied;
-        setTimeout(() => { ev.target.textContent = AI_STR.copy; }, 2000);
-      } catch (_) {}
-    });
-
-    document.body.appendChild(modal);
-  }
-
-  function escapeHtml(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  function makeShoplistId() {
+    // Short URL-safe id based on timestamp + random
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   }
 
   window.BE.wireShoppingList = function wireShoppingList(calcType, getInputs, getResults, titleBuilder) {
@@ -434,19 +329,30 @@ window.BE = {
       btn.textContent = AI_STR.btnBusy;
 
       try {
+        const title = (typeof titleBuilder === 'function') ? titleBuilder() : '';
         const r = await fetch(AI_SHOP_API, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             calcType,
-            title:   (typeof titleBuilder === 'function') ? titleBuilder() : '',
+            title,
             inputs:  (typeof getInputs === 'function') ? getInputs() : {},
             results,
           }),
         });
         const data = await r.json();
         if (data.ok && Array.isArray(data.items)) {
-          renderModal(data);
+          // Save list in localStorage onder een nieuwe UUID + open shopping-list pagina
+          const id = makeShoplistId();
+          const payload = {
+            title,
+            calcType,
+            createdAt: Date.now(),
+            items: data.items.map(it => ({...it, checked: false})),
+            tips:  data.tips || [],
+          };
+          try { localStorage.setItem(SHOPLIST_KEY_PREFIX + id, JSON.stringify(payload)); } catch (_) {}
+          window.location.href = SHOPLIST_PAGE + '?id=' + encodeURIComponent(id);
         } else {
           window.BE.credits.add(AI_SHOP_COST); // refund
           msg.style.display = 'block';

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boodschappenlijst — BuildExact</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://buildexact.app/nl/shopping-list/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/shopping-list/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/shopping-list/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header no-print"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a>
+<ul class="nav-links"><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/shopping-list/">EN</a><a href="/nl/shopping-list/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+
+<section class="section">
+  <div class="container" style="max-width:760px;">
+    <div class="shoplist-header no-print">
+      <div>
+        <p class="muted" style="margin:0 0 4px;"><a href="#" id="backLink" class="muted">← Terug naar calculator</a></p>
+        <h1 id="shoplistTitle" style="margin:0;">Boodschappenlijst</h1>
+        <p class="muted" id="shoplistSubtitle" style="margin:4px 0 0;"></p>
+      </div>
+      <div class="shoplist-actions">
+        <button type="button" id="shareBtn" class="btn btn-ghost btn-sm" title="Deel">📤 Delen</button>
+        <button type="button" id="printBtn" class="btn btn-ghost btn-sm" title="Print">🖨 Print</button>
+      </div>
+    </div>
+
+    <div id="progressBar" class="shoplist-progress no-print" style="display:none;">
+      <div class="shoplist-progress-bar"><div id="progressFill" class="shoplist-progress-fill" style="width:0%;"></div></div>
+      <p class="muted" id="progressText" style="margin:6px 0 0;font-size:.85rem;">0 van 0 afgevinkt</p>
+    </div>
+
+    <ol id="shoplistItems" class="shoplist-items"></ol>
+
+    <div id="tipsBlock" class="shoplist-tips no-print" style="display:none;">
+      <h3>💡 Tips voor deze klus</h3>
+      <ul id="shoplistTips"></ul>
+    </div>
+
+    <div id="emptyState" class="shoplist-empty" style="display:none;">
+      <div style="font-size:3rem;margin-bottom:16px;">📝</div>
+      <h2>Lijst niet gevonden</h2>
+      <p class="muted">Deze boodschappenlijst bestaat niet (meer) in deze browser. Lijsten worden lokaal opgeslagen op het apparaat waar ze zijn gemaakt.</p>
+      <p style="margin-top:24px;"><a href="/nl/calculators/" class="btn btn-primary">▶ Naar calculators</a></p>
+    </div>
+
+    <div class="shoplist-footer no-print" id="shoplistFooter" style="display:none;">
+      <button type="button" id="deleteBtn" class="muted" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:.85rem;">Lijst verwijderen</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer no-print"><div class="container">
+<div class="footer-bottom" style="justify-content:center;"><span>© 2026 Grounded Studio · <a href="/nl/" style="color:#CBD5E1;">buildexact.app</a></span></div>
+</div></footer>
+
+<script src="/assets/js/main.js"></script>
+<script>
+(function () {
+  const STR = {
+    done: 'afgevinkt',
+    searchAt: 'Zoek bij',
+    shareTitle: 'Mijn BuildExact boodschappenlijst',
+    confirmDelete: 'Weet je zeker dat je deze lijst wilt verwijderen?',
+    shareNotSupported: 'Deel-functie niet beschikbaar in deze browser. Kopieer de URL handmatig.',
+  };
+
+  const KEY_PREFIX = 'be_shoplist_v1_';
+  const url = new URL(window.location.href);
+  const id = url.searchParams.get('id') || '';
+
+  const titleEl    = document.getElementById('shoplistTitle');
+  const subtitleEl = document.getElementById('shoplistSubtitle');
+  const itemsEl    = document.getElementById('shoplistItems');
+  const tipsBlock  = document.getElementById('tipsBlock');
+  const tipsEl     = document.getElementById('shoplistTips');
+  const progressBar = document.getElementById('progressBar');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const emptyEl    = document.getElementById('emptyState');
+  const footerEl   = document.getElementById('shoplistFooter');
+  const backLink   = document.getElementById('backLink');
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY_PREFIX + id);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch { return null; }
+  }
+  function save(data) {
+    try { localStorage.setItem(KEY_PREFIX + id, JSON.stringify(data)); } catch {}
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function storesForQuery(q) {
+    const enc = encodeURIComponent(q);
+    return [
+      { name: 'Praxis',   url: `https://www.google.com/search?q=${enc}+site%3Apraxis.nl` },
+      { name: 'Gamma',    url: `https://www.google.com/search?q=${enc}+site%3Agamma.nl` },
+      { name: 'Hornbach', url: `https://www.google.com/search?q=${enc}+site%3Ahornbach.nl` },
+    ];
+  }
+
+  function updateProgress(data) {
+    const total = data.items.length;
+    const done = data.items.filter(i => i.checked).length;
+    const pct = total > 0 ? Math.round(100 * done / total) : 0;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = `${done} van ${total} ${STR.done}`;
+    progressBar.style.display = total > 0 ? 'block' : 'none';
+  }
+
+  function render(data) {
+    if (!data || !Array.isArray(data.items)) {
+      emptyEl.style.display = 'block';
+      return;
+    }
+    titleEl.textContent = data.title || 'Boodschappenlijst';
+    subtitleEl.textContent = data.calcType
+      ? `Gegenereerd op ${new Date(data.createdAt || Date.now()).toLocaleDateString('nl-NL', {day:'numeric',month:'long',year:'numeric'})} · ${data.calcType} calculator`
+      : '';
+    footerEl.style.display = 'block';
+
+    // Backlink naar oorspronkelijke calc
+    if (data.calcType && backLink) {
+      backLink.href = `/nl/calculators/${data.calcType === 'tegels' ? 'tiles' : data.calcType}/`;
+    }
+
+    // Items
+    itemsEl.innerHTML = '';
+    data.items.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'shoplist-item' + (item.checked ? ' is-done' : '');
+      const stores = storesForQuery(item.searchQuery || item.material);
+      li.innerHTML = `
+        <label class="shoplist-check">
+          <input type="checkbox" ${item.checked ? 'checked' : ''} data-idx="${idx}">
+          <span class="shoplist-checkmark"></span>
+        </label>
+        <div class="shoplist-content">
+          <div class="shoplist-row-top">
+            <strong class="shoplist-mat">${escapeHtml(item.material)}</strong>
+            <span class="shoplist-qty">${escapeHtml(item.quantity || '')}</span>
+          </div>
+          ${item.notes ? `<p class="shoplist-notes">${escapeHtml(item.notes)}</p>` : ''}
+          <div class="shoplist-stores no-print">
+            <span class="shoplist-search">${STR.searchAt}:</span>
+            ${stores.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`).join('')}
+          </div>
+        </div>
+      `;
+      itemsEl.appendChild(li);
+    });
+
+    // Tips
+    if (Array.isArray(data.tips) && data.tips.length) {
+      tipsBlock.style.display = 'block';
+      tipsEl.innerHTML = '';
+      data.tips.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        tipsEl.appendChild(li);
+      });
+    }
+
+    updateProgress(data);
+  }
+
+  const data = load();
+  render(data);
+
+  // Checkbox interactions
+  itemsEl.addEventListener('change', (e) => {
+    if (e.target.matches('input[type="checkbox"]')) {
+      const idx = parseInt(e.target.dataset.idx, 10);
+      const d = load();
+      if (!d) return;
+      d.items[idx].checked = e.target.checked;
+      save(d);
+      e.target.closest('.shoplist-item').classList.toggle('is-done', e.target.checked);
+      updateProgress(d);
+    }
+  });
+
+  // Share
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const d = load();
+    if (!d) return;
+    const lines = [d.title || 'Boodschappenlijst', ''];
+    d.items.forEach(it => {
+      lines.push(`${it.checked ? '☑' : '☐'} ${it.material} — ${it.quantity}`);
+    });
+    const text = lines.join('\n');
+    if (navigator.share) {
+      try { await navigator.share({title: STR.shareTitle, text, url: window.location.href}); } catch (_) {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(text + '\n\n' + window.location.href);
+        alert('Lijst gekopieerd naar klembord');
+      } catch { alert(STR.shareNotSupported); }
+    }
+  });
+
+  // Print
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  // Delete
+  document.getElementById('deleteBtn').addEventListener('click', () => {
+    if (confirm(STR.confirmDelete)) {
+      try { localStorage.removeItem(KEY_PREFIX + id); } catch {}
+      window.location.href = '/nl/calculators/';
+    }
+  });
+})();
+</script>
+</body>
+</html>
