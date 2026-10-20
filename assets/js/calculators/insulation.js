@@ -84,5 +84,39 @@
     });
     BE.wireCalc(recalc, ['area', 'waste', 'fasteners', 'tape']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('vapour').addEventListener('change', recalc);
+
+    BE.wireShoppingList(
+      'isolatie',
+      () => ({
+        oppervlak_m2: BE.v('area', 0),
+        snijverlies_percent: BE.v('waste', 10),
+        met_dampremmer: BE.checked('vapour'),
+        pluggen_per_m2: BE.v('fasteners', 4),
+        tape_m_per_m2: BE.v('tape', 0.8),
+        aantal_lagen: layers.length,
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const area = BE.v('area', 0);
+        const waste = BE.v('waste', 10);
+        const areaWaste = area * (1 + waste / 100);
+        let totalR = 0;
+        const layerInfo = layers.map((l, i) => {
+          const r = l.lambda > 0 ? (l.thickness / 1000) / l.lambda : 0;
+          totalR += r;
+          const packs = l.coverage > 0 ? Math.ceil(areaWaste / l.coverage) : 0;
+          return `laag${i+1}_${l.thickness}mm_${packs}pak`;
+        });
+        const r = { oppervlak_m2: area, totale_R_waarde: totalR.toFixed(2), lagen: layerInfo.join('; ') };
+        if (BE.checked('vapour')) r.dampremmer_m2 = areaWaste.toFixed(1);
+        const fast = BE.v('fasteners', 4);
+        if (fast > 0) r.pluggen_aantal = Math.ceil(area * fast);
+        const tape = BE.v('tape', 0.8);
+        if (tape > 0) r.tape_meter = (area * tape).toFixed(1);
+        return r;
+      },
+      () => `Isolatieproject ${BE.v('area', 0)}m² (${layers.length} laag${layers.length === 1 ? '' : 'en'})`
+    );
   });
 })();

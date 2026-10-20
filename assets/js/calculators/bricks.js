@@ -96,5 +96,46 @@
       recalc();
     });
     BE.wireCalc(recalc, ['length', 'height', 'perM2', 'waste', 'mortarKg', 'bagKg', 'tiesPerM2']); BE.markStaleOn("input,select,.chip,.toggle-row input");
+
+    BE.wireShoppingList(
+      'metselwerk',
+      () => ({
+        wand_lengte_m: BE.v('length', 0),
+        wand_hoogte_m: BE.v('height', 0),
+        stenen_per_m2: BE.v('perM2', 50),
+        snijverlies_percent: BE.v('waste', 5),
+        mortel_kg_per_m2: BE.v('mortarKg', 35),
+        aantal_openingen: openings.length,
+        spouwmuur: BE.checked('cavity'),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const l = BE.v('length', 0);
+        const h = BE.v('height', 0);
+        const perM2 = BE.v('perM2', 50);
+        const waste = BE.v('waste', 5);
+        const mortarKg = BE.v('mortarKg', 35);
+        const bagKg = BE.v('bagKg', 25);
+        const openingsArea = openings.reduce((s, o) => s + o.width * o.height, 0);
+        const net = Math.max(l * h - openingsArea, 0);
+        const bricks = Math.ceil(net * perM2 * (1 + waste / 100));
+        const mortarKgTotal = net * mortarKg;
+        const bags = bagKg > 0 ? Math.ceil(mortarKgTotal / bagKg) : 0;
+        const r = {
+          netto_wandoppervlak_m2: net.toFixed(2),
+          bakstenen_aantal: bricks,
+          mortelzakken_25kg: bags,
+          mortel_kg_totaal: mortarKgTotal.toFixed(1),
+        };
+        if (openings.length > 0) {
+          r.aantal_lateien = openings.length;
+          r.latei_totaal_lengte_m = openings.reduce((s, o) => s + (o.width + 0.4), 0).toFixed(1);
+        }
+        if (BE.checked('cavity')) r.spouwankers_aantal = Math.ceil(net * BE.v('tiesPerM2', 5));
+        return r;
+      },
+      () => `Metselwerk ${BE.v('length', 0)}×${BE.v('height', 0)}m`
+    );
   });
 })();

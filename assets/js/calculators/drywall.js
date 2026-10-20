@@ -61,5 +61,49 @@
     BE.chip('modeChips', recalc);
     BE.wireCalc(recalc, ['area', 'boardW', 'boardH', 'waste', 'screws', 'compound', 'tape', 'wallLen', 'wallHt', 'studSpacing']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('twoLayers').addEventListener('change', recalc);
+
+    BE.wireShoppingList(
+      'gipsplaten',
+      () => ({
+        toepassing: BE.activeChip('modeChips') || 'ceiling',
+        oppervlak_m2: BE.v('area', 0),
+        plaat_breedte_cm: BE.v('boardW', 120),
+        plaat_hoogte_cm: BE.v('boardH', 260),
+        snijverlies_percent: BE.v('waste', 10),
+        twee_lagen: BE.checked('twoLayers'),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const mode = BE.activeChip('modeChips') || 'ceiling';
+        const area = BE.v('area', 0);
+        const bw = BE.v('boardW', 120);
+        const bh = BE.v('boardH', 260);
+        const waste = BE.v('waste', 10);
+        const twoLayers = BE.checked('twoLayers');
+        const boardArea = (bw / 100) * (bh / 100);
+        const layerMul = twoLayers ? 2 : 1;
+        const boards = Math.ceil((area / boardArea) * (1 + waste / 100) * layerMul);
+        const areaWaste = area * (1 + waste / 100);
+        const r = {
+          platen_aantal: boards,
+          platen_formaat: `${bw}x${bh}cm`,
+          schroeven_aantal: boards * BE.v('screws', 32),
+          voegsel_kg: (areaWaste * BE.v('compound', 0.6)).toFixed(1),
+          voegband_m: (areaWaste * BE.v('tape', 1.5)).toFixed(1),
+          toepassing: mode === 'partition' ? 'wand' : 'plafond',
+        };
+        if (mode === 'partition') {
+          const wallLen = BE.v('wallLen', 0);
+          const spacing = BE.v('studSpacing', 60);
+          if (wallLen > 0 && spacing > 0) {
+            r.verticale_profielen = Math.ceil((wallLen * 100) / spacing) + 1;
+            r.horizontale_rails_m = (wallLen * 2).toFixed(1);
+          }
+        }
+        return r;
+      },
+      () => `Gipsplaten ${BE.v('area', 0)}m² (${BE.activeChip('modeChips') === 'partition' ? 'wand' : 'plafond'})`
+    );
   });
 })();

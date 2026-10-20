@@ -341,5 +341,61 @@
       renderLongPanelField(); recalc();
     });
     document.getElementById('addGateBtn').addEventListener('click', addGate);
+
+    BE.wireShoppingList(
+      'schutting',
+      () => ({
+        aantal_hoeken: cornerCount,
+        aantal_lijnen: cornerCount + 1,
+        totale_lengte_cm: segments.slice(0, cornerCount + 1).reduce((a, b) => a + b, 0),
+        paal_breedte_cm: parseFloat(document.getElementById('postCm').value) || 10,
+        scherm_breedte_cm: parseFloat(document.getElementById('panelCm').value) || 180,
+        start_met_paal: document.getElementById('startWithPost').checked,
+        eind_met_paal: document.getElementById('endWithPost').checked,
+        lange_schermen_toegestaan: document.getElementById('allowLong').checked,
+        aantal_poorten: gates.length,
+      }),
+      () => {
+        const inputs = {
+          segmentLengthsCm: segments.slice(0, cornerCount + 1),
+          postWidthCm: parseFloat(document.getElementById('postCm').value) || 10,
+          panelWidthCm: parseFloat(document.getElementById('panelCm').value) || 180,
+          startWithPost: document.getElementById('startWithPost').checked,
+          endWithPost: document.getElementById('endWithPost').checked,
+          allowLongPanels: document.getElementById('allowLong').checked,
+          longPanelMaxCm: parseFloat(document.getElementById('longMaxCm').value) || 200,
+          gates: gates.map(g => ({ widthCm: g.widthCm, beamCm: g.beamCm, isDouble: g.isDouble })),
+          cornerCount,
+        };
+        const result = calculateFence(inputs);
+        if (result.totalLengthCm <= 0) return null;
+        const gatePosts = 2 * result.gates.length;
+        const regularPosts = Math.max(result.postCount - gatePosts, 0);
+        const panelW = inputs.panelWidthCm;
+        const totalPanels = result.standardPanelCount + result.longPanelCount + (result.pasvakWidthCm > 0 ? 1 : 0);
+        const r = {
+          totale_lengte_m: (result.totalLengthCm / 100).toFixed(2),
+          palen_regulier_10x10_aantal: regularPosts,
+          schermen_standaard_aantal: result.standardPanelCount,
+          scherm_breedte_cm: panelW,
+          afdekkappen_aantal: totalPanels,
+          hoekpalen_aantal: result.cornerCount,
+          eindpalen_zonder_sponning_voor_poort: gatePosts,
+        };
+        if (result.longPanelCount > 0) {
+          r.schermen_lang_aantal = result.longPanelCount;
+          r.scherm_lang_breedte_cm = result.longPanelWidthCm.toFixed(1);
+        }
+        if (result.pasvakWidthCm > 0) r.pasvak_breedte_cm = result.pasvakWidthCm.toFixed(1);
+        if (result.gates.length > 0) {
+          r.poorten = result.gates.map((g, i) =>
+            `${g.isDouble ? 'dubbel' : 'enkel'} ${g.widthCm}cm + ${2 * g.beamCm}cm balk`
+          ).join('; ');
+        }
+        if (result.unfilledGapCm > 0) r.waarschuwing_niet_opgevuld_cm = result.unfilledGapCm.toFixed(1);
+        return r;
+      },
+      () => `Schutting ${(segments.slice(0, cornerCount + 1).reduce((a, b) => a + b, 0) / 100).toFixed(1)}m${cornerCount > 0 ? ` (${cornerCount} hoek${cornerCount === 1 ? '' : 'en'})` : ''}`
+    );
   });
 })();

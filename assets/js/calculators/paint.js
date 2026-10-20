@@ -67,5 +67,32 @@
       recalc();
     });
     BE.wireCalc(recalc, ['area', 'coats', 'coverage', 'primerCov', 'waste']); BE.markStaleOn("input,select,.chip,.toggle-row input");
+
+    BE.wireShoppingList(
+      'verf',
+      () => ({
+        oppervlak_m2: BE.v('area', 0),
+        aantal_lagen: BE.v('coats', 2),
+        dekking_m2_per_liter: BE.v('coverage', 10),
+        met_grondverf: BE.checked('primer'),
+        snijverlies_percent: BE.v('waste', 5),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const area = BE.v('area', 0);
+        const coats = BE.v('coats', 2);
+        const coverage = BE.v('coverage', 10);
+        const primer = BE.checked('primer');
+        const primerCov = BE.v('primerCov', 10);
+        const waste = BE.v('waste', 5);
+        const topcoat = (area / coverage) * coats * (1 + waste / 100);
+        const primerL = primer && primerCov > 0 ? (area / primerCov) * (1 + waste / 100) : 0;
+        const r = { dekverf_liter: topcoat.toFixed(1), aantal_lagen: coats, oppervlak_m2: area };
+        if (primer) r.grondverf_liter = primerL.toFixed(1);
+        return r;
+      },
+      () => `Verfproject ${BE.v('area', 0)}m² (${BE.v('coats', 2)} lagen)`
+    );
   });
 })();

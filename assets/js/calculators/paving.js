@@ -55,5 +55,44 @@
       document.getElementById('perimField').style.display = BE.checked('edge') ? '' : 'none';
       recalc();
     });
+
+    BE.wireShoppingList(
+      'bestrating',
+      () => ({
+        oppervlak_m2: BE.v('area', 0),
+        steen_breedte_cm: BE.v('stoneW', 20),
+        steen_hoogte_cm: BE.v('stoneH', 10),
+        snijverlies_percent: BE.v('waste', 7),
+        bedding_cm: BE.v('bedding', 5),
+        onderlaag_cm: BE.v('subBase', 20),
+        kantopsluiting: BE.checked('edge'),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const area = BE.v('area', 0);
+        const sw = BE.v('stoneW', 20);
+        const sh = BE.v('stoneH', 10);
+        const waste = BE.v('waste', 7);
+        const bedding = BE.v('bedding', 5) / 100;
+        const subBase = BE.v('subBase', 20) / 100;
+        const jointSand = BE.v('jointSand', 3);
+        const stoneArea = (sw / 100) * (sh / 100);
+        const stones = Math.ceil(area * (1 + waste / 100) / stoneArea);
+        const r = {
+          stenen_aantal: stones,
+          steen_formaat: `${sw}x${sh}cm`,
+          onderlaag_m3: (area * subBase).toFixed(2),
+          straatzand_bedding_m3: (area * bedding).toFixed(2),
+          voegzand_kg: (area * jointSand).toFixed(1),
+        };
+        if (BE.checked('edge')) {
+          const perim = BE.v('perimeter', 0);
+          r.kantopsluiting_m = (perim > 0 ? perim : 4 * Math.sqrt(area)).toFixed(1);
+        }
+        return r;
+      },
+      () => `Bestrating ${BE.v('area', 0)}m² (${BE.v('stoneW',20)}x${BE.v('stoneH',10)}cm)`
+    );
   });
 })();

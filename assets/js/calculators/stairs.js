@@ -59,5 +59,47 @@
     BE.wireCalc(recalc, ['height', 'riser', 'tread', 'swidth', 'stringers', 'handrailM', 'baluster']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('includeRisers').addEventListener('change', recalc);
     document.getElementById('handrail').addEventListener('change', recalc);
+
+    BE.wireShoppingList(
+      'trap',
+      () => ({
+        totale_hoogte_cm: BE.v('height', 0),
+        gewenste_optrede_cm: BE.v('riser', 17),
+        aantrede_cm: BE.v('tread', 26),
+        breedte_cm: BE.v('swidth', 0),
+        aantal_bomen: BE.v('stringers', 2),
+        met_stootborden: BE.checked('includeRisers'),
+        met_leuning: BE.checked('handrail'),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const heightCm = BE.v('height', 0);
+        const targetRiser = BE.v('riser', 17);
+        const treadCm = BE.v('tread', 26);
+        const stringers = BE.v('stringers', 2);
+        const steps = Math.max(1, Math.round(heightCm / targetRiser));
+        const totalRun = steps * treadCm;
+        const stringerM = Math.sqrt(Math.pow(heightCm / 100, 2) + Math.pow(totalRun / 100, 2));
+        const r = {
+          aantal_treden: steps,
+          werkelijke_optrede_cm: (heightCm / steps).toFixed(1),
+          totale_uitslag_cm: totalRun.toFixed(0),
+          traphoogte_cm: heightCm,
+          aantal_bomen: stringers,
+          lengte_per_boom_m: stringerM.toFixed(2),
+        };
+        if (BE.checked('includeRisers')) r.stootborden_aantal = steps;
+        if (BE.checked('handrail')) {
+          const handrailOverride = BE.v('handrailM', 0);
+          const handrailM = handrailOverride > 0 ? handrailOverride : stringerM;
+          const baluster = BE.v('baluster', 12);
+          r.leuning_meter = handrailM.toFixed(2);
+          if (baluster > 0) r.spijlen_aantal = Math.ceil((handrailM * 100) / baluster) + 1;
+        }
+        return r;
+      },
+      () => `Trap ${BE.v('height', 0)}cm hoogte (${Math.max(1, Math.round(BE.v('height',0)/BE.v('riser',17)))} treden)`
+    );
   });
 })();

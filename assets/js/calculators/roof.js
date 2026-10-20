@@ -58,5 +58,45 @@
   document.addEventListener('DOMContentLoaded', () => {
     BE.chip('materialChips', recalc);
     BE.wireCalc(recalc, ['rise', 'run', 'rwidth', 'waste', 'tilesPerM2', 'batten', 'ridge']); BE.markStaleOn("input,select,.chip,.toggle-row input");
+
+    BE.wireShoppingList(
+      'dak',
+      () => ({
+        stijghoogte_cm: BE.v('rise', 0),
+        aanloop_cm: BE.v('run', 0),
+        breedte_m: BE.v('rwidth', 0),
+        snijverlies_percent: BE.v('waste', 10),
+        materiaal: BE.activeChip('materialChips') || 'tiles',
+      }),
+      () => {
+        const rise = BE.v('rise', 0);
+        const run = BE.v('run', 0);
+        const widthM = BE.v('rwidth', 0);
+        const waste = BE.v('waste', 10);
+        const material = BE.activeChip('materialChips') || 'tiles';
+        if (rise <= 0 || run <= 0 || widthM <= 0) return null;
+        const angleDeg = Math.atan(rise / run) * 180 / Math.PI;
+        const slopeM = Math.sqrt(Math.pow(rise / 100, 2) + Math.pow(run / 100, 2));
+        const areaWaste = slopeM * widthM * (1 + waste / 100);
+        const r = {
+          dakhelling_graden: angleDeg.toFixed(1),
+          dakvlak_m2_per_zijde: (slopeM * widthM).toFixed(2),
+          totaal_incl_snijverlies_m2: areaWaste.toFixed(2),
+        };
+        if (material === 'tiles') {
+          r.pannen_aantal = Math.ceil(areaWaste * BE.v('tilesPerM2', 10));
+          const battenCm = BE.v('batten', 32);
+          if (battenCm > 0) r.panlatten_meter = (widthM * Math.ceil((slopeM * 100) / battenCm)).toFixed(1);
+          const ridgeM = BE.v('ridge', 0);
+          if (ridgeM > 0) r.nokvorsten_aantal = Math.ceil(ridgeM * 3);
+          r.materiaal = 'dakpannen';
+        } else {
+          r.membraan_m2 = areaWaste.toFixed(2);
+          r.materiaal = 'membraan/bitumen';
+        }
+        return r;
+      },
+      () => `Dakproject ${BE.v('rwidth', 0)}m breed (${(Math.atan(BE.v('rise',0)/BE.v('run',1))*180/Math.PI).toFixed(0)}°)`
+    );
   });
 })();

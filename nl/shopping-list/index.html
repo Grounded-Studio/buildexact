@@ -138,9 +138,15 @@
       : '';
     footerEl.style.display = 'block';
 
-    // Backlink naar oorspronkelijke calc
+    // Backlink naar oorspronkelijke calc (calcType is NL, URL slug is EN)
+    const CALC_SLUGS = {
+      tegels: 'tiles', verf: 'paint', beton: 'concrete', isolatie: 'insulation',
+      metselwerk: 'bricks', gipsplaten: 'drywall', dak: 'roof', bestrating: 'paving',
+      hout: 'wood', trap: 'stairs', schutting: 'fence',
+    };
     if (data.calcType && backLink) {
-      backLink.href = `/nl/calculators/${data.calcType === 'tegels' ? 'tiles' : data.calcType}/`;
+      const slug = CALC_SLUGS[data.calcType] || data.calcType;
+      backLink.href = `/nl/calculators/${slug}/`;
     }
 
     // Items

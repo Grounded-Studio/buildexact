@@ -68,5 +68,42 @@
     BE.chip('supplyChips', recalc);
     BE.wireCalc(recalc, ['length', 'width', 'depth', 'waste', 'rebar', 'barLen']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('formwork').addEventListener('change', recalc);
+
+    BE.wireShoppingList(
+      'beton',
+      () => ({
+        lengte_m: BE.v('length', 0),
+        breedte_m: BE.v('width', 0),
+        diepte_cm: BE.v('depth', 12),
+        snijverlies_percent: BE.v('waste', 10),
+        wapening_kg_per_m3: BE.v('rebar', 60),
+        aanlever: BE.activeChip('supplyChips') || 'readymix',
+        bekisting: BE.checked('formwork'),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const l = BE.v('length', 0);
+        const w = BE.v('width', 0);
+        const depth = BE.v('depth', 12) / 100;
+        const waste = BE.v('waste', 10);
+        const rebarKgPerM3 = BE.v('rebar', 60);
+        const supply = BE.activeChip('supplyChips') || 'readymix';
+        const formwork = BE.checked('formwork');
+        const volume = l * w * depth * (1 + waste / 100);
+        const r = { volume_m3: volume.toFixed(2) };
+        if (supply === 'readymix') {
+          r.bestel_bij_betonmolen_m3 = (Math.ceil(volume * 2) / 2).toFixed(1);
+        } else {
+          r.cementzakken_25kg = Math.ceil(volume * 14);
+          r.zand_m3 = (volume * 0.5).toFixed(2);
+          r.grind_m3 = (volume * 0.8).toFixed(2);
+        }
+        if (rebarKgPerM3 > 0) r.wapening_kg = (volume * rebarKgPerM3).toFixed(1);
+        if (formwork) r.bekisting_omtrek_m = ((l + w) * 2).toFixed(1);
+        return r;
+      },
+      () => `Betonproject ${BE.v('length', 0)}×${BE.v('width', 0)}×${BE.v('depth', 12)}cm`
+    );
   });
 })();
