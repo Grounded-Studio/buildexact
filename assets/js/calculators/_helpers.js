@@ -107,6 +107,14 @@ window.BE = {
       updateAllChips();
       return true;
     },
+    consumeN(n) {
+      const c = load();
+      if (c.balance < n) return false;
+      c.balance -= n;
+      save(c);
+      updateAllChips();
+      return true;
+    },
     add(n) { const c = load(); c.balance += n; save(c); updateAllChips(); },
   };
 
@@ -261,4 +269,198 @@ window.BE = {
 
   // Expose string table for calcs that need it (e.g. for a "no result yet" state)
   window.BE.STR = STR;
+
+  // =====================================================================
+  // AI Shopping List — generates a practical bouwmarkt list via Gemini
+  //   Calculators call BE.wireShoppingList(calcType, getInputs, getResults, title)
+  //   where getInputs/getResults return a plain object with the current state.
+  // =====================================================================
+  const AI_SHOP_API = 'https://api.buildexact.app/ai-shopping.php';
+  const AI_SHOP_COST = 3;
+
+  const AI_STR = isNl ? {
+    btn:        `🛒 Boodschappenlijst (−${AI_SHOP_COST} credits)`,
+    btnBusy:    'Lijst wordt gemaakt…',
+    needCredits: `Je hebt ${AI_SHOP_COST} credits nodig voor een shoppinglist.`,
+    modalTitle: 'Je boodschappenlijst',
+    modalIntro: 'Praktische lijst voor de bouwmarkt. Klik een item om 't bij Praxis / Gamma / Hornbach op te zoeken.',
+    tipsTitle:  'Tips voor deze klus',
+    close:      'Sluiten',
+    copy:       '📋 Kopiëren',
+    copied:     '✓ Gekopieerd',
+    error:      'Kon de lijst niet maken. Probeer het later opnieuw.',
+    searchAt:   'Zoek bij',
+  } : {
+    btn:        `🛒 Shopping list (−${AI_SHOP_COST} credits)`,
+    btnBusy:    'Generating list…',
+    needCredits: `You need ${AI_SHOP_COST} credits for a shopping list.`,
+    modalTitle: 'Your shopping list',
+    modalIntro: 'A practical list for the DIY store. Click any item to search for it.',
+    tipsTitle:  'Tips for this job',
+    close:      'Close',
+    copy:       '📋 Copy',
+    copied:     '✓ Copied',
+    error:      "Couldn't create the list. Please try again later.",
+    searchAt:   'Search at',
+  };
+
+  function storesForQuery(q) {
+    const enc = encodeURIComponent(q);
+    return [
+      { name: 'Praxis',   url: `https://www.praxis.nl/zoeken?text=${enc}` },
+      { name: 'Gamma',    url: `https://www.gamma.nl/zoeken?text=${enc}` },
+      { name: 'Hornbach', url: `https://www.hornbach.nl/s/${enc}` },
+    ];
+  }
+
+  function renderModal(data) {
+    const existing = document.getElementById('aiShopModal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'aiShopModal';
+    modal.className = 'ai-shop-modal';
+    modal.innerHTML = `
+      <div class="ai-shop-backdrop"></div>
+      <div class="ai-shop-dialog" role="dialog" aria-labelledby="aiShopTitle">
+        <header class="ai-shop-head">
+          <h3 id="aiShopTitle">🛒 ${AI_STR.modalTitle}</h3>
+          <button type="button" class="ai-shop-close" aria-label="${AI_STR.close}">✕</button>
+        </header>
+        <p class="ai-shop-intro">${AI_STR.modalIntro}</p>
+        <ol class="ai-shop-items"></ol>
+        <div class="ai-shop-tips" style="display:none;">
+          <h4>💡 ${AI_STR.tipsTitle}</h4>
+          <ul></ul>
+        </div>
+        <footer class="ai-shop-foot">
+          <button type="button" class="btn btn-ghost ai-shop-copy">${AI_STR.copy}</button>
+          <button type="button" class="btn btn-primary ai-shop-close-btn">${AI_STR.close}</button>
+        </footer>
+      </div>
+    `;
+    const itemsEl = modal.querySelector('.ai-shop-items');
+    (data.items || []).forEach(it => {
+      const li = document.createElement('li');
+      li.className = 'ai-shop-item';
+      const stores = storesForQuery(it.searchQuery || it.material);
+      li.innerHTML = `
+        <div class="ai-shop-row">
+          <div class="ai-shop-main">
+            <strong>${escapeHtml(it.material)}</strong>
+            <span class="ai-shop-qty">${escapeHtml(it.quantity || '')}</span>
+          </div>
+          <div class="ai-shop-links">
+            <span class="ai-shop-search">${AI_STR.searchAt}:</span>
+            ${stores.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`).join(' · ')}
+          </div>
+          ${it.notes ? `<p class="ai-shop-notes">${escapeHtml(it.notes)}</p>` : ''}
+        </div>
+      `;
+      itemsEl.appendChild(li);
+    });
+
+    if (Array.isArray(data.tips) && data.tips.length) {
+      const tipsBlock = modal.querySelector('.ai-shop-tips');
+      tipsBlock.style.display = 'block';
+      const ul = tipsBlock.querySelector('ul');
+      data.tips.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        ul.appendChild(li);
+      });
+    }
+
+    const close = () => modal.remove();
+    modal.querySelector('.ai-shop-backdrop').addEventListener('click', close);
+    modal.querySelector('.ai-shop-close').addEventListener('click', close);
+    modal.querySelector('.ai-shop-close-btn').addEventListener('click', close);
+
+    modal.querySelector('.ai-shop-copy').addEventListener('click', (ev) => {
+      const lines = [AI_STR.modalTitle, ''];
+      (data.items || []).forEach(it => {
+        lines.push(`• ${it.material} — ${it.quantity}`);
+        if (it.notes) lines.push(`  (${it.notes})`);
+      });
+      if (data.tips && data.tips.length) {
+        lines.push('', AI_STR.tipsTitle);
+        data.tips.forEach(t => lines.push(`- ${t}`));
+      }
+      try {
+        navigator.clipboard.writeText(lines.join('\n'));
+        ev.target.textContent = AI_STR.copied;
+        setTimeout(() => { ev.target.textContent = AI_STR.copy; }, 2000);
+      } catch (_) {}
+    });
+
+    document.body.appendChild(modal);
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  window.BE.wireShoppingList = function wireShoppingList(calcType, getInputs, getResults, titleBuilder) {
+    const result = document.querySelector('.calc-result:not([data-no-lock="true"])');
+    if (!result) return;
+
+    // Button leeft onder .result-rows en wordt pas zichtbaar als result "ready" is
+    const wrap = document.createElement('div');
+    wrap.className = 'ai-shop-trigger';
+    wrap.innerHTML = `<button type="button" class="btn btn-ghost ai-shop-btn">${AI_STR.btn}</button><p class="ai-shop-msg" style="display:none;"></p>`;
+    const rows = result.querySelector('.result-rows') || result;
+    rows.parentNode.insertBefore(wrap, rows.nextSibling);
+
+    const btn = wrap.querySelector('.ai-shop-btn');
+    const msg = wrap.querySelector('.ai-shop-msg');
+
+    btn.addEventListener('click', async () => {
+      msg.style.display = 'none';
+      const results = (typeof getResults === 'function') ? getResults() : {};
+      if (!results || !Object.keys(results).length) return;
+
+      if (!window.BE.credits.consumeN(AI_SHOP_COST)) {
+        msg.style.display = 'block';
+        msg.style.color = 'var(--err)';
+        msg.textContent = AI_STR.needCredits;
+        return;
+      }
+
+      btn.disabled = true;
+      const originalLabel = btn.textContent;
+      btn.textContent = AI_STR.btnBusy;
+
+      try {
+        const r = await fetch(AI_SHOP_API, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            calcType,
+            title:   (typeof titleBuilder === 'function') ? titleBuilder() : '',
+            inputs:  (typeof getInputs === 'function') ? getInputs() : {},
+            results,
+          }),
+        });
+        const data = await r.json();
+        if (data.ok && Array.isArray(data.items)) {
+          renderModal(data);
+        } else {
+          window.BE.credits.add(AI_SHOP_COST); // refund
+          msg.style.display = 'block';
+          msg.style.color = 'var(--err)';
+          msg.textContent = AI_STR.error + (data.reason ? ' (' + data.reason + ')' : '');
+        }
+      } catch (e) {
+        window.BE.credits.add(AI_SHOP_COST); // refund on network error
+        msg.style.display = 'block';
+        msg.style.color = 'var(--err)';
+        msg.textContent = AI_STR.error;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }
+    });
+  };
 })();

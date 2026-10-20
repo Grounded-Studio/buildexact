@@ -63,5 +63,44 @@
     });
     BE.wireCalc(recalc, ['area', 'tileW', 'tileH', 'groutMm', 'waste', 'perBox', 'adhesive', 'bagKg', 'edgeM']); BE.markStaleOn("input,select,.chip,.toggle-row input");
     document.getElementById('spareBox').addEventListener('change', recalc);
+
+    BE.wireShoppingList(
+      'tegels',
+      () => ({
+        oppervlak_m2: BE.v('area', 0),
+        tegel_breedte_cm: BE.v('tileW', 60),
+        tegel_hoogte_cm: BE.v('tileH', 60),
+        voeg_mm: BE.v('groutMm', 3),
+        snijverlies_percent: BE.v('waste', 10),
+        tegels_per_doos: BE.v('perBox', 5),
+      }),
+      () => {
+        const hero = document.getElementById('heroValue');
+        if (!hero || !hero.textContent || hero.textContent === STR.heroEmpty) return null;
+        const area = BE.v('area', 0);
+        const waste = BE.v('waste', 10);
+        const perBox = BE.v('perBox', 5);
+        const adhesive = BE.v('adhesive', 6);
+        const bagKg = BE.v('bagKg', 25);
+        const tw = BE.v('tileW', 60);
+        const th = BE.v('tileH', 60);
+        const groutMm = BE.v('groutMm', 3);
+        const twM = (tw + groutMm / 10) / 100;
+        const thM = (th + groutMm / 10) / 100;
+        const tiles = Math.ceil((area * (1 + waste / 100)) / (twM * thM));
+        const boxes = Math.ceil(tiles / perBox);
+        const adhKg = area * adhesive;
+        const bags = bagKg > 0 ? Math.ceil(adhKg / bagKg) : 0;
+        return {
+          tegels_aantal: tiles,
+          tegel_formaat: `${tw}x${th} cm`,
+          dozen: boxes,
+          lijm_zakken: `${bags} zakken van ${bagKg}kg`,
+          totaal_lijm_kg: adhKg.toFixed(1),
+          oppervlak_m2: area,
+        };
+      },
+      () => `Tegelproject ${BE.v('area', 0)}m² (${BE.v('tileW', 60)}x${BE.v('tileH', 60)}cm)`
+    );
   });
 })();
