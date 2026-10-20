@@ -305,11 +305,12 @@ window.BE = {
   };
 
   function storesForQuery(q) {
+    // Google-search per winkel: werkt altijd, geen gedoe met store URL changes
     const enc = encodeURIComponent(q);
     return [
-      { name: 'Praxis',   url: `https://www.praxis.nl/zoeken?text=${enc}` },
-      { name: 'Gamma',    url: `https://www.gamma.nl/zoeken?text=${enc}` },
-      { name: 'Hornbach', url: `https://www.hornbach.nl/s/${enc}` },
+      { name: 'Praxis',   url: `https://www.google.com/search?q=${enc}+site%3Apraxis.nl` },
+      { name: 'Gamma',    url: `https://www.google.com/search?q=${enc}+site%3Agamma.nl` },
+      { name: 'Hornbach', url: `https://www.google.com/search?q=${enc}+site%3Ahornbach.nl` },
     ];
   }
 
