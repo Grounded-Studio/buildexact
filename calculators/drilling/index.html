@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drilling & sawing calculator | BuildExact</title>
+<meta name="description" content="Core drilling and wall/floor sawing price calculation. Per-hole pricing, diamond metres, time estimate and reinforced-concrete surcharge. For professional drilling contractors.">
+<link rel="canonical" href="https://buildexact.app/calculators/drilling/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/drilling/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/drilling/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a>
+<ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/drilling/" class="active">EN</a><a href="/nl/calculators/drilling/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <p><a href="/calculators/" class="muted">&larr; All calculators</a></p>
+    <h1>Drilling &amp; sawing calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Core drilling and wall/floor sawing price calculation. Per-hole pricing, diamond metres for crown-wear tracking, time estimates and reinforced-concrete surcharge.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Job type</h3>
+        <div class="chips" id="modeChips">
+          <button type="button" class="chip active" data-value="coreDrill">Core drill</button>
+          <button type="button" class="chip" data-value="wallSaw">Wall saw</button>
+          <button type="button" class="chip" data-value="floorSaw">Floor saw</button>
+        </div>
+
+        <div id="coreDrillSection">
+          <h3 style="margin-top:28px;">Holes</h3>
+          <p class="muted" style="margin-top:-8px;margin-bottom:14px;font-size:.85rem;">Add a row per unique diameter + depth. Price per hole from your rates.</p>
+
+          <div id="holesList"></div>
+
+          <button type="button" id="addHoleBtn" class="btn btn-ghost btn-sm" style="margin-top:12px;">+ Add row</button>
+        </div>
+
+        <div id="sawSection" style="display:none;">
+          <h3 style="margin-top:28px;" id="sawTitle">Wall sawing</h3>
+          <div class="field-row">
+            <div class="field"><label for="sawLen">Length (m)</label><input type="number" id="sawLen" value="2" min="0" step="0.1"></div>
+            <div class="field"><label for="sawDepth">Depth (cm)</label><input type="number" id="sawDepth" value="10" min="0" step="1"></div>
+          </div>
+          <div class="field"><label for="sawPrice">Price per metre (&euro;)</label><input type="number" id="sawPrice" value="120" min="0" step="1"></div>
+          <label class="toggle-row" style="margin-top:12px;">
+            <input type="checkbox" id="sawReinforced">
+            <span>Reinforced concrete (+40% time/price)</span>
+          </label>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="calcBtn" style="margin-top:28px;width:100%;">Calculate (&minus;1 credit)</button>
+      </form>
+
+      <div class="calc-result" data-no-lock="false">
+        <h3>Result</h3>
+        <div class="result-hero"><div class="result-hero-value" id="heroValue">Fill in and click Calculate</div></div>
+        <div class="result-rows" id="resultRows"></div>
+      </div>
+    </div>
+
+    <div class="article" style="margin-top:48px;">
+      <h2>How this calculator works</h2>
+      <p><strong>Core drilling:</strong> add a row per unique diameter + depth combo. Pick from standard sizes (52, 82, 102, 132, 162, 182, 202, 250 mm) or type your own. Fill in count and your per-hole price — the app computes total price, total diamond metres (for crown wear) and a time estimate.</p>
+      <p><strong>Reinforced-concrete toggle:</strong> rebar makes drilling 30-50% harder. Toggle on and the app adds +40% time and price automatically. Prevents loss-leader quotes.</p>
+      <p><strong>Wall / floor sawing:</strong> length in metres + depth + price per metre. Same reinforced-concrete toggle available.</p>
+      <h3>Tips for accurate quotes</h3>
+      <ul>
+        <li>Account for setup time (water hookup, rig assembly) — minimum 1 hour even for a single small hole</li>
+        <li>Natural stone drills slower than concrete — add 20% time</li>
+        <li>For pipe penetrations: always a few mm wider than the pipe + 5mm play</li>
+        <li>Replace diamond crown around 150m drilled — track via the "diamond metres" output</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"> BuildExact</a><p>Offline-first measurement, quoting and invoicing for Dutch and Belgian builders.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge">▶ Google Play</a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div>
+<div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
+<div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+</div></footer>
+
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/drilling.js"></script>
+</body>
+</html>
