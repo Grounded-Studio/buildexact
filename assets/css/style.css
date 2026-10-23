@@ -530,8 +530,12 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   font-size: .82rem; color: #64748B;
 }
 .footer-brand p { color: #94A3B8; font-size: .9rem; margin-top: 12px; max-width: 36ch; }
-.footer-brand .brand { white-space: nowrap; }
-.footer-brand .brand-text { line-height: 1; }
+.footer-brand .brand {
+  display: inline-flex; align-items: center; gap: 12px;
+  white-space: nowrap; font-size: 1.35rem; line-height: 1;
+}
+.footer-brand .brand-mark { width: 44px; height: 44px; border-radius: 11px; }
+.footer-brand .brand-text { line-height: 1; letter-spacing: -0.015em; }
 .store-badge {
   display: inline-flex; align-items: center; gap: 10px;
   margin-top: 16px; padding: 10px 16px;
@@ -543,7 +547,7 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   padding: 0; background: transparent; border-radius: 0;
 }
 .store-badge-img:hover { background: transparent; opacity: .9; }
-.store-badge-img img { display: block; height: 56px; width: auto; }
+.store-badge-img img { display: block; height: 44px; width: auto; }
 
 /* ---------- Blog ---------- */
 .article {
