@@ -296,6 +296,12 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .field .hint { font-size: .78rem; color: var(--muted); margin-top: 4px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
+/* Input + button side by side (e.g. redeem a code) */
+.redeem-row { grid-template-columns: 1fr auto; align-items: end; gap: 14px; }
+.redeem-row .field { margin-bottom: 0; }
+.redeem-row .field input { height: 50px; }
+.redeem-row .btn { height: 50px; padding-top: 0; padding-bottom: 0; display: inline-flex; align-items: center; white-space: nowrap; }
+
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
 .chip {
   padding: 7px 13px; border-radius: 999px;
