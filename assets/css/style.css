@@ -530,6 +530,8 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   font-size: .82rem; color: #64748B;
 }
 .footer-brand p { color: #94A3B8; font-size: .9rem; margin-top: 12px; max-width: 36ch; }
+.footer-brand .brand { white-space: nowrap; }
+.footer-brand .brand-text { line-height: 1; }
 .store-badge {
   display: inline-flex; align-items: center; gap: 10px;
   margin-top: 16px; padding: 10px 16px;
@@ -537,6 +539,11 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   color: #fff !important; font-weight: 600; font-size: .9rem;
 }
 .store-badge:hover { background: #334155; }
+.store-badge-img {
+  padding: 0; background: transparent; border-radius: 0;
+}
+.store-badge-img:hover { background: transparent; opacity: .9; }
+.store-badge-img img { display: block; height: 56px; width: auto; }
 
 /* ---------- Blog ---------- */
 .article {

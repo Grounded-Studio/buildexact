@@ -14,7 +14,7 @@
   function fmt(v, d) { d = d == null ? 2 : d; return isNl ? v.toFixed(d).replace('.', ',') : v.toFixed(d); }
 
   function recalc() {
-    const heightCm = BE.v('height', 0);
+    const heightCm = BE.v('height', 0) * 100;
     const targetRiser = BE.v('riser', 17);
     const treadCm = BE.v('tread', 26);
     const stringers = BE.v('stringers', 2);

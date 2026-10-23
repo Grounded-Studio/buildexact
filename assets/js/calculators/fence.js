@@ -23,6 +23,9 @@
     rowStandardPanels: (w) => `Standaard schermen (${w} cm)`,
     rowLongPanels: (w) => `Lange schermen (${w} cm)`,
     rowPasvak: (base) => `Pasvak (ingekort van ${base} cm)`,
+    rowPasvakTwoEnd: (base) => `2× pasvak (begin + eind, ingekort van ${base} cm)`,
+    twoEndLabel: '2 gelijke pasvakken (begin + eind)',
+    twoEndSub: 'App rekent uit welke breedte beide pasvakken moeten hebben',
     rowCoverCaps: 'Afdekkappen (op schermen)',
     rowGate: (i, w, b, dbl) => `${dbl ? 'Dubbele p' : 'P'}oort ${i} (${w} cm + 2×${b} cm balk)`,
     rowGateBeam: (i) => `Bovenbalk poort ${i}`,
@@ -45,6 +48,9 @@
     rowStandardPanels: (w) => `Standard panels (${w} cm)`,
     rowLongPanels: (w) => `Long panels (${w} cm)`,
     rowPasvak: (base) => `End cut (from ${base} cm panel)`,
+    rowPasvakTwoEnd: (base) => `2× end panel (begin + end, cut from ${base} cm)`,
+    twoEndLabel: '2 equal end panels (begin + end)',
+    twoEndSub: 'App figures out the width both end panels need',
     rowCoverCaps: 'Cover caps (on panels)',
     rowGate: (i, w, b, dbl) => `${dbl ? 'Double g' : 'G'}ate ${i} (${w} cm + 2×${b} cm beam)`,
     rowGateBeam: (i) => `Top beam gate ${i}`,
@@ -77,6 +83,7 @@
   // State
   let cornerCount = 0;
   let segments = [500];
+  let twoEndPerSegment = [false];
   let gates = [];
   let gateSeq = 0;
 
@@ -96,7 +103,7 @@
     const minPosts = gateCount + 1 - endMissing;
     const minUsed = gateSpanSum + Math.max(minPosts, 0) * postW;
     if (minUsed > length) {
-      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthCm: 0, totalUsedCm: 0, unfilledGapCm: length };
+      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthsCm: [], totalUsedCm: 0, unfilledGapCm: length };
     }
 
     let sections = n + gateCount;
@@ -141,36 +148,67 @@
       unfilled = leftover;
     }
 
-    return { postCount, standardPanelCount: standardPanels, longPanelCount, longPanelWidthCm: longPanelWidth, pasvakWidthCm: pasvakWidth, totalUsedCm: used, unfilledGapCm: unfilled };
+    return { postCount, standardPanelCount: standardPanels, longPanelCount, longPanelWidthCm: longPanelWidth, pasvakWidthsCm: pasvakWidth > 0 ? [pasvakWidth] : [], totalUsedCm: used, unfilledGapCm: unfilled };
+  }
+
+  // Two end-pasvakken layout: start-post, pasvak(x), post, panel×n, post, pasvak(x), end-post.
+  // Mirror of _computeTwoEndPasvakken in fence_calculator.dart.
+  function computeTwoEndPasvakken(length, postW, panelW) {
+    if (length <= 0 || panelW <= 0 || postW < 0) {
+      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthsCm: [], totalUsedCm: 0, unfilledGapCm: length < 0 ? 0 : length };
+    }
+    const pasvakFor = (n) => (length - (n + 3) * postW - n * panelW) / 2;
+    let n = 0;
+    while (pasvakFor(n) > panelW) {
+      n += 1;
+      if (n > 500) break;
+    }
+    const x = pasvakFor(n);
+    if (x < MIN_PASVAK_CM) {
+      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthsCm: [], totalUsedCm: 0, unfilledGapCm: length };
+    }
+    const postCount = n + 3;
+    const used = postCount * postW + n * panelW + 2 * x;
+    return { postCount, standardPanelCount: n, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthsCm: [x, x], totalUsedCm: used, unfilledGapCm: 0 };
   }
 
   function calculateFence(inputs) {
     const segs = inputs.segmentLengthsCm;
+    const twoEnd = inputs.twoEndPasvakkenPerSegment || [];
     const totalLength = segs.reduce((a, b) => a + b, 0);
     if (totalLength <= 0) {
-      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthCm: 0, gates: [], totalUsedCm: 0, unfilledGapCm: 0, totalLengthCm: 0, cornerCount: inputs.cornerCount };
+      return { postCount: 0, standardPanelCount: 0, longPanelCount: 0, longPanelWidthCm: 0, pasvakWidthsCm: [], gates: [], totalUsedCm: 0, unfilledGapCm: 0, totalLengthCm: 0, cornerCount: inputs.cornerCount };
     }
     if (segs.length === 1) {
-      const r = computeStraight(segs[0], inputs.postWidthCm, inputs.panelWidthCm, inputs.startWithPost, inputs.endWithPost, inputs.allowLongPanels, inputs.longPanelMaxCm, inputs.gates);
+      const useTwoEnd = twoEnd[0] === true && inputs.gates.length === 0;
+      const r = useTwoEnd
+        ? computeTwoEndPasvakken(segs[0], inputs.postWidthCm, inputs.panelWidthCm)
+        : computeStraight(segs[0], inputs.postWidthCm, inputs.panelWidthCm, inputs.startWithPost, inputs.endWithPost, inputs.allowLongPanels, inputs.longPanelMaxCm, inputs.gates);
       return { ...r, gates: inputs.gates, totalLengthCm: segs[0], cornerCount: inputs.cornerCount };
     }
-    let totalPosts = 0, totalStandard = 0, totalLong = 0, longWidthLatest = 0, totalPasvak = 0, totalUnfilled = 0, usedSum = 0;
+    let totalPosts = 0, totalStandard = 0, totalLong = 0, longWidthLatest = 0, allPasvakWidths = [], totalUnfilled = 0, usedSum = 0;
     for (let s = 0; s < segs.length; s++) {
       const isFirst = s === 0;
       const isLast = s === segs.length - 1;
-      const r = computeStraight(segs[s], inputs.postWidthCm, inputs.panelWidthCm,
-        isFirst ? inputs.startWithPost : false,
-        isLast ? inputs.endWithPost : false,
-        inputs.allowLongPanels, inputs.longPanelMaxCm, isLast ? inputs.gates : []);
+      const segGates = isLast ? inputs.gates : [];
+      // Toggle is ignored when gates sit on that segment (the gate claims
+      // the end — a pasvak can't share that spot).
+      const useTwoEnd = twoEnd[s] === true && segGates.length === 0;
+      const r = useTwoEnd
+        ? computeTwoEndPasvakken(segs[s], inputs.postWidthCm, inputs.panelWidthCm)
+        : computeStraight(segs[s], inputs.postWidthCm, inputs.panelWidthCm,
+            isFirst ? inputs.startWithPost : false,
+            isLast ? inputs.endWithPost : false,
+            inputs.allowLongPanels, inputs.longPanelMaxCm, segGates);
       totalPosts += r.postCount;
       totalStandard += r.standardPanelCount;
       totalLong += r.longPanelCount;
       if (r.longPanelWidthCm > longWidthLatest) longWidthLatest = r.longPanelWidthCm;
-      totalPasvak += r.pasvakWidthCm;
+      if (r.pasvakWidthsCm && r.pasvakWidthsCm.length) allPasvakWidths.push(...r.pasvakWidthsCm);
       totalUnfilled += r.unfilledGapCm;
       usedSum += r.totalUsedCm;
     }
-    return { postCount: totalPosts, standardPanelCount: totalStandard, longPanelCount: totalLong, longPanelWidthCm: longWidthLatest, pasvakWidthCm: totalPasvak, gates: inputs.gates, totalUsedCm: usedSum, unfilledGapCm: totalUnfilled, totalLengthCm: totalLength, cornerCount: inputs.cornerCount };
+    return { postCount: totalPosts, standardPanelCount: totalStandard, longPanelCount: totalLong, longPanelWidthCm: longWidthLatest, pasvakWidthsCm: allPasvakWidths, gates: inputs.gates, totalUsedCm: usedSum, unfilledGapCm: totalUnfilled, totalLengthCm: totalLength, cornerCount: inputs.cornerCount };
   }
 
   // ---------- UI builders ----------
@@ -179,18 +217,26 @@
     const total = cornerCount + 1;
     while (segments.length < total) segments.push(400);
     if (segments.length > total) segments = segments.slice(0, total);
+    while (twoEndPerSegment.length < total) twoEndPerSegment.push(false);
+    if (twoEndPerSegment.length > total) twoEndPerSegment = twoEndPerSegment.slice(0, total);
+    const segmentBlock = (i, label, value, twoEnd) => `
+      <div class="field">
+        <label for="seg${i}">${label}</label>
+        <input type="number" id="seg${i}" value="${value}" min="0" step="10">
+      </div>
+      <label class="toggle-row">
+        <span class="toggle-stacked">
+          <span>${STR.twoEndLabel}</span>
+          <span class="toggle-sub">${STR.twoEndSub}</span>
+        </span>
+        <input type="checkbox" class="two-end-toggle" data-idx="${i}" ${twoEnd ? 'checked' : ''}>
+      </label>`;
     if (total === 1) {
-      wrap.innerHTML = `
-        <div class="field">
-          <label for="seg0">${STR.totalLengthSingle}</label>
-          <input type="number" id="seg0" value="${segments[0]}" min="0" step="10">
-        </div>`;
+      wrap.innerHTML = segmentBlock(0, STR.totalLengthSingle, segments[0], twoEndPerSegment[0]);
     } else {
-      wrap.innerHTML = segments.map((v, i) => `
-        <div class="field">
-          <label for="seg${i}">${segmentLabel(i, total)}</label>
-          <input type="number" id="seg${i}" value="${v}" min="0" step="10">
-        </div>`).join('');
+      wrap.innerHTML = segments.map((v, i) =>
+        segmentBlock(i, segmentLabel(i, total), v, twoEndPerSegment[i])
+      ).join('');
     }
     for (let i = 0; i < total; i++) {
       document.getElementById('seg' + i).addEventListener('input', (e) => {
@@ -198,6 +244,13 @@
         recalc();
       });
     }
+    wrap.querySelectorAll('.two-end-toggle').forEach(el => {
+      el.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.dataset.idx, 10);
+        twoEndPerSegment[idx] = e.target.checked;
+        recalc();
+      });
+    });
   }
 
   function renderCornerStepper() {
@@ -278,7 +331,13 @@
     if (result.cornerCount > 0) parts.push(line(STR.rowCornerPosts, result.cornerCount));
     parts.push(line(STR.rowStandardPanels(fmt(panelW)), result.standardPanelCount));
     if (result.longPanelCount > 0) parts.push(line(STR.rowLongPanels(fmt(result.longPanelWidthCm)), result.longPanelCount));
-    if (result.pasvakWidthCm > 0) parts.push(line(STR.rowPasvak(fmt(panelW)), fmt(result.pasvakWidthCm) + ' cm'));
+    const pasvakList = result.pasvakWidthsCm || [];
+    if (pasvakList.length === 1) {
+      parts.push(line(STR.rowPasvak(fmt(panelW)), fmt(pasvakList[0]) + ' cm'));
+    } else if (pasvakList.length >= 2) {
+      // Width is the same for a two-end layout — show it once.
+      parts.push(line(STR.rowPasvakTwoEnd(fmt(panelW)), fmt(pasvakList[0]) + ' cm'));
+    }
     if (totalPanels > 0) parts.push(line(STR.rowCoverCaps, totalPanels));
     for (let i = 0; i < result.gates.length; i++) {
       const g = result.gates[i];
@@ -291,7 +350,8 @@
   }
 
   function standardPlusLongPlusPasvak(r) {
-    return r.standardPanelCount + r.longPanelCount + (r.pasvakWidthCm > 0 ? 1 : 0);
+    const pasvakCount = (r.pasvakWidthsCm || []).length;
+    return r.standardPanelCount + r.longPanelCount + pasvakCount;
   }
 
   function line(label, value, isError) {
@@ -299,9 +359,10 @@
     return `<div${cls}><span class="k">${label}</span><span class="v">${value}</span></div>`;
   }
 
-  function recalc() {
-    const inputs = {
+  function currentInputs() {
+    return {
       segmentLengthsCm: segments.slice(0, cornerCount + 1),
+      twoEndPasvakkenPerSegment: twoEndPerSegment.slice(0, cornerCount + 1),
       postWidthCm: parseFloat(document.getElementById('postCm').value) || 10,
       panelWidthCm: parseFloat(document.getElementById('panelCm').value) || 180,
       startWithPost: document.getElementById('startWithPost').checked,
@@ -311,7 +372,10 @@
       gates: gates.map(g => ({ widthCm: g.widthCm, beamCm: g.beamCm, isDouble: g.isDouble })),
       cornerCount,
     };
-    const result = calculateFence(inputs);
+  }
+
+  function recalc() {
+    const result = calculateFence(currentInputs());
     renderResult(result);
   }
 
@@ -356,23 +420,14 @@
         aantal_poorten: gates.length,
       }),
       () => {
-        const inputs = {
-          segmentLengthsCm: segments.slice(0, cornerCount + 1),
-          postWidthCm: parseFloat(document.getElementById('postCm').value) || 10,
-          panelWidthCm: parseFloat(document.getElementById('panelCm').value) || 180,
-          startWithPost: document.getElementById('startWithPost').checked,
-          endWithPost: document.getElementById('endWithPost').checked,
-          allowLongPanels: document.getElementById('allowLong').checked,
-          longPanelMaxCm: parseFloat(document.getElementById('longMaxCm').value) || 200,
-          gates: gates.map(g => ({ widthCm: g.widthCm, beamCm: g.beamCm, isDouble: g.isDouble })),
-          cornerCount,
-        };
+        const inputs = currentInputs();
         const result = calculateFence(inputs);
         if (result.totalLengthCm <= 0) return null;
         const gatePosts = 2 * result.gates.length;
         const regularPosts = Math.max(result.postCount - gatePosts, 0);
         const panelW = inputs.panelWidthCm;
-        const totalPanels = result.standardPanelCount + result.longPanelCount + (result.pasvakWidthCm > 0 ? 1 : 0);
+        const pasvakCount = (result.pasvakWidthsCm || []).length;
+        const totalPanels = result.standardPanelCount + result.longPanelCount + pasvakCount;
         const r = {
           totale_lengte_m: (result.totalLengthCm / 100).toFixed(2),
           palen_regulier_10x10_aantal: regularPosts,
@@ -386,7 +441,12 @@
           r.schermen_lang_aantal = result.longPanelCount;
           r.scherm_lang_breedte_cm = result.longPanelWidthCm.toFixed(1);
         }
-        if (result.pasvakWidthCm > 0) r.pasvak_breedte_cm = result.pasvakWidthCm.toFixed(1);
+        if (pasvakCount === 1) {
+          r.pasvak_breedte_cm = result.pasvakWidthsCm[0].toFixed(1);
+        } else if (pasvakCount >= 2) {
+          r.pasvakken_aantal = pasvakCount;
+          r.pasvak_breedte_cm = result.pasvakWidthsCm[0].toFixed(1);
+        }
         if (result.gates.length > 0) {
           r.poorten = result.gates.map((g, i) =>
             `${g.isDouble ? 'dubbel' : 'enkel'} ${g.widthCm}cm + ${2 * g.beamCm}cm balk`
