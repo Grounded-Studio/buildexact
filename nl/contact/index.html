@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — BuildExact</title>
-<meta name="description" content="Neem contact op met de BuildExact-ontwikkelaar. Stuur direct vanaf de site een bericht — bugmeldingen, calculator-verzoeken, vragen over betalingen en meer.">
+<title>Contact BuildExact — Vragen, bugs &amp; feedback</title>
+<meta name="description" content="Vraag, bugmelding of feature-idee voor BuildExact? Stuur direct vanaf deze pagina een bericht — we reageren meestal binnen 1–2 werkdagen.">
 <link rel="canonical" href="https://buildexact.app/nl/contact/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/contact/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/contact/">
@@ -21,35 +21,73 @@
 </nav></div></header>
 
 <section class="section">
-  <div class="container" style="max-width:720px;">
-    <div class="section-head">
-      <h1>Contact</h1>
-      <p class="lede">Stuur direct hier een bericht. BuildExact is door één persoon gebouwd — je bericht wordt door de ontwikkelaar gelezen, niet door een ticketsysteem. Meestal reageren we binnen 1–2 werkdagen.</p>
-    </div>
+  <div class="container">
+    <span class="section-kicker">CONTACT</span>
+    <h1>Neem contact op.</h1>
+    <p class="section-sub">Vraag, bug of feature-idee? Stuur hier direct een bericht — het komt meteen in onze inbox, geen mail-app nodig.</p>
 
-    <div class="calc-shell" style="display:block;">
-      <form class="calc-form" id="contactForm" novalidate>
-        <div class="field-row">
-          <div class="field"><label for="name">Je naam</label><input type="text" id="name" name="name" autocomplete="name" required></div>
-          <div class="field"><label for="email">Je e-mail</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+    <div class="contact-layout">
+      <div class="card form-panel">
+        <h2>Verstuur een bericht</h2>
+        <form id="contactForm" data-lang="nl" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Je naam</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jan Jansen">
+            </div>
+            <div class="field">
+              <label for="f-email">E-mailadres</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="jij@voorbeeld.nl">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-topic">Onderwerp</label>
+            <select id="f-topic" name="topic">
+              <option value="Vraag">Vraag</option>
+              <option value="Bugmelding">Bugmelding</option>
+              <option value="Feature-verzoek">Feature-verzoek</option>
+              <option value="Aankoop / PRO">Aankoop / PRO</option>
+              <option value="Nieuwe calculator">Nieuwe calculator aanvragen</option>
+              <option value="Pers / samenwerking">Pers / samenwerking</option>
+              <option value="Anders">Anders</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-message">Bericht</label>
+            <textarea id="f-message" name="message" rows="6" required placeholder="Vertel waar je mee zit. Bij een bug: noem de calculator, de waardes die je invulde en wat je verwachtte."></textarea>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Leeg laten<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+          <div class="form-foot">
+            <p class="form-note">We gebruiken je gegevens alleen om te reageren. Zie ons <a href="/nl/privacy/">privacybeleid</a>.</p>
+            <button type="submit" class="btn btn-primary" id="sendBtn"><span>Verstuur bericht</span> →</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-side">
+        <div class="card side-card">
+          <div class="side-label">Liever mailen?</div>
+          <p>Schrijf ons vanuit je eigen mail-app.</p>
+          <div class="mail-row">
+            <a href="mailto:contact@grounded-studio.app?subject=BuildExact" class="mail-addr">contact@grounded-studio.app</a>
+            <button type="button" class="copy-btn" id="copyBtn">Kopieer</button>
+          </div>
         </div>
-        <div class="field"><label for="subject">Onderwerp</label><input type="text" id="subject" name="subject" placeholder="bijv. Fout in schutting-calculator"></div>
-        <div class="field"><label for="message">Bericht</label><textarea id="message" name="message" rows="6" required style="width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font:inherit;resize:vertical;"></textarea></div>
-        <!-- Honeypot: mensen laten dit leeg; bots vullen het in. -->
-        <div style="position:absolute;left:-9999px;" aria-hidden="true"><label for="company">Bedrijf</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
-        <button type="submit" id="sendBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;">Bericht versturen</button>
-        <p id="formMsg" style="margin-top:14px;font-weight:600;"></p>
-      </form>
-    </div>
-
-    <p class="muted" style="margin-top:28px;font-size:.9rem;text-align:center;">
-      Liever je eigen mail-app? Schrijf naar
-      <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.
-    </p>
-
-    <div class="grid grid-2" style="margin-top:40px;">
-      <div class="card"><h3>Een bug gevonden?</h3><p>Vermeld de calculator, de waardes die je invulde, het resultaat dat je kreeg en wat je verwachtte. Die lossen we binnen dagen op.</p></div>
-      <div class="card"><h3>Vraag over betaling of PRO?</h3><p>PRO is een eenmalige Google Play-aankoop. Bij herstel-problemen: open eerst in de app Instellingen → Entitlement → Aankoop herstellen.</p></div>
+        <div class="card side-card">
+          <div class="side-label">Een bug gevonden?</div>
+          <p>Vermeld de calculator, de waardes die je invulde, het resultaat dat je kreeg en wat je verwachtte. Die lossen we binnen dagen op.</p>
+        </div>
+        <div class="card side-card">
+          <div class="side-label">Wat je kunt verwachten</div>
+          <ul class="download-list">
+            <li>Bugmeldingen: binnen 24 uur opgepakt</li>
+            <li>Feature-verzoeken: reactie met roadmap-status</li>
+            <li>Pers &amp; samenwerking: binnen 1 werkdag</li>
+            <li>Al het andere: binnen 1–2 werkdagen</li>
+          </ul>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -65,75 +103,6 @@
 </div></footer>
 
 <script src="/assets/js/main.js"></script>
-<script>
-(function () {
-  // Verzonden via FormSubmit (formsubmit.co) → contact@grounded-studio.app,
-  // geen backend nodig. Zelfde opzet als de Grounded Studio + FreshGarant site.
-  const form = document.getElementById('contactForm');
-  const msg = document.getElementById('formMsg');
-  const btn = document.getElementById('sendBtn');
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const company = document.getElementById('company').value.trim(); // honeypot
-    if (company) return; // bot
-
-    if (!name || !email || !message) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Vul je naam, e-mail en bericht in.';
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Dat e-mailadres lijkt niet te kloppen.';
-      return;
-    }
-
-    btn.disabled = true;
-    const original = btn.textContent;
-    btn.textContent = 'Versturen…';
-    msg.style.color = 'var(--ink-2)';
-    msg.textContent = '';
-
-    const payload = {
-      name: name,
-      email: email,
-      subject: subject || 'Contact',
-      message: message,
-      _subject: '[BuildExact] ' + (subject || 'Contact') + ' — ' + name,
-      _replyto: email,
-      _template: 'table',
-      _captcha: 'false'
-    };
-
-    try {
-      const res = await fetch('https://formsubmit.co/ajax/contact@grounded-studio.app', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const json = await res.json().catch(() => ({}));
-      if (res.ok && String(json.success) === 'true') {
-        form.reset();
-        msg.style.color = 'var(--ok, #16a34a)';
-        msg.textContent = '✓ Bedankt! Je bericht is verstuurd. We reageren snel.';
-      } else {
-        throw new Error('send failed');
-      }
-    } catch (err) {
-      msg.style.color = 'var(--err)';
-      msg.innerHTML = '✗ Versturen lukt nu niet. Mail anders naar ' +
-        '<a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = original;
-    }
-  });
-})();
-</script>
+<script src="/assets/js/contact-form.js" defer></script>
 </body>
 </html>

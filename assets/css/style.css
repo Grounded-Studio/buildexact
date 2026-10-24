@@ -555,6 +555,49 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .store-badge-img:hover { background: transparent; opacity: .9; }
 .store-badge-img img { display: block; height: 44px; width: auto; }
 
+/* ---------- Contact page (matches the Grounded Studio / FreshGarant layout) ---------- */
+.section-kicker {
+  display: inline-block; font-size: 12px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--blue-600);
+  margin-bottom: 10px;
+}
+.section-sub { color: var(--muted); font-size: 1.08rem; max-width: 680px; margin: 0 0 40px; }
+.contact-layout { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 900px) { .contact-layout { grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); } }
+.form-panel h2 { font-size: 1.4rem; margin: 0 0 20px; }
+.field textarea, .field select {
+  width: 100%; padding: 11px 13px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--ink); font: inherit;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field textarea { resize: vertical; min-height: 140px; }
+.field textarea:focus, .field select:focus {
+  outline: 0; border-color: var(--blue-600);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status { display: none; padding: 12px 14px; border-radius: var(--radius-sm); font-size: 14px; margin-bottom: 16px; font-weight: 600; }
+.form-status.show { display: block; }
+.form-status.ok  { background: rgba(22,163,74,.12); color: #15803D; }
+.form-status.err { background: rgba(220,38,38,.10); color: var(--err); }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.form-note { margin: 0; font-size: 12.5px; color: var(--faint); max-width: 320px; }
+.contact-side { display: flex; flex-direction: column; gap: 16px; }
+.side-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.side-label { font-size: 11.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-600); margin-bottom: 8px; }
+.mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.mail-addr { font-weight: 700; color: var(--blue-700); word-break: break-all; }
+.copy-btn {
+  border: 1px solid var(--border-strong); background: var(--surface-raised);
+  color: var(--ink-2); border-radius: 8px; padding: 6px 12px; font-size: 13px;
+  font-weight: 600; cursor: pointer; transition: background .15s ease;
+}
+.copy-btn:hover { background: var(--blue-50); }
+.download-list { padding-left: 0; margin: 10px 0 0; list-style: none; }
+.download-list li { position: relative; padding: 6px 0 6px 24px; color: var(--ink-2); font-size: 14px; }
+.download-list li::before { content: '✓'; position: absolute; left: 0; top: 6px; color: var(--blue-600); font-weight: 800; }
+
 /* ---------- Blog ---------- */
 .article {
   background: var(--surface-raised);
