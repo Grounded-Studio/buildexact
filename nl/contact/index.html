@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — BuildExact</title>
+<meta name="description" content="Neem contact op met de BuildExact-ontwikkelaar. Stuur direct vanaf de site een bericht — bugmeldingen, calculator-verzoeken, vragen over betalingen en meer.">
+<link rel="canonical" href="https://buildexact.app/nl/contact/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/contact/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/contact/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/contact/">EN</a><a href="/nl/contact/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+
+<section class="section">
+  <div class="container" style="max-width:720px;">
+    <div class="section-head">
+      <h1>Contact</h1>
+      <p class="lede">Stuur direct hier een bericht. BuildExact is door één persoon gebouwd — je bericht wordt door de ontwikkelaar gelezen, niet door een ticketsysteem. Meestal reageren we binnen 1–2 werkdagen.</p>
+    </div>
+
+    <div class="calc-shell" style="display:block;">
+      <form class="calc-form" id="contactForm" novalidate>
+        <div class="field-row">
+          <div class="field"><label for="name">Je naam</label><input type="text" id="name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="email">Je e-mail</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+        </div>
+        <div class="field"><label for="subject">Onderwerp</label><input type="text" id="subject" name="subject" placeholder="bijv. Fout in schutting-calculator"></div>
+        <div class="field"><label for="message">Bericht</label><textarea id="message" name="message" rows="6" required style="width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font:inherit;resize:vertical;"></textarea></div>
+        <!-- Honeypot: mensen laten dit leeg; bots vullen het in. -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true"><label for="company">Bedrijf</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
+        <button type="submit" id="sendBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:8px;">Bericht versturen</button>
+        <p id="formMsg" style="margin-top:14px;font-weight:600;"></p>
+      </form>
+    </div>
+
+    <p class="muted" style="margin-top:28px;font-size:.9rem;text-align:center;">
+      Liever je eigen mail-app? Schrijf naar
+      <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.
+    </p>
+
+    <div class="grid grid-2" style="margin-top:40px;">
+      <div class="card"><h3>Een bug gevonden?</h3><p>Vermeld de calculator, de waardes die je invulde, het resultaat dat je kreeg en wat je verwachtte. Die lossen we binnen dagen op.</p></div>
+      <div class="card"><h3>Vraag over betaling of PRO?</h3><p>PRO is een eenmalige Google Play-aankoop. Bij herstel-problemen: open eerst in de app Instellingen → Entitlement → Aankoop herstellen.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a></div>
+<div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
+<div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+
+<script src="/assets/js/main.js"></script>
+<script>
+(function () {
+  // Verzonden via FormSubmit (formsubmit.co) → contact@grounded-studio.app,
+  // geen backend nodig. Zelfde opzet als de Grounded Studio + FreshGarant site.
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('formMsg');
+  const btn = document.getElementById('sendBtn');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const company = document.getElementById('company').value.trim(); // honeypot
+    if (company) return; // bot
+
+    if (!name || !email || !message) {
+      msg.style.color = 'var(--err)';
+      msg.textContent = '✗ Vul je naam, e-mail en bericht in.';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.style.color = 'var(--err)';
+      msg.textContent = '✗ Dat e-mailadres lijkt niet te kloppen.';
+      return;
+    }
+
+    btn.disabled = true;
+    const original = btn.textContent;
+    btn.textContent = 'Versturen…';
+    msg.style.color = 'var(--ink-2)';
+    msg.textContent = '';
+
+    const payload = {
+      name: name,
+      email: email,
+      subject: subject || 'Contact',
+      message: message,
+      _subject: '[BuildExact] ' + (subject || 'Contact') + ' — ' + name,
+      _replyto: email,
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/contact@grounded-studio.app', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && String(json.success) === 'true') {
+        form.reset();
+        msg.style.color = 'var(--ok, #16a34a)';
+        msg.textContent = '✓ Bedankt! Je bericht is verstuurd. We reageren snel.';
+      } else {
+        throw new Error('send failed');
+      }
+    } catch (err) {
+      msg.style.color = 'var(--err)';
+      msg.innerHTML = '✗ Versturen lukt nu niet. Mail anders naar ' +
+        '<a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
+})();
+</script>
+</body>
+</html>
