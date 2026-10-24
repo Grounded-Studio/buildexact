@@ -1,4 +1,4 @@
-// Contact form → FormSubmit. Delivers straight to contact@grounded-studio.app
+// Contact form → shared Grounded Studio contact endpoint (own Strato mail).
 // without opening the visitor's mail app. Same endpoint the Grounded Studio
 // and FreshGarant sites use. Language comes from data-lang on the <form>.
 (function () {
@@ -50,7 +50,7 @@
     sendLabel.textContent = t.sending;
     const topic = fd.get('topic');
     try {
-      const res = await fetch('https://formsubmit.co/ajax/contact@grounded-studio.app', {
+      const res = await fetch('https://api.buildexact.app/contact.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
