@@ -53,6 +53,7 @@
   <url><loc>https://buildexact.app/about/</loc><priority>0.5</priority></url>
   <url><loc>https://buildexact.app/privacy/</loc><priority>0.3</priority></url>
   <url><loc>https://buildexact.app/terms/</loc><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/delete-data/</loc><priority>0.3</priority></url>
 
   <url><loc>https://buildexact.app/nl/features/</loc><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/pricing/</loc><priority>0.8</priority></url>
@@ -61,6 +62,7 @@
   <url><loc>https://buildexact.app/nl/about/</loc><priority>0.5</priority></url>
   <url><loc>https://buildexact.app/nl/privacy/</loc><priority>0.3</priority></url>
   <url><loc>https://buildexact.app/nl/terms/</loc><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/nl/delete-data/</loc><priority>0.3</priority></url>
 
   <url><loc>https://buildexact.app/blog/</loc><priority>0.7</priority></url>
   <url><loc>https://buildexact.app/nl/blog/</loc><priority>0.7</priority></url>

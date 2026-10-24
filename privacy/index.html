@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy — BuildExact</title>
-<meta name="description" content="BuildExact privacy policy. We don't collect your calculations, projects or clients. Everything stays on your phone.">
+<meta name="description" content="BuildExact privacy policy. Your projects, calculations and clients stay on your phone. The app uses Firebase for analytics and crash reports; payment is via Google Play.">
 <link rel="canonical" href="https://buildexact.app/privacy/">
 <link rel="alternate" hreflang="en" href="https://buildexact.app/privacy/">
 <link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/privacy/">
@@ -23,47 +23,63 @@
 <section class="section">
   <div class="container" style="max-width:760px;">
     <h1>Privacy policy</h1>
-    <p class="muted">Last updated: 17 October 2026</p>
+    <p class="muted">Last updated: 24 October 2026</p>
 
     <h2>Short version</h2>
     <ul>
-      <li>We don't require an account.</li>
-      <li>Your projects, calculations, quotes, invoices and clients are stored locally on your phone using Hive.</li>
-      <li>We don't sell data. We don't have your data.</li>
-      <li>Payment is handled by Google Play, not us.</li>
+      <li>No account required.</li>
+      <li>Your projects, calculations, quotes, invoices, clients and photos are stored locally on your phone and never leave your device.</li>
+      <li>The app uses Google Firebase (Analytics + Crashlytics) to understand usage and fix crashes, and Google Play for payment. We don't sell data.</li>
+      <li>Our marketing site (grounded-studio.app) uses advertising cookies, only after you accept them.</li>
     </ul>
 
-    <h2>What we collect</h2>
-    <p><strong>In the Android app.</strong> Nothing by default. If you opt in to a crash report after an app crash, that report (device model, Android version, stack trace) is sent to Google Play Console. No personal data is attached.</p>
-    <p><strong>On this website.</strong> Standard GitHub Pages access logs (IP, user agent, requested page) kept by GitHub. No cookies, no analytics scripts, no tracking pixels on calculator pages.</p>
-    <p><strong>In Google Play.</strong> Google Play tracks installs, uninstalls and in-app purchases per their policies. We see aggregated numbers in Play Console; we don't see individual users.</p>
+    <h2>What the app collects</h2>
+    <ul>
+      <li><strong>Analytics &amp; diagnostics (Firebase).</strong> The app uses Google Firebase Analytics and Crashlytics. These automatically send aggregate usage events (e.g. which features are opened, whether a quote was generated), your device model, OS and app version, a device/advertising identifier and crash reports to Google — only to improve the app and fix bugs. We never attach your name, measurements, projects or client data.</li>
+      <li><strong>Advertising identifier.</strong> Firebase uses your device's advertising ID; we also use it to measure whether our Google Ads campaigns lead to installs. You can reset or limit it in Android settings → Privacy → Ads.</li>
+      <li><strong>Purchases (Google Play).</strong> The one-time PRO purchase is processed by Google Play. We receive confirmation only, never your card details.</li>
+      <li><strong>Everything else stays on your device.</strong> Measurements, inputs and results, projects, quotes, invoices, your client list, photos, logo and signature are stored locally with Hive and are never uploaded.</li>
+    </ul>
 
-    <h2>What we don't collect</h2>
+    <h2>What the app does NOT collect</h2>
     <ul>
       <li>Your measurements, calculation inputs or results.</li>
       <li>Your projects, quotes, invoices or client list.</li>
-      <li>Your contacts (BuildExact reads them on-device only to populate client fields; nothing leaves the phone).</li>
+      <li>Your contacts (read on-device only to fill a client field; nothing is uploaded).</li>
       <li>Your location, camera roll or files outside the app.</li>
     </ul>
 
     <h2>Permissions explained</h2>
     <ul>
-      <li><strong>Contacts</strong> — only when you tap "Pick from contacts" in the client manager. Picks a single contact; nothing is uploaded.</li>
-      <li><strong>Storage</strong> — to save branded PDFs you export and to pick a logo from your gallery.</li>
-      <li><strong>Internet</strong> — only used by Google Play Billing to verify your PRO purchase, by the Play Store to notify updates, and by `url_launcher` when you tap a link.</li>
-      <li><strong>Camera</strong> — only if you snap a logo or signature photo; file stays local.</li>
+      <li><strong>Contacts</strong> — only when you tap "Pick from contacts" in the client manager; nothing is uploaded.</li>
+      <li><strong>Storage / Camera</strong> — to save branded PDFs you export and to pick a logo or signature; files stay local.</li>
+      <li><strong>Internet</strong> — used by Firebase (analytics/crashes), Google Play Billing, the Play Store (update notifications) and <code>url_launcher</code> when you tap a link (WhatsApp, Maps).</li>
     </ul>
 
-    <h2>Third-party processors</h2>
+    <h2>Our website &amp; online services</h2>
     <ul>
-      <li>Google Play (payment, update notifications, in-app review prompt)</li>
-      <li>GitHub Pages (website hosting)</li>
-      <li>Cloudflare (DNS)</li>
+      <li><strong>buildexact.app</strong> (this site) runs on GitHub Pages. No cookies, no analytics scripts, no tracking pixels. GitHub keeps standard access logs (IP, user agent, requested page).</li>
+      <li><strong>grounded-studio.app</strong> (our studio / marketing site) uses the Meta Pixel and Google Analytics 4 (ID G-DBG67CDKSP) to measure our advertising. These load only after you accept the cookie banner, and GA4 IP addresses are anonymised.</li>
+      <li><strong>AI shopping list (browser calculators).</strong> If you use this optional feature, your calculation type, title, inputs and results are sent to Google Gemini to build the list. Please don't enter personal data in those fields.</li>
+      <li><strong>Credits (website).</strong> Website credit payments are handled by Mollie; we store your payment email and IP address on our EU server (Strato) to deliver and protect the credits. The Android app does not use this — it uses Google Play.</li>
+      <li><strong>Contact form.</strong> Messages you send via the contact form are emailed to us (name, email, subject, message and basic device/language info); they are not stored in a database.</li>
     </ul>
-    <p>No analytics providers (no Firebase, no Google Analytics, no Facebook SDK, no third-party ads).</p>
 
-    <h2>Your rights (GDPR)</h2>
-    <p>Because we don't have your data, there is nothing to request, correct or delete at our end. Uninstalling the app removes everything on-device. For questions, email <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.</p>
+    <h2>Data retention</h2>
+    <p>On-device data lives until you delete it or uninstall the app. Website payment records (email, IP) are kept for our accounting and anti-abuse needs; you can request deletion at any time.</p>
+
+    <h2>Your rights (GDPR) &amp; deletion</h2>
+    <p>The app has no account and no server-side data, so uninstalling removes everything on-device. For website credit purchases or contact emails, you can request access to or deletion of your data — see our <a href="/delete-data/">data deletion page</a> or email <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>. We action requests within 30 days.</p>
+
+    <h2>Third parties</h2>
+    <ul>
+      <li>Google Firebase — analytics &amp; crash reporting (app)</li>
+      <li>Google Play — payment, update notifications, review prompt (app)</li>
+      <li>Google Gemini — AI shopping list (website calculators only)</li>
+      <li>Mollie — payment (website credits only)</li>
+      <li>Meta &amp; Google Analytics — advertising measurement (grounded-studio.app only, after consent)</li>
+      <li>GitHub Pages (hosting), Cloudflare (DNS)</li>
+    </ul>
 
     <h2>Contact</h2>
     <p>Grounded Studio · The Netherlands · <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a></p>
@@ -75,7 +91,7 @@
 <div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first measurement, quoting and invoicing for builders across Europe.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Get it on Google Play"><img src="/assets/icons/google-play-badge-en.svg" alt="Get it on Google Play"></a></div>
 <div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a></div>
 <div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div>
-<div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+<div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/delete-data/">Delete my data</a></div>
 </div>
 <div class="footer-bottom"><span>© 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
 </div></footer>
