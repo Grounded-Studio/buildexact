@@ -241,14 +241,14 @@
     for (let i = 0; i < total; i++) {
       document.getElementById('seg' + i).addEventListener('input', (e) => {
         segments[i] = parseFloat(e.target.value) || 0;
-        recalc();
+        BE.markStale();
       });
     }
     wrap.querySelectorAll('.two-end-toggle').forEach(el => {
       el.addEventListener('change', (e) => {
         const idx = parseInt(e.target.dataset.idx, 10);
         twoEndPerSegment[idx] = e.target.checked;
-        recalc();
+        BE.markStale();
       });
     });
   }
@@ -289,13 +289,13 @@
       const id = card.dataset.id;
       const g = gates.find(x => x.id === id);
       if (!g) return;
-      card.querySelector('.g-width').addEventListener('input', (e) => { g.widthCm = parseFloat(e.target.value) || 0; recalc(); });
-      card.querySelector('.g-beam').addEventListener('input', (e) => { g.beamCm = parseFloat(e.target.value) || 0; recalc(); });
-      card.querySelector('.g-double').addEventListener('change', (e) => { g.isDouble = e.target.checked; recalc(); });
+      card.querySelector('.g-width').addEventListener('input', (e) => { g.widthCm = parseFloat(e.target.value) || 0; BE.markStale(); });
+      card.querySelector('.g-beam').addEventListener('input', (e) => { g.beamCm = parseFloat(e.target.value) || 0; BE.markStale(); });
+      card.querySelector('.g-double').addEventListener('change', (e) => { g.isDouble = e.target.checked; BE.markStale(); });
       card.querySelector('.gate-remove').addEventListener('click', () => {
         gates = gates.filter(x => x.id !== id);
         renderGates();
-        recalc();
+        BE.markStale();
       });
     });
   }
@@ -303,7 +303,7 @@
   function addGate() {
     gates.push({ id: 'g' + (++gateSeq), widthCm: 100, beamCm: 5, isDouble: false });
     renderGates();
-    recalc();
+    BE.markStale();
   }
 
   function renderLongPanelField() {
@@ -387,22 +387,22 @@
     renderSegments();
     renderGates();
     renderLongPanelField();
-    recalc();
+    BE.wireCalc(recalc, []);
 
     document.getElementById('cornerMinus').addEventListener('click', () => {
-      if (cornerCount > 0) { cornerCount--; renderCornerStepper(); renderSegments(); recalc(); }
+      if (cornerCount > 0) { cornerCount--; renderCornerStepper(); renderSegments(); BE.markStale(); }
     });
     document.getElementById('cornerPlus').addEventListener('click', () => {
-      if (cornerCount < 10) { cornerCount++; renderCornerStepper(); renderSegments(); recalc(); }
+      if (cornerCount < 10) { cornerCount++; renderCornerStepper(); renderSegments(); BE.markStale(); }
     });
     ['postCm', 'panelCm', 'longMaxCm'].forEach(id => {
-      document.getElementById(id).addEventListener('input', recalc);
+      document.getElementById(id).addEventListener('input', BE.markStale);
     });
     ['startWithPost', 'endWithPost'].forEach(id => {
-      document.getElementById(id).addEventListener('change', recalc);
+      document.getElementById(id).addEventListener('change', BE.markStale);
     });
     document.getElementById('allowLong').addEventListener('change', () => {
-      renderLongPanelField(); recalc();
+      renderLongPanelField(); BE.markStale();
     });
     document.getElementById('addGateBtn').addEventListener('click', addGate);
 

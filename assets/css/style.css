@@ -447,7 +447,7 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 /* Hide hero + rows for monetised calcs until first Calculate click */
 .calc-result:not([data-no-lock]):not([data-ready]) .result-hero,
 .calc-result:not([data-no-lock]):not([data-ready]) .result-rows,
-.calc-result:not([data-no-lock]):not([data-ready]) .calc-stale-hint {
+.calc-result:not([data-no-lock]):not([data-ready]) .calc-stale-hint:not(.calc-error) {
   display: none !important;
 }
 .calc-result[data-ready] .calc-placeholder,

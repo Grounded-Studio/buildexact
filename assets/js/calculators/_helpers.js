@@ -191,7 +191,7 @@ window.BE = {
     });
   }
 
-  function setHint(text) {
+  function setHint(text, isError) {
     const result = document.querySelector('.calc-result:not([data-no-lock="true"])');
     if (!result) return;
     let hint = result.querySelector('.calc-stale-hint');
@@ -203,6 +203,7 @@ window.BE = {
         if (rows) rows.parentNode.insertBefore(hint, rows); else result.appendChild(hint);
       }
       hint.textContent = '⚠️ ' + text;
+      hint.classList.toggle('calc-error', !!isError);
     } else if (hint) {
       hint.remove();
     }
@@ -236,12 +237,12 @@ window.BE = {
 
       if (!r) {
         updateAllChips();
-        setHint(STR.netError);
+        setHint(STR.netError, true);
         return;
       }
       if (r.status === 401) { setAcct(null); location.href = Auth.loginUrl(); return; }
       if (r.status === 402) { setAcct({ loggedIn: true, credits: 0 }); showLockOverlay(); return; }
-      if (!r.ok) { updateAllChips(); setHint(STR.netError); return; }
+      if (!r.ok) { updateAllChips(); setHint(STR.netError, true); return; }
 
       updateAllChips();
       removeLockOverlay();
@@ -263,6 +264,9 @@ window.BE = {
       el.addEventListener('click', () => setStale(isReady()));
     });
   };
+
+  // Voor calcs met dynamische velden (schutting): invoer gewijzigd → resultaat verouderd.
+  window.BE.markStale = function markStale() { setStale(isReady()); };
 
   function isReady() {
     const r = document.querySelector('.calc-result:not([data-no-lock="true"])');
