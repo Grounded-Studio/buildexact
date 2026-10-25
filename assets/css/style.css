@@ -798,3 +798,16 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .field-error { color: var(--err); font-size: .8rem; font-weight: 600; margin-top: 4px; }
 @media (max-width: 520px) { .billing-row { grid-template-columns: 1fr; gap: 0; } }
 [hidden] { display: none !important; }
+
+/* Account page */
+.acc-card { padding: 22px 24px; margin-top: 16px; }
+.acc-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.acc-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; }
+.acc-balance { font-size: 1.8rem; font-weight: 800; color: var(--blue-600); }
+.acc-billing { margin-top: 6px; line-height: 1.6; }
+.acc-orders { margin-top: 6px; }
+.acc-order { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); font-size: .92rem; }
+.acc-order:first-child { border-top: 0; }
+.nav-account-link { display: block; padding: 8px 0; font-size: .92rem; color: var(--ink); text-decoration: none; }
+.nav-account-link:hover { color: var(--blue-600); }
+.acc-order-actions { display: flex; gap: 14px; white-space: nowrap; }

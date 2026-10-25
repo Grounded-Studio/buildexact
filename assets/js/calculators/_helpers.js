@@ -128,6 +128,15 @@ window.BE = {
       chip.className = 'credit-chip';
       chip.textContent = '🪙 ' + STR.chipBalance(acct.credits);
     }
+    if (acct && acct.loggedIn) {
+      // Saldo-chip linkt naar de koop-pagina.
+      const a = document.createElement('a');
+      a.className = chip.className;
+      a.href = CREDITS_URL;
+      a.title = STR.lockBuy;
+      a.textContent = chip.textContent + ' · +';
+      return a;
+    }
     return chip;
   }
 

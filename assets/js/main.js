@@ -136,6 +136,15 @@
     const bal = document.createElement('div');
     bal.className = 'nav-account-balance';
     bal.textContent = (isNl ? 'Saldo: ' : 'Balance: ') + me.credits + ' credits';
+    const links = document.createElement('div');
+    [[isNl ? 'Mijn account' : 'My account', isNl ? '/nl/account/' : '/account/'],
+     [isNl ? 'Credits kopen' : 'Buy credits', isNl ? '/nl/credits/' : '/credits/']].forEach(([text, href]) => {
+      const a = document.createElement('a');
+      a.className = 'nav-account-link';
+      a.href = href;
+      a.textContent = text;
+      links.appendChild(a);
+    });
     const out = document.createElement('button');
     out.type = 'button';
     out.className = 'nav-account-logout';
@@ -145,7 +154,7 @@
       await BEAuth.logout();
       location.reload();
     });
-    menu.append(who, bal, out);
+    menu.append(who, bal, links, out);
 
     function setOpen(open) {
       menu.hidden = !open;

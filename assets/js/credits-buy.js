@@ -186,5 +186,6 @@
         if (profile && editLink) editLink.hidden = false;
       }
     } catch (_) {}
+    if (location.hash === '#billing') openForm();
   });
 })();
