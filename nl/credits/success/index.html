@@ -54,13 +54,22 @@
   const actions = document.getElementById('actions');
   const failedActions = document.getElementById('failedActions');
 
-  function showSuccess(amount, bonus, credits) {
+  function showSuccess(amount, bonus, credits, invoiceUrl) {
     emoji.textContent = '🎉';
     title.textContent = '✓ Credits geactiveerd';
     status.innerHTML = '<strong style="color:var(--ok);">' + amount + ' credits toegevoegd aan je account.</strong>'
       + (bonus ? '<br>' + ' + ' + bonus + ' bonuscredits voor je eerste aankoop!' : '');
     balance.style.display = 'inline-flex';
     balance.textContent = '🪙 Nieuwe balans: ' + credits + ' credits';
+    if (invoiceUrl && !document.getElementById('invoiceLink')) {
+      const p = document.createElement('p');
+      p.style.marginTop = '12px';
+      const a = document.createElement('a');
+      a.id = 'invoiceLink'; a.href = invoiceUrl; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = '📄 Factuur bekijken';
+      p.appendChild(a);
+      actions.appendChild(p);
+    }
     actions.style.display = 'block';
   }
   function showAlready() {
@@ -117,7 +126,7 @@
     } else if (data.ok && data.amount) {
       BEAuth.setCredits(data.credits);
       try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
-      showSuccess(data.amount, data.bonus, data.credits);
+      showSuccess(data.amount, data.bonus, data.credits, data.invoiceUrl);
     } else if (data.reason === 'already claimed') {
       try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showAlready();

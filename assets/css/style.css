@@ -791,3 +791,10 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   margin-top: 18px; padding: 12px 14px; border-radius: var(--radius-sm);
   background: var(--blue-50); color: var(--ink-2); font-size: .86rem; line-height: 1.5;
 }
+
+/* Billing details (credits page) */
+.billing-row { grid-template-columns: 1fr 2fr; }
+.billing-help { font-size: .78rem; margin-top: 4px; }
+.field-error { color: var(--err); font-size: .8rem; font-weight: 600; margin-top: 4px; }
+@media (max-width: 520px) { .billing-row { grid-template-columns: 1fr; gap: 0; } }
+[hidden] { display: none !important; }

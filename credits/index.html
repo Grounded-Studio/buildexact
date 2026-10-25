@@ -35,7 +35,29 @@
       <p class="muted">Enough for a typical fencing or renovation estimate across several calculators. Your first purchase comes with <strong>10 extra credits</strong>.</p>
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Buy now — iDEAL / card</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
-      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Credits land on your account right after payment. You'll also get a backup code by email.</p>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Credits land on your account right after payment. You'll get a confirmation with your invoice by email.</p>
+    </div>
+
+    <p style="margin-top:12px;text-align:center;"><a href="#billingCard" id="editBilling" class="muted" style="font-size:.85rem;" hidden>Edit billing details</a></p>
+
+    <div class="card billing-card" id="billingCard" hidden style="margin-top:24px;padding:28px;">
+      <h2 style="margin-top:0;">Billing details</h2>
+      <p class="muted">Needed for your invoice. You only fill this in once.</p>
+      <form id="billingForm" novalidate>
+        <div class="field"><label for="bName">Full name</label><input id="bName" name="name" autocomplete="name" required maxlength="100"></div>
+        <div class="field"><label for="bCompany">Company (optional)</label><input id="bCompany" name="company" autocomplete="organization" maxlength="100"></div>
+        <div class="field"><label for="bAddress">Street and number</label><input id="bAddress" name="address" autocomplete="street-address" required maxlength="150"></div>
+        <div class="field-row billing-row">
+          <div class="field"><label for="bPostcode">Postcode</label><input id="bPostcode" name="postcode" autocomplete="postal-code" required maxlength="12"></div>
+          <div class="field"><label for="bCity">City</label><input id="bCity" name="city" autocomplete="address-level2" required maxlength="80"></div>
+        </div>
+        <div class="field"><label for="bCountry">Country</label><select id="bCountry" name="country" required></select><p class="muted billing-help">Payment is available for customers in the EU.</p></div>
+        <div class="field"><label for="bVat">VAT number (optional, EU businesses)</label><input id="bVat" name="vat_number" maxlength="20" style="text-transform:uppercase;"><p class="muted billing-help">EU business outside the Netherlands with a valid VAT number? Then VAT is reverse charged and you pay €2.99 without VAT.</p></div>
+        <p id="vatMsg" class="billing-help" style="display:none;font-weight:600;"></p>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px;">Save and continue to payment</button>
+        <button type="button" id="billingContinue" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;" hidden>Continue to payment</button>
+        <p id="billingMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;"></p>
+      </form>
     </div>
 
     <h2 id="redeem" style="margin-top:48px;">Redeem a code</h2>
@@ -64,43 +86,13 @@
 
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/credits-buy.js"></script>
 <script>
 (function () {
   const API = 'https://api.buildexact.app/redeem.php';
-  const CHECKOUT_API = 'https://api.buildexact.app/checkout.php';
-  const PENDING_KEY = 'be_pending_payment';
   let acct = { loggedIn: false, credits: 0 };
 
   const buyBtn = document.getElementById('buyBtn');
-  const buyMsg = document.getElementById('buyMsg');
-  if (buyBtn) {
-    buyBtn.addEventListener('click', async () => {
-      if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
-      buyBtn.disabled = true;
-      const original = buyBtn.textContent;
-      buyBtn.textContent = 'One moment…';
-      buyMsg.style.display = 'none';
-      try {
-        const r = await fetch(CHECKOUT_API, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: '{}',
-        });
-        const data = await r.json();
-        if (data.ok && data.id && data.checkoutUrl) {
-          try { localStorage.setItem(PENDING_KEY, data.id); } catch (_) {}
-          window.location.href = data.checkoutUrl;
-          return;
-        }
-        throw new Error(data.reason || 'checkout failed');
-      } catch (e) {
-        buyBtn.disabled = false;
-        buyBtn.textContent = original;
-        buyMsg.textContent = '✗ Could not start payment — please try again or contact us.';
-        buyMsg.style.display = 'block';
-      }
-    });
-  }
 
   function render() {
     const bal = acct.credits;

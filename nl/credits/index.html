@@ -35,7 +35,29 @@
       <p class="muted">Genoeg voor een complete schuttingklus of renovatie-raming over meerdere calculators. Bij je eerste aankoop krijg je er <strong>10 credits extra</strong> bij.</p>
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Nu kopen — iDEAL / creditcard</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
-      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">De credits staan direct na betaling op je account. Je krijgt ook een reservecode per e-mail.</p>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">De credits staan direct na betaling op je account. Je krijgt een bevestiging met je factuur per e-mail.</p>
+    </div>
+
+    <p style="margin-top:12px;text-align:center;"><a href="#billingCard" id="editBilling" class="muted" style="font-size:.85rem;" hidden>Factuurgegevens wijzigen</a></p>
+
+    <div class="card billing-card" id="billingCard" hidden style="margin-top:24px;padding:28px;">
+      <h2 style="margin-top:0;">Factuurgegevens</h2>
+      <p class="muted">Nodig voor je factuur. Je vult dit maar één keer in.</p>
+      <form id="billingForm" novalidate>
+        <div class="field"><label for="bName">Volledige naam</label><input id="bName" name="name" autocomplete="name" required maxlength="100"></div>
+        <div class="field"><label for="bCompany">Bedrijfsnaam (optioneel)</label><input id="bCompany" name="company" autocomplete="organization" maxlength="100"></div>
+        <div class="field"><label for="bAddress">Straat en huisnummer</label><input id="bAddress" name="address" autocomplete="street-address" required maxlength="150"></div>
+        <div class="field-row billing-row">
+          <div class="field"><label for="bPostcode">Postcode</label><input id="bPostcode" name="postcode" autocomplete="postal-code" required maxlength="12"></div>
+          <div class="field"><label for="bCity">Plaats</label><input id="bCity" name="city" autocomplete="address-level2" required maxlength="80"></div>
+        </div>
+        <div class="field"><label for="bCountry">Land</label><select id="bCountry" name="country" required></select><p class="muted billing-help">Betalen kan voor klanten in de EU.</p></div>
+        <div class="field"><label for="bVat">Btw-nummer (optioneel, voor bedrijven)</label><input id="bVat" name="vat_number" maxlength="20" style="text-transform:uppercase;"><p class="muted billing-help">Bedrijf in een ander EU-land met een geldig btw-nummer? Dan wordt de btw verlegd en betaal je €2,99 zonder btw.</p></div>
+        <p id="vatMsg" class="billing-help" style="display:none;font-weight:600;"></p>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px;">Opslaan en door naar betalen</button>
+        <button type="button" id="billingContinue" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;" hidden>Door naar betalen</button>
+        <p id="billingMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;"></p>
+      </form>
     </div>
 
     <h2 id="redeem" style="margin-top:48px;">Code inwisselen</h2>
@@ -64,43 +86,13 @@
 
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/credits-buy.js"></script>
 <script>
 (function () {
   const API = 'https://api.buildexact.app/redeem.php';
-  const CHECKOUT_API = 'https://api.buildexact.app/checkout.php';
-  const PENDING_KEY = 'be_pending_payment';
   let acct = { loggedIn: false, credits: 0 };
 
   const buyBtn = document.getElementById('buyBtn');
-  const buyMsg = document.getElementById('buyMsg');
-  if (buyBtn) {
-    buyBtn.addEventListener('click', async () => {
-      if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
-      buyBtn.disabled = true;
-      const original = buyBtn.textContent;
-      buyBtn.textContent = 'Even geduld…';
-      buyMsg.style.display = 'none';
-      try {
-        const r = await fetch(CHECKOUT_API, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: '{}',
-        });
-        const data = await r.json();
-        if (data.ok && data.id && data.checkoutUrl) {
-          try { localStorage.setItem(PENDING_KEY, data.id); } catch (_) {}
-          window.location.href = data.checkoutUrl;
-          return;
-        }
-        throw new Error(data.reason || 'checkout failed');
-      } catch (e) {
-        buyBtn.disabled = false;
-        buyBtn.textContent = original;
-        buyMsg.textContent = '✗ Kon betaling niet starten — probeer het opnieuw of neem contact op.';
-        buyMsg.style.display = 'block';
-      }
-    });
-  }
 
   function render() {
     const bal = acct.credits;
