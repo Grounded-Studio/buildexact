@@ -36,6 +36,7 @@
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Buy now — iDEAL / card</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
       <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Credits land on your account right after payment. You'll get a confirmation with your invoice by email.</p>
+      <p class="muted buy-consent">By buying you agree to immediate delivery of the credits, which ends the right of withdrawal. See our <a href="/terms/">terms</a>.</p>
     </div>
 
     <p style="margin-top:12px;text-align:center;"><a href="#billingCard" id="editBilling" class="muted" style="font-size:.85rem;" hidden>Edit billing details</a></p>
@@ -56,17 +57,10 @@
         <p id="vatMsg" class="billing-help" style="display:none;font-weight:600;"></p>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px;">Save and continue to payment</button>
         <button type="button" id="billingContinue" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;" hidden>Continue to payment</button>
+        <p class="muted buy-consent">By buying you agree to immediate delivery of the credits, which ends the right of withdrawal. See our <a href="/terms/">terms</a>.</p>
         <p id="billingMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;"></p>
       </form>
     </div>
-
-    <h2 id="redeem" style="margin-top:48px;">Redeem a code</h2>
-    <p class="muted">Paste the code from your purchase email below.</p>
-    <div class="field-row redeem-row">
-      <div class="field"><label for="codeInput">Code</label><input type="text" id="codeInput" placeholder="e.g. BEX-ABCD-1234" style="text-transform:uppercase;letter-spacing:0.1em;"></div>
-      <button type="button" id="redeemBtn" class="btn btn-primary btn-lg">Redeem</button>
-    </div>
-    <p id="redeemMsg" style="margin-top:16px;font-weight:600;"></p>
 
     <h2 style="margin-top:48px;">Prefer unlimited?</h2>
     <p>The BuildExact Android app gives you <strong>unlimited calculations</strong>, plus saved projects, branded PDF quotes, invoices and client manager — all for a <strong>one-off €7.99</strong> in-app purchase. No subscription either.</p>
@@ -89,14 +83,10 @@
 <script src="/assets/js/credits-buy.js"></script>
 <script>
 (function () {
-  const API = 'https://api.buildexact.app/redeem.php';
-  let acct = { loggedIn: false, credits: 0 };
-
-  const buyBtn = document.getElementById('buyBtn');
-
-  function render() {
+  // Saldo bovenaan; kopen + factuurgegevens zitten in credits-buy.js.
+  const el = document.getElementById('currentBalance');
+  function render(acct) {
     const bal = acct.credits;
-    const el = document.getElementById('currentBalance');
     if (!acct.loggedIn) {
       el.innerHTML = '';
       const a = document.createElement('a');
@@ -104,8 +94,6 @@
       a.textContent = '🔑 Log in to see your balance — new accounts get 5 free credits';
       el.appendChild(a);
       el.classList.remove('exhausted');
-      buyBtn.textContent = 'Log in to buy';
-      btn.textContent = 'Log in to redeem';
     } else if (bal > 0) {
       el.textContent = '🪙 You currently have ' + bal + ' credit' + (bal === 1 ? '' : 's');
       el.classList.remove('exhausted');
@@ -114,63 +102,8 @@
       el.classList.add('exhausted');
     }
   }
-  const btn = document.getElementById('redeemBtn');
-  const buyLabel = buyBtn.textContent, redeemLabel = btn.textContent;
-  BEAuth.me().then((me) => {
-    if (me && me.loggedIn) {
-      acct = { loggedIn: true, credits: me.credits };
-      buyBtn.textContent = buyLabel; btn.textContent = redeemLabel;
-    }
-    render();
-  });
-  document.addEventListener('be:credits', (e) => { acct = { loggedIn: true, credits: e.detail.credits }; render(); });
-  btn.addEventListener('click', async () => {
-    if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
-    const input = document.getElementById('codeInput');
-    const code = input.value.trim().toUpperCase();
-    const msg = document.getElementById('redeemMsg');
-    if (!/^BEX-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Invalid code format — expected BEX-XXXX-XXXX.';
-      return;
-    }
-    btn.disabled = true;
-    const originalText = btn.textContent;
-    btn.textContent = 'Checking…';
-    msg.style.color = 'var(--muted)';
-    msg.textContent = '';
-    try {
-      const r = await fetch(API, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({code}),
-      });
-      const data = await r.json();
-      if (r.status === 401) { location.href = BEAuth.loginUrl(); return; }
-      if (data.ok && data.amount) {
-        BEAuth.setCredits(data.credits);
-        msg.style.color = 'var(--ok)';
-        msg.textContent = '✓ ' + data.amount + ' credits added' + (data.bonus ? ' + ' + data.bonus + ' bonus' : '') + '! New balance: ' + data.credits + '.';
-        input.value = '';
-      } else {
-        msg.style.color = 'var(--err)';
-        const map = {
-          'code not recognised': 'Code not recognised. Check for typos.',
-          'already redeemed': 'This code has already been used.',
-          'invalid code format': 'Invalid code format — expected BEX-XXXX-XXXX.',
-          'Too many attempts, try again in a few minutes': 'Too many attempts — wait a few minutes.',
-        };
-        msg.textContent = '✗ ' + (map[data.reason] || data.reason || 'Something went wrong.');
-      }
-    } catch (e) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Network error — check your connection.';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }
-  });
+  BEAuth.me().then((me) => render(me && me.loggedIn ? { loggedIn: true, credits: me.credits } : { loggedIn: false, credits: 0 }));
+  document.addEventListener('be:credits', (e) => render({ loggedIn: true, credits: e.detail.credits }));
 })();
 </script>
 </body>

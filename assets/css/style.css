@@ -814,3 +814,5 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .acc-danger summary { cursor: pointer; font-weight: 700; color: var(--err); }
 .acc-delete-btn { background: var(--err); color: #fff; border: 0; }
 .acc-delete-btn:disabled { opacity: .45; cursor: not-allowed; }
+.buy-consent { font-size: .72rem; line-height: 1.45; margin-top: 8px; text-align: center; }
+.buy-consent a { color: inherit; text-decoration: underline; }

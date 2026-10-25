@@ -67,7 +67,6 @@ window.BE = {
     lockTitle:   'Je credits zijn op',
     lockBody:    `Koop een pakket van ${PACK.size} credits voor ${PACK.price} om door te rekenen op de website. Eenmalig, geen abonnement. Bij je eerste aankoop krijg je er ${PACK.firstBonus} extra.`,
     lockBuy:     `Koop ${PACK.size} credits — ${PACK.price}`,
-    lockHaveCode: 'Al een code? Inwisselen',
     installFoot: 'Liever onbeperkt + PDF-offertes? Installeer BuildExact (€7,99 eenmalig in de app)',
   } : {
     chipBalance: (n) => `${n} credit${n === 1 ? '' : 's'} left`,
@@ -85,7 +84,6 @@ window.BE = {
     lockTitle:   'Out of credits',
     lockBody:    `Buy a pack of ${PACK.size} credits for ${PACK.price} to keep calculating on the website. One-off, no subscription. Your first purchase comes with ${PACK.firstBonus} extra.`,
     lockBuy:     `Buy ${PACK.size} credits — ${PACK.price}`,
-    lockHaveCode: 'Already got a code? Redeem',
     installFoot: 'Want unlimited + branded PDF quotes? Install BuildExact (one-off €7.99 in the app)',
   };
 
@@ -186,7 +184,6 @@ window.BE = {
       <h4>${STR.lockTitle}</h4>
       <p>${STR.lockBody}</p>
       <a href="${CREDITS_URL}" class="btn btn-primary btn-sm">${STR.lockBuy}</a>
-      <a href="${CREDITS_URL}#redeem" style="display:block;margin-top:10px;font-size:.8rem;color:var(--muted);">${STR.lockHaveCode}</a>
     `;
     target.appendChild(overlay);
   }

@@ -36,6 +36,7 @@
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Nu kopen — iDEAL / creditcard</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
       <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">De credits staan direct na betaling op je account. Je krijgt een bevestiging met je factuur per e-mail.</p>
+      <p class="muted buy-consent">Met kopen ga je akkoord met directe levering van de credits, waardoor het herroepingsrecht vervalt. Zie onze <a href="/nl/terms/">voorwaarden</a>.</p>
     </div>
 
     <p style="margin-top:12px;text-align:center;"><a href="#billingCard" id="editBilling" class="muted" style="font-size:.85rem;" hidden>Factuurgegevens wijzigen</a></p>
@@ -56,17 +57,10 @@
         <p id="vatMsg" class="billing-help" style="display:none;font-weight:600;"></p>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:8px;">Opslaan en door naar betalen</button>
         <button type="button" id="billingContinue" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;" hidden>Door naar betalen</button>
+        <p class="muted buy-consent">Met kopen ga je akkoord met directe levering van de credits, waardoor het herroepingsrecht vervalt. Zie onze <a href="/nl/terms/">voorwaarden</a>.</p>
         <p id="billingMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;"></p>
       </form>
     </div>
-
-    <h2 id="redeem" style="margin-top:48px;">Code inwisselen</h2>
-    <p class="muted">Plak de code uit je aankoopmail hieronder.</p>
-    <div class="field-row redeem-row">
-      <div class="field"><label for="codeInput">Code</label><input type="text" id="codeInput" placeholder="bijv. BEX-ABCD-1234" style="text-transform:uppercase;letter-spacing:0.1em;"></div>
-      <button type="button" id="redeemBtn" class="btn btn-primary btn-lg">Inwisselen</button>
-    </div>
-    <p id="redeemMsg" style="margin-top:16px;font-weight:600;"></p>
 
     <h2 style="margin-top:48px;">Liever onbeperkt?</h2>
     <p>De BuildExact Android app geeft je <strong>onbeperkte berekeningen</strong>, plus opgeslagen projecten, offerte-PDF's met je eigen stijl, facturen en klantenbeheer — allemaal voor <strong>eenmalig €7,99</strong> in de app. Ook geen abonnement.</p>
@@ -89,14 +83,10 @@
 <script src="/assets/js/credits-buy.js"></script>
 <script>
 (function () {
-  const API = 'https://api.buildexact.app/redeem.php';
-  let acct = { loggedIn: false, credits: 0 };
-
-  const buyBtn = document.getElementById('buyBtn');
-
-  function render() {
+  // Saldo bovenaan; kopen + factuurgegevens zitten in credits-buy.js.
+  const el = document.getElementById('currentBalance');
+  function render(acct) {
     const bal = acct.credits;
-    const el = document.getElementById('currentBalance');
     if (!acct.loggedIn) {
       el.innerHTML = '';
       const a = document.createElement('a');
@@ -104,8 +94,6 @@
       a.textContent = '🔑 Log in om je saldo te zien — nieuwe accounts krijgen 5 gratis credits';
       el.appendChild(a);
       el.classList.remove('exhausted');
-      buyBtn.textContent = 'Log in om te kopen';
-      btn.textContent = 'Log in om in te wisselen';
     } else if (bal > 0) {
       el.textContent = '🪙 Je hebt nu ' + bal + ' credit' + (bal === 1 ? '' : 's');
       el.classList.remove('exhausted');
@@ -114,63 +102,8 @@
       el.classList.add('exhausted');
     }
   }
-  const btn = document.getElementById('redeemBtn');
-  const buyLabel = buyBtn.textContent, redeemLabel = btn.textContent;
-  BEAuth.me().then((me) => {
-    if (me && me.loggedIn) {
-      acct = { loggedIn: true, credits: me.credits };
-      buyBtn.textContent = buyLabel; btn.textContent = redeemLabel;
-    }
-    render();
-  });
-  document.addEventListener('be:credits', (e) => { acct = { loggedIn: true, credits: e.detail.credits }; render(); });
-  btn.addEventListener('click', async () => {
-    if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
-    const input = document.getElementById('codeInput');
-    const code = input.value.trim().toUpperCase();
-    const msg = document.getElementById('redeemMsg');
-    if (!/^BEX-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Ongeldige code — verwacht BEX-XXXX-XXXX.';
-      return;
-    }
-    btn.disabled = true;
-    const originalText = btn.textContent;
-    btn.textContent = 'Controleren…';
-    msg.style.color = 'var(--muted)';
-    msg.textContent = '';
-    try {
-      const r = await fetch(API, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({code}),
-      });
-      const data = await r.json();
-      if (r.status === 401) { location.href = BEAuth.loginUrl(); return; }
-      if (data.ok && data.amount) {
-        BEAuth.setCredits(data.credits);
-        msg.style.color = 'var(--ok)';
-        msg.textContent = '✓ ' + data.amount + ' credits toegevoegd' + (data.bonus ? ' + ' + data.bonus + ' bonus' : '') + '! Nieuw saldo: ' + data.credits + '.';
-        input.value = '';
-      } else {
-        msg.style.color = 'var(--err)';
-        const map = {
-          'code not recognised': 'Code onbekend. Controleer op typefouten.',
-          'already redeemed': 'Deze code is al gebruikt.',
-          'invalid code format': 'Ongeldige code — verwacht BEX-XXXX-XXXX.',
-          'Too many attempts, try again in a few minutes': 'Te veel pogingen — wacht een paar minuten.',
-        };
-        msg.textContent = '✗ ' + (map[data.reason] || data.reason || 'Er ging iets mis.');
-      }
-    } catch (e) {
-      msg.style.color = 'var(--err)';
-      msg.textContent = '✗ Netwerkfout — controleer je verbinding.';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }
-  });
+  BEAuth.me().then((me) => render(me && me.loggedIn ? { loggedIn: true, credits: me.credits } : { loggedIn: false, credits: 0 }));
+  document.addEventListener('be:credits', (e) => render({ loggedIn: true, credits: e.detail.credits }));
 })();
 </script>
 </body>

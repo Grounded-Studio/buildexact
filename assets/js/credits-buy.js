@@ -11,6 +11,9 @@
   if (!A || !buyBtn || !card || !form) return;
   const nl = A.isNl;
   const API = 'https://api.buildexact.app';
+  // Versie van de akkoordtekst onder de koopknop (directe levering, geen herroepingsrecht).
+  // Verander je die tekst, verhoog dan deze versie.
+  const CONSENT = 'immediate-delivery-v1';
 
   const EU = [
     ['AT', 'Oostenrijk', 'Austria'], ['BE', 'België', 'Belgium'], ['BG', 'Bulgarije', 'Bulgaria'],
@@ -111,7 +114,7 @@
     buyBtn.textContent = T.wait;
     buyMsg.style.display = 'none';
     try {
-      const r = await api('/checkout.php', { method: 'POST', body: JSON.stringify({ lang: nl ? 'nl' : 'en' }) });
+      const r = await api('/checkout.php', { method: 'POST', body: JSON.stringify({ lang: nl ? 'nl' : 'en', consent: CONSENT }) });
       if (r.status === 401) { location.href = A.loginUrl(); return; }
       if (r.status === 409) { complete = false; buyBtn.disabled = false; buyBtn.textContent = buyLabel; openForm(); return; }
       if (r.data.ok && r.data.id && r.data.checkoutUrl) {
