@@ -11,7 +11,7 @@
       sending: 'Sending…',
       send: 'Send message',
       ok: 'Thanks! Your message is on its way. We usually reply within 1–2 working days.',
-      err: 'Something went wrong while sending. Please email us at <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.',
+      err: 'Something went wrong while sending. Please email us at <a href="mailto:contact@buildexact.app">contact@buildexact.app</a>.',
       copied: 'Copied!',
       copy: 'Copy',
     },
@@ -20,7 +20,7 @@
       sending: 'Versturen…',
       send: 'Verstuur bericht',
       ok: 'Bedankt! Je bericht is onderweg. We reageren meestal binnen 1–2 werkdagen.',
-      err: 'Er ging iets mis bij het versturen. Mail ons gerust via <a href="mailto:contact@grounded-studio.app">contact@grounded-studio.app</a>.',
+      err: 'Er ging iets mis bij het versturen. Mail ons gerust via <a href="mailto:contact@buildexact.app">contact@buildexact.app</a>.',
       copied: 'Gekopieerd!',
       copy: 'Kopieer',
     },
@@ -81,7 +81,7 @@
   const copyBtn = document.getElementById('copyBtn');
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText('contact@grounded-studio.app'); } catch (err) {}
+      try { await navigator.clipboard.writeText('contact@buildexact.app'); } catch (err) {}
       copyBtn.textContent = t.copied;
       setTimeout(() => { copyBtn.textContent = t.copy; }, 1800);
     });
