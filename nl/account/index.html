@@ -47,6 +47,14 @@
       <div id="accOrders" class="muted">Laden…</div>
     </div>
 
+    <details class="card acc-card acc-danger">
+      <summary>Account verwijderen</summary>
+      <p class="muted" style="margin-top:10px;">Dit verwijdert je account, je saldo en je factuurgegevens. Resterende credits vervallen. Facturen van aankopen bewaren we 7 jaar, omdat de belastingwet dat verplicht.</p>
+      <div class="field" style="margin-top:12px;"><label for="delConfirm">Typ je e-mailadres ter bevestiging</label><input id="delConfirm" type="email" autocomplete="off"></div>
+      <button type="button" id="accDelete" class="btn acc-delete-btn" disabled>Verwijder mijn account</button>
+      <p id="delMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;"></p>
+    </details>
+
     <p style="margin-top:24px;"><button type="button" id="accLogout" class="btn btn-ghost">Uitloggen</button></p>
   </div>
 </section>

@@ -47,6 +47,14 @@
       <div id="accOrders" class="muted">Loading…</div>
     </div>
 
+    <details class="card acc-card acc-danger">
+      <summary>Delete account</summary>
+      <p class="muted" style="margin-top:10px;">This deletes your account, your balance and your billing details. Remaining credits are lost. Invoices of purchases are kept for 7 years because Dutch tax law requires it.</p>
+      <div class="field" style="margin-top:12px;"><label for="delConfirm">Type your email address to confirm</label><input id="delConfirm" type="email" autocomplete="off"></div>
+      <button type="button" id="accDelete" class="btn acc-delete-btn" disabled>Delete my account</button>
+      <p id="delMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;"></p>
+    </details>
+
     <p style="margin-top:24px;"><button type="button" id="accLogout" class="btn btn-ghost">Log out</button></p>
   </div>
 </section>

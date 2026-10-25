@@ -9,9 +9,13 @@
   const T = nl ? {
     loggedInAs: 'Ingelogd als ', none: 'Nog niet ingevuld — dat doe je bij je eerste aankoop.',
     noOrders: 'Nog geen aankopen.', view: 'Bekijken', bonus: 'bonus', error: 'Kon gegevens niet laden.',
+    sure: 'Weet je het zeker? Dit kan niet ongedaan worden gemaakt.',
+    deleted: 'Je account is verwijderd.', deleteFail: 'Verwijderen mislukt — probeer het opnieuw of mail ons.',
   } : {
     loggedInAs: 'Logged in as ', none: 'Not filled in yet — you do this with your first purchase.',
     noOrders: 'No purchases yet.', view: 'View', bonus: 'bonus', error: "Couldn't load your details.",
+    sure: 'Are you sure? This cannot be undone.',
+    deleted: 'Your account has been deleted.', deleteFail: 'Deleting failed — please try again or email us.',
   };
 
   async function get(path) {
@@ -81,8 +85,37 @@
     location.href = nl ? '/nl/' : '/';
   });
 
+  function wireDelete(email) {
+    const input = $('delConfirm'), btn = $('accDelete'), msg = $('delMsg');
+    if (!input || !btn) return;
+    input.addEventListener('input', () => {
+      btn.disabled = input.value.trim().toLowerCase() !== email.toLowerCase();
+    });
+    btn.addEventListener('click', async () => {
+      if (!confirm(T.sure)) return;
+      btn.disabled = true;
+      msg.textContent = '';
+      try {
+        const r = await fetch(API + '/account-delete.php', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ confirm: input.value.trim() }),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!d.ok) throw new Error(d.reason || 'failed');
+        await A.logout();
+        alert(T.deleted);
+        location.href = nl ? '/nl/' : '/';
+      } catch (_) {
+        msg.textContent = T.deleteFail;
+        btn.disabled = false;
+      }
+    });
+  }
+
   A.me(true).then(async (me) => {
     if (!me || !me.loggedIn) { location.href = A.loginUrl(); return; }
+    wireDelete(me.email);
     $('accEmail').textContent = T.loggedInAs + me.email;
     $('accBalance').textContent = me.credits + ' credits';
     document.addEventListener('be:credits', (e) => { $('accBalance').textContent = e.detail.credits + ' credits'; });

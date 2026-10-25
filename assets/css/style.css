@@ -811,3 +811,6 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .nav-account-link { display: block; padding: 8px 0; font-size: .92rem; color: var(--ink); text-decoration: none; }
 .nav-account-link:hover { color: var(--blue-600); }
 .acc-order-actions { display: flex; gap: 14px; white-space: nowrap; }
+.acc-danger summary { cursor: pointer; font-weight: 700; color: var(--err); }
+.acc-delete-btn { background: var(--err); color: #fff; border: 0; }
+.acc-delete-btn:disabled { opacity: .45; cursor: not-allowed; }
