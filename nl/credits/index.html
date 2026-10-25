@@ -24,7 +24,7 @@
   <div class="container" style="max-width:720px;">
     <p><a href="/nl/calculators/" class="muted">← Alle calculators</a></p>
     <h1>Credits aanvullen</h1>
-    <p class="lede">Elke berekening op de website kost 1 credit. Je krijgt 5 gratis credits — vul aan met een eenmalige aankoop om door te rekenen. Credits vervallen nooit.</p>
+    <p class="lede">Elke berekening op de website kost 1 credit. Log in met je e-mail en je krijgt 5 gratis credits — vul aan met een eenmalige aankoop om door te rekenen. Credits horen bij je account, werken op elk apparaat en vervallen nooit.</p>
 
     <div id="currentBalance" class="credit-chip" style="font-size:1rem;margin:24px 0;">🪙 Balans wordt opgehaald…</div>
 
@@ -32,10 +32,10 @@
       <span class="badge">Eenmalig · geen abonnement</span>
       <h2 style="margin-top:12px;">50 credits</h2>
       <p style="font-size:2.4rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€ 2,99</p>
-      <p class="muted">Genoeg voor een complete schuttingklus of renovatie-raming over meerdere calculators. Geen account nodig.</p>
+      <p class="muted">Genoeg voor een complete schuttingklus of renovatie-raming over meerdere calculators. Bij je eerste aankoop krijg je er <strong>10 credits extra</strong> bij.</p>
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Nu kopen — iDEAL / creditcard</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
-      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Na betaling krijg je je activatiecode per e-mail, meestal binnen enkele minuten.</p>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">De credits staan direct na betaling op je account. Je krijgt ook een reservecode per e-mail.</p>
     </div>
 
     <h2 id="redeem" style="margin-top:48px;">Code inwisselen</h2>
@@ -69,11 +69,13 @@
   const API = 'https://api.buildexact.app/redeem.php';
   const CHECKOUT_API = 'https://api.buildexact.app/checkout.php';
   const PENDING_KEY = 'be_pending_payment';
+  let acct = { loggedIn: false, credits: 0 };
 
   const buyBtn = document.getElementById('buyBtn');
   const buyMsg = document.getElementById('buyMsg');
   if (buyBtn) {
     buyBtn.addEventListener('click', async () => {
+      if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
       buyBtn.disabled = true;
       const original = buyBtn.textContent;
       buyBtn.textContent = 'Even geduld…';
@@ -101,9 +103,18 @@
   }
 
   function render() {
-    const bal = BE.credits.balance();
+    const bal = acct.credits;
     const el = document.getElementById('currentBalance');
-    if (bal > 0) {
+    if (!acct.loggedIn) {
+      el.innerHTML = '';
+      const a = document.createElement('a');
+      a.href = BEAuth.loginUrl();
+      a.textContent = '🔑 Log in om je saldo te zien — nieuwe accounts krijgen 5 gratis credits';
+      el.appendChild(a);
+      el.classList.remove('exhausted');
+      buyBtn.textContent = 'Log in om te kopen';
+      btn.textContent = 'Log in om in te wisselen';
+    } else if (bal > 0) {
       el.textContent = '🪙 Je hebt nu ' + bal + ' credit' + (bal === 1 ? '' : 's');
       el.classList.remove('exhausted');
     } else {
@@ -111,9 +122,18 @@
       el.classList.add('exhausted');
     }
   }
-  render();
   const btn = document.getElementById('redeemBtn');
+  const buyLabel = buyBtn.textContent, redeemLabel = btn.textContent;
+  BEAuth.me().then((me) => {
+    if (me && me.loggedIn) {
+      acct = { loggedIn: true, credits: me.credits };
+      buyBtn.textContent = buyLabel; btn.textContent = redeemLabel;
+    }
+    render();
+  });
+  document.addEventListener('be:credits', (e) => { acct = { loggedIn: true, credits: e.detail.credits }; render(); });
   btn.addEventListener('click', async () => {
+    if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
     const input = document.getElementById('codeInput');
     const code = input.value.trim().toUpperCase();
     const msg = document.getElementById('redeemMsg');
@@ -130,16 +150,17 @@
     try {
       const r = await fetch(API, {
         method: 'POST',
+        credentials: 'include',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({code}),
       });
       const data = await r.json();
+      if (r.status === 401) { location.href = BEAuth.loginUrl(); return; }
       if (data.ok && data.amount) {
-        BE.credits.add(data.amount);
+        BEAuth.setCredits(data.credits);
         msg.style.color = 'var(--ok)';
-        msg.textContent = '✓ ' + data.amount + ' credits toegevoegd! Nieuwe balans: ' + BE.credits.balance() + '.';
+        msg.textContent = '✓ ' + data.amount + ' credits toegevoegd' + (data.bonus ? ' + ' + data.bonus + ' bonus' : '') + '! Nieuw saldo: ' + data.credits + '.';
         input.value = '';
-        render();
       } else {
         msg.style.color = 'var(--err)';
         const map = {

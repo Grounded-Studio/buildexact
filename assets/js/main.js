@@ -60,21 +60,34 @@
       try { await call('/auth-logout.php', { method: 'POST' }); } catch (_) {}
       cacheClear();
     },
+    // Schrijft 1 credit af op de server. status 401 = niet ingelogd, 402 = op.
+    async spend(calc) {
+      const r = await call('/spend.php', { method: 'POST', body: JSON.stringify({ calc: calc || '' }) });
+      if (typeof r.data.credits === 'number') BEAuth.setCredits(r.data.credits);
+      return r;
+    },
+    // Nieuw saldo van de server doorgeven aan cache, header en calculators.
+    setCredits(n) {
+      const c = cacheGet();
+      if (c && c.loggedIn) { c.credits = n; cacheSet(c); }
+      document.dispatchEvent(new CustomEvent('be:credits', { detail: { credits: n } }));
+    },
+    // Na een fetch die credits wijzigde (betaling, code, AI): opnieuw ophalen.
+    async refresh() {
+      const me = await BEAuth.me(true);
+      if (me && me.loggedIn) BEAuth.setCredits(me.credits);
+      return me;
+    },
     loginUrl() {
       return (isNl ? '/nl/login/' : '/login/') + '?next=' + encodeURIComponent(location.pathname + location.search);
     },
   };
   window.BEAuth = BEAuth;
 
-  // ── Inlogknop in de header ──
-  // TIJDELIJK (stap 1 van het account-systeem): de knop is alleen zichtbaar
-  // voor wie /login/ heeft bezocht (login.js zet de vlag). Zo kan het live
-  // getest worden zonder dat bezoekers een half-af systeem zien. Bij stap 2
-  // (saldo op de server) gaat deze regel eruit.
-  let preview = false;
-  try { preview = localStorage.getItem('be_auth_preview') === '1'; } catch (_) {}
-  if (!preview) return;
+  // Oude browser-credits (vóór accounts) opruimen.
+  try { localStorage.removeItem('be_credits_v2'); localStorage.removeItem('be_auth_preview'); } catch (_) {}
 
+  // ── Inlogknop in de header ──
   const navRight = document.querySelector('.nav-right');
   if (!navRight || /\/login\/?$/.test(location.pathname)) return;
 
@@ -141,6 +154,11 @@
     btn.addEventListener('click', (e) => { e.stopPropagation(); setOpen(menu.hidden); });
     document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+    document.addEventListener('be:credits', (e) => {
+      label.textContent = e.detail.credits + ' credits';
+      bal.textContent = (isNl ? 'Saldo: ' : 'Balance: ') + e.detail.credits + ' credits';
+    });
 
     wrap.append(btn, menu);
     slot.appendChild(wrap);

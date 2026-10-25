@@ -24,7 +24,7 @@
   <div class="container" style="max-width:720px;">
     <p><a href="/calculators/" class="muted">← All calculators</a></p>
     <h1>Top up credits</h1>
-    <p class="lede">Every calculation on the website costs 1 credit. You get 5 free credits — top up with a one-off purchase to keep going. Credits never expire.</p>
+    <p class="lede">Every calculation on the website costs 1 credit. Log in with your email and you get 5 free credits — top up with a one-off purchase to keep going. Credits are linked to your account, work on every device and never expire.</p>
 
     <div id="currentBalance" class="credit-chip" style="font-size:1rem;margin:24px 0;">🪙 Checking balance…</div>
 
@@ -32,10 +32,10 @@
       <span class="badge">One-off · no subscription</span>
       <h2 style="margin-top:12px;">50 credits</h2>
       <p style="font-size:2.4rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€ 2,99</p>
-      <p class="muted">Enough for a typical fencing or renovation estimate across several calculators. No sign-up required.</p>
+      <p class="muted">Enough for a typical fencing or renovation estimate across several calculators. Your first purchase comes with <strong>10 extra credits</strong>.</p>
       <button type="button" id="buyBtn" class="btn btn-primary btn-lg" style="width:100%;margin-top:14px;text-align:center;justify-content:center;">Buy now — iDEAL / card</button>
       <p id="buyMsg" style="color:var(--err);font-size:.85rem;margin-top:8px;text-align:center;display:none;"></p>
-      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">After payment you'll receive your activation code by email, usually within a few minutes.</p>
+      <p class="muted" style="font-size:.82rem;margin-top:12px;text-align:center;">Credits land on your account right after payment. You'll also get a backup code by email.</p>
     </div>
 
     <h2 id="redeem" style="margin-top:48px;">Redeem a code</h2>
@@ -69,11 +69,13 @@
   const API = 'https://api.buildexact.app/redeem.php';
   const CHECKOUT_API = 'https://api.buildexact.app/checkout.php';
   const PENDING_KEY = 'be_pending_payment';
+  let acct = { loggedIn: false, credits: 0 };
 
   const buyBtn = document.getElementById('buyBtn');
   const buyMsg = document.getElementById('buyMsg');
   if (buyBtn) {
     buyBtn.addEventListener('click', async () => {
+      if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
       buyBtn.disabled = true;
       const original = buyBtn.textContent;
       buyBtn.textContent = 'One moment…';
@@ -101,9 +103,18 @@
   }
 
   function render() {
-    const bal = BE.credits.balance();
+    const bal = acct.credits;
     const el = document.getElementById('currentBalance');
-    if (bal > 0) {
+    if (!acct.loggedIn) {
+      el.innerHTML = '';
+      const a = document.createElement('a');
+      a.href = BEAuth.loginUrl();
+      a.textContent = '🔑 Log in to see your balance — new accounts get 5 free credits';
+      el.appendChild(a);
+      el.classList.remove('exhausted');
+      buyBtn.textContent = 'Log in to buy';
+      btn.textContent = 'Log in to redeem';
+    } else if (bal > 0) {
       el.textContent = '🪙 You currently have ' + bal + ' credit' + (bal === 1 ? '' : 's');
       el.classList.remove('exhausted');
     } else {
@@ -111,9 +122,18 @@
       el.classList.add('exhausted');
     }
   }
-  render();
   const btn = document.getElementById('redeemBtn');
+  const buyLabel = buyBtn.textContent, redeemLabel = btn.textContent;
+  BEAuth.me().then((me) => {
+    if (me && me.loggedIn) {
+      acct = { loggedIn: true, credits: me.credits };
+      buyBtn.textContent = buyLabel; btn.textContent = redeemLabel;
+    }
+    render();
+  });
+  document.addEventListener('be:credits', (e) => { acct = { loggedIn: true, credits: e.detail.credits }; render(); });
   btn.addEventListener('click', async () => {
+    if (!acct.loggedIn) { location.href = BEAuth.loginUrl(); return; }
     const input = document.getElementById('codeInput');
     const code = input.value.trim().toUpperCase();
     const msg = document.getElementById('redeemMsg');
@@ -130,16 +150,17 @@
     try {
       const r = await fetch(API, {
         method: 'POST',
+        credentials: 'include',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({code}),
       });
       const data = await r.json();
+      if (r.status === 401) { location.href = BEAuth.loginUrl(); return; }
       if (data.ok && data.amount) {
-        BE.credits.add(data.amount);
+        BEAuth.setCredits(data.credits);
         msg.style.color = 'var(--ok)';
-        msg.textContent = '✓ ' + data.amount + ' credits added! New balance: ' + BE.credits.balance() + '.';
+        msg.textContent = '✓ ' + data.amount + ' credits added' + (data.bonus ? ' + ' + data.bonus + ' bonus' : '') + '! New balance: ' + data.credits + '.';
         input.value = '';
-        render();
       } else {
         msg.style.color = 'var(--err)';
         const map = {

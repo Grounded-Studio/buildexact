@@ -4,9 +4,6 @@
   if (!A) return;
   const nl = A.isNl;
 
-  // TIJDELIJK (stap 1): toont voortaan de inlogknop in de header van dit apparaat.
-  try { localStorage.setItem('be_auth_preview', '1'); } catch (_) {}
-
   const T = nl ? {
     send: 'Stuur code', sending: 'Versturen…',
     login: 'Inloggen', checking: 'Controleren…',

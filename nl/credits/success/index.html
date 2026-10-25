@@ -54,21 +54,36 @@
   const actions = document.getElementById('actions');
   const failedActions = document.getElementById('failedActions');
 
-  function showSuccess(amount) {
+  function showSuccess(amount, bonus, credits) {
     emoji.textContent = '🎉';
     title.textContent = '✓ Credits geactiveerd';
-    status.innerHTML = '<strong style="color:var(--ok);">' + amount + ' credits toegevoegd aan dit apparaat.</strong>';
+    status.innerHTML = '<strong style="color:var(--ok);">' + amount + ' credits toegevoegd aan je account.</strong>'
+      + (bonus ? '<br>' + ' + ' + bonus + ' bonuscredits voor je eerste aankoop!' : '');
     balance.style.display = 'inline-flex';
-    balance.textContent = '🪙 Nieuwe balans: ' + BE.credits.balance() + ' credits';
+    balance.textContent = '🪙 Nieuwe balans: ' + credits + ' credits';
     actions.style.display = 'block';
   }
   function showAlready() {
+    BEAuth.refresh().then((me) => {
+      if (me && me.loggedIn) balance.textContent = '🪙 Huidige balans: ' + me.credits + ' credits';
+    });
     emoji.textContent = '✓';
     title.textContent = 'Al eerder geactiveerd';
     status.textContent = 'Deze betaling is al eerder gebruikt om credits toe te voegen.';
     balance.style.display = 'inline-flex';
-    balance.textContent = '🪙 Huidige balans: ' + BE.credits.balance() + ' credits';
     actions.style.display = 'block';
+  }
+  function showLogin() {
+    emoji.textContent = '🔑';
+    title.textContent = 'Log in om je credits te ontvangen';
+    status.textContent = 'Je betaling is veilig. Log in met je e-mail en de credits komen direct op je account.';
+    actions.style.display = 'block';
+    actions.innerHTML = '';
+    const a = document.createElement('a');
+    a.className = 'btn btn-primary btn-lg';
+    a.href = BEAuth.loginUrl();
+    a.textContent = 'Inloggen';
+    actions.appendChild(a);
   }
   function showError(msg) {
     emoji.textContent = '⚠️';
@@ -92,14 +107,17 @@
   try {
     const r = await fetch(API, {
       method: 'POST',
+      credentials: 'include',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id: paymentId}),
     });
     const data = await r.json();
-    if (data.ok && data.amount) {
-      BE.credits.add(data.amount);
+    if (r.status === 401) {
+      showLogin();
+    } else if (data.ok && data.amount) {
+      BEAuth.setCredits(data.credits);
       try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
-      showSuccess(data.amount);
+      showSuccess(data.amount, data.bonus, data.credits);
     } else if (data.reason === 'already claimed') {
       try { localStorage.removeItem(PENDING_KEY); } catch (_) {}
       showAlready();
