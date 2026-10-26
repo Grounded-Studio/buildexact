@@ -176,3 +176,27 @@
   renderLoggedOut();
   BEAuth.me().then((me) => { if (me && me.loggedIn) renderLoggedIn(me); });
 })();
+
+// ─── Blog: share buttons (WhatsApp + copy link) ───────────────────────
+(function () {
+  const wa = document.getElementById('share-wa');
+  const copy = document.getElementById('share-copy');
+  if (!wa && !copy) return;
+  const nl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  const url = location.href.split('#')[0];
+  const h1 = document.querySelector('h1');
+  const title = (h1 ? h1.textContent : document.title).trim();
+  if (wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(title + ' ' + url);
+  if (copy) {
+    copy.addEventListener('click', async () => {
+      const original = copy.innerHTML;
+      try {
+        await navigator.clipboard.writeText(url);
+        copy.textContent = nl ? 'Link gekopieerd ✓' : 'Link copied ✓';
+      } catch (_) {
+        window.prompt(nl ? 'Kopieer deze link:' : 'Copy this link:', url);
+      }
+      setTimeout(() => { copy.innerHTML = original; }, 2000);
+    });
+  }
+})();

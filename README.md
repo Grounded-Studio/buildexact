@@ -16,6 +16,18 @@ Play Store: <https://play.google.com/store/apps/details?id=com.metenweten.bouw>
 - `/assets/css/style.css` — single global stylesheet (design tokens, components)
 - `/assets/js/` — language switcher, calculator demos
 - `CNAME` — custom domain (buildexact.app)
+- `_tools/` — blog generator (see below)
+
+## Writing a new blog article
+
+1. Add the article (EN and/or NL) to `_tools/blog_posts.py` — the file explains every field.
+2. Run from the site root: `python -I _tools/build_blog.py`
+3. Check the page locally, then commit and push.
+
+The generator writes the page in the same layout as the existing articles, with
+breadcrumbs, hreflang, Open Graph tags, structured data, the Google Play badge and
+share buttons, and adds a card to the blog overview plus a line to `sitemap.xml`.
+The older hand-written articles are not touched by it.
 
 ## Design tokens
 
