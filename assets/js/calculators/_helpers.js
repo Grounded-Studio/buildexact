@@ -286,7 +286,7 @@ window.BE = {
       if (result && !result.querySelector('.calc-placeholder')) {
         const placeholder = document.createElement('div');
         placeholder.className = 'calc-placeholder';
-        placeholder.innerHTML = `<span class="pl-icon">🧮</span>${STR.placeholderMsg}`;
+        placeholder.innerHTML = `<span class="pl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="16" height="19" rx="3"/><rect x="7.5" y="6" width="9" height="3.5" rx="1"/><path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01"/><path d="M16 16v2"/></svg></span>${STR.placeholderMsg}`;
         const hero = result.querySelector('.result-hero');
         if (hero) hero.parentNode.insertBefore(placeholder, hero);
       }

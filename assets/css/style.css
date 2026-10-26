@@ -361,6 +361,8 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 
 /* Stepper (for corner count) */
 .stepper-row { align-items: flex-start; }
+/* .field label is display:block, so the stepper sits under the text: give it room. */
+.field .stepper-row .stepper { margin-top: 10px; }
 .stepper-label { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 .stepper-title { font-weight: 600; color: var(--ink-2); }
 .stepper-sub { font-size: .8rem; color: var(--muted); line-height: 1.4; }
@@ -463,8 +465,12 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   margin-bottom: 14px;
 }
 .calc-placeholder .pl-icon {
-  display: block; font-size: 2rem; margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--blue-50); color: var(--blue-600);
+  border: 1px solid var(--blue-100); margin: 0 auto 12px;
 }
+.calc-placeholder .pl-icon svg { stroke-width: 2.2; }
 
 /* Bottom install-app strip (secondary CTA) */
 .install-strip {
