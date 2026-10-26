@@ -7,7 +7,7 @@
 
   const STR = isNl ? {
     cornersSubtitle: 'Elke hoek splitst de lijn in extra lijnen. Voorbeeld: 2 hoeken = U-vorm = 3 lijnen.',
-    totalLengthSingle: 'Totale lengte zijlijn (cm)',
+    totalLengthSingle: 'Totale lengte zijlijn (m)',
     noGates: 'Geen poorten. Tik hieronder om er een toe te voegen.',
     gatePrefix: 'Poort',
     removeGate: 'Verwijderen',
@@ -32,7 +32,7 @@
     rowUnfilled: 'Niet opgevuld (te klein voor pasvak)',
   } : {
     cornersSubtitle: 'Each corner splits the run into extra lines. Example: 2 corners = U-shape = 3 lines.',
-    totalLengthSingle: 'Total side line length (cm)',
+    totalLengthSingle: 'Total side line length (m)',
     noGates: 'No gates yet. Tap below to add one.',
     gatePrefix: 'Gate',
     removeGate: 'Remove',
@@ -62,22 +62,31 @@
     return v.toFixed(1);
   }
 
+  // Lengths like the app: from 100 cm in metres ("1,6 m" / "1.6 m"), shorter in cm.
+  function fmtLen(cm) {
+    if (cm >= 100) {
+      const m = (cm / 100).toFixed(2).replace(/\.?0+$/, '');
+      return (isNl ? m.replace('.', ',') : m) + ' m';
+    }
+    return fmt(cm) + ' cm';
+  }
+
   function segmentLabel(index, total) {
     const n = index + 1;
     if (total === 2) {
-      if (isNl) return index === 0 ? 'Totale lengte zijlijn (cm)' : 'Totale lengte achterlijn (cm)';
-      return index === 0 ? 'Total length side line (cm)' : 'Total length back line (cm)';
+      if (isNl) return index === 0 ? 'Totale lengte zijlijn (m)' : 'Totale lengte achterlijn (m)';
+      return index === 0 ? 'Total length side line (m)' : 'Total length back line (m)';
     }
     if (total === 3) {
       if (isNl) {
-        if (index === 2) return 'Totale lengte achterlijn (cm)';
-        return `Totale lengte zijlijn ${n} (cm)`;
+        if (index === 2) return 'Totale lengte achterlijn (m)';
+        return `Totale lengte zijlijn ${n} (m)`;
       } else {
-        if (index === 2) return 'Total length back line (cm)';
-        return `Total length side line ${n} (cm)`;
+        if (index === 2) return 'Total length back line (m)';
+        return `Total length side line ${n} (m)`;
       }
     }
-    return isNl ? `Totale lengte lijn ${n} (cm)` : `Total length line ${n} (cm)`;
+    return isNl ? `Totale lengte lijn ${n} (m)` : `Total length line ${n} (m)`;
   }
 
   // State
@@ -222,7 +231,7 @@
     const segmentBlock = (i, label, value, twoEnd) => `
       <div class="field">
         <label for="seg${i}">${label}</label>
-        <input type="number" id="seg${i}" value="${value}" min="0" step="10">
+        <input type="number" id="seg${i}" value="${value / 100}" min="0" step="0.01" inputmode="decimal">
       </div>
       <label class="toggle-row">
         <span class="toggle-stacked">
@@ -240,7 +249,8 @@
     }
     for (let i = 0; i < total; i++) {
       document.getElementById('seg' + i).addEventListener('input', (e) => {
-        segments[i] = parseFloat(e.target.value) || 0;
+        // Entered in metres (like the app), stored in cm for the calculation.
+        segments[i] = Math.round((parseFloat(String(e.target.value).replace(',', '.')) || 0) * 100);
         BE.markStale();
       });
     }
@@ -333,19 +343,19 @@
     if (result.longPanelCount > 0) parts.push(line(STR.rowLongPanels(fmt(result.longPanelWidthCm)), result.longPanelCount));
     const pasvakList = result.pasvakWidthsCm || [];
     if (pasvakList.length === 1) {
-      parts.push(line(STR.rowPasvak(fmt(panelW)), fmt(pasvakList[0]) + ' cm'));
+      parts.push(line(STR.rowPasvak(fmt(panelW)), fmtLen(pasvakList[0])));
     } else if (pasvakList.length >= 2) {
       // Width is the same for a two-end layout — show it once.
-      parts.push(line(STR.rowPasvakTwoEnd(fmt(panelW)), fmt(pasvakList[0]) + ' cm'));
+      parts.push(line(STR.rowPasvakTwoEnd(fmt(panelW)), fmtLen(pasvakList[0])));
     }
     if (totalPanels > 0) parts.push(line(STR.rowCoverCaps, totalPanels));
     for (let i = 0; i < result.gates.length; i++) {
       const g = result.gates[i];
       const span = g.widthCm + 2 * g.beamCm;
       parts.push(line(STR.rowGate(i + 1, fmt(g.widthCm), fmt(g.beamCm), g.isDouble), 1));
-      parts.push(line(STR.rowGateBeam(i + 1), fmt(span) + ' cm'));
+      parts.push(line(STR.rowGateBeam(i + 1), fmtLen(span)));
     }
-    if (result.unfilledGapCm > 0) parts.push(line(STR.rowUnfilled, fmt(result.unfilledGapCm) + ' cm', true));
+    if (result.unfilledGapCm > 0) parts.push(line(STR.rowUnfilled, fmtLen(result.unfilledGapCm), true));
     rows.innerHTML = parts.join('');
   }
 
