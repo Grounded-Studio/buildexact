@@ -141,6 +141,7 @@ def build_post(post, lang, header, footer):
 <link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
 <meta name="theme-color" content="#2563EB">
 <link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
 <script type="application/ld+json">{json.dumps(post_ld, ensure_ascii=False)}</script>
 </head>
 <body>
