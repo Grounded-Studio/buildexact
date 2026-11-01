@@ -882,6 +882,9 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .tag.new { background: #FEF3C7; color: #92400E; }
 .tag.app { background: var(--blue-50); color: var(--blue-700); }
 .calc-empty { text-align: center; color: var(--muted); display: none; }
+.calc-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.calc-mini .tags:empty { display: none; }
+@media (max-width: 1100px) { .calc-grid-4 { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 960px) { .calc-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .calc-grid { grid-template-columns: 1fr; } }
 
