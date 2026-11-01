@@ -33,6 +33,56 @@ window.BE = {
     const btn = document.querySelector('#' + groupId + ' .chip.active');
     return btn ? btn.dataset.value : null;
   },
+  isNl() { return (document.documentElement.lang || '').toLowerCase().startsWith('nl'); },
+  // Number in the page language: 1,234.5 (EN) or 1.234,5 (NL).
+  num(v, d) {
+    d = d == null ? 2 : d;
+    return Number(v).toLocaleString(BE.isNl() ? 'nl-NL' : 'en-GB', { minimumFractionDigits: d, maximumFractionDigits: d });
+  },
+  money(v) { return '€ ' + BE.num(v, 2); },
+  // rows: [[label, value, extraClass?], ...] → result rows HTML
+  rows(rows) {
+    return rows.filter(Boolean).map(r =>
+      `<div class="result-row${r[2] ? ' ' + r[2] : ''}"><span class="k">${r[0]}</span><span class="v">${r[1]}</span></div>`).join('');
+  },
+  show(id, on) { const el = document.getElementById(id); if (el) el.style.display = on ? '' : 'none'; },
+  // Repeating input rows (shapes, walls, windows). template(data) returns the
+  // inner HTML of one row; inputs/selects carry data-k="key". The add button
+  // has id listId + 'Add'. onChange runs after every add, remove or edit.
+  list(listId, template, initial, blank, onChange) {
+    const box = document.getElementById(listId);
+    const add = document.getElementById(listId + 'Add');
+    if (!box) return;
+    const removeLabel = BE.isNl() ? 'Verwijderen' : 'Remove';
+    function addRow(data) {
+      const div = document.createElement('div');
+      div.className = 'dyn-row';
+      div.innerHTML = template(data || {}).replace('{{remove}}',
+        `<button type="button" class="gate-remove" aria-label="${removeLabel}" title="${removeLabel}">✕</button>`);
+      box.appendChild(div);
+    }
+    (initial || []).forEach(addRow);
+    if (add) add.addEventListener('click', () => { addRow(blank ? blank() : {}); onChange(); });
+    box.addEventListener('click', (e) => {
+      const rm = e.target.closest('.gate-remove');
+      if (!rm) return;
+      rm.closest('.dyn-row').remove();
+      onChange();
+    });
+    box.addEventListener('input', onChange);
+    box.addEventListener('change', onChange);
+  },
+  listValues(listId) {
+    return Array.from(document.querySelectorAll('#' + listId + ' .dyn-row')).map(row => {
+      const o = {};
+      row.querySelectorAll('[data-k]').forEach(el => {
+        if (el.type === 'checkbox') o[el.dataset.k] = el.checked;
+        else if (el.tagName === 'SELECT') o[el.dataset.k] = el.value;
+        else { const n = parseFloat(el.value); o[el.dataset.k] = isFinite(n) ? n : 0; }
+      });
+      return o;
+    });
+  },
 };
 
 // =====================================================================

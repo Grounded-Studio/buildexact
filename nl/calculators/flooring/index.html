@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vloerbedekking calculator | BuildExact</title>
+<meta name="description" content="Vloerbedekking calculator voor tapijt, vinyl en linoleum van de rol: meters kopen, banen, naden, ondervloer en kosten.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/nl/calculators/flooring/">
+<meta property="og:title" content="Vloerbedekking calculator | BuildExact">
+<meta property="og:description" content="Vloerbedekking calculator voor tapijt, vinyl en linoleum van de rol: meters kopen, banen, naden, ondervloer en kosten.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/nl/calculators/flooring/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/flooring/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/flooring/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/flooring/">EN</a><a href="/nl/calculators/flooring/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Kruimelpad"><div class="container"><ol><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li aria-current="page">Vloerbedekking calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/nl/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/nl/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Vloerbedekking calculator", "item": "https://buildexact.app/nl/calculators/flooring/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Vloerbedekking calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Tapijt, vinyl en linoleum van de rol: meters kopen, banen, patroonrapport, ondervloer en kosten.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Ruimte</h3><div class="field-row"><div class="field"><label for="l">Lengte (m)</label><input type="number" id="l" value="5" min="0" step="0.01"></div><div class="field"><label for="w">Breedte (m)</label><input type="number" id="w" value="3.5" min="0" step="0.01"></div></div><h3 style="margin-top:28px;">Rol</h3><div class="chips" id="rollChips"><button type="button" class="chip active" data-value="2">2 m</button><button type="button" class="chip" data-value="3">3 m</button><button type="button" class="chip" data-value="4">4 m</button><button type="button" class="chip" data-value="5">5 m</button></div><div class="field-row"><div class="field"><label for="roll">Rolbreedte (m)</label><input type="number" id="roll" value="4" min="0" step="0.1"></div><div class="field"><label for="extra">Extra per baan (cm)</label><input type="number" id="extra" value="10" min="0" step="1"></div></div><div class="field"><label for="repeat">Patroonrapport (cm, 0 = geen)</label><input type="number" id="repeat" value="0" min="0" step="1"></div><h3 style="margin-top:28px;">Extra</h3><label class="toggle-row"><span>Ondervloer</span><input type="checkbox" id="underlay"></label><label class="toggle-row"><span>Afwerkprofiel langs de wanden</span><input type="checkbox" id="edge"></label><div class="field"><label for="price">Prijs per m² (€, optioneel)</label><input type="number" id="price" value="0" min="0" step="0.5"></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Bereken (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Kopen</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Alleen een schatting - meet op het breedste punt en let op de looprichting van de rol.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>Zo werkt de vloerbedekking calculator</h2>
+    <p>Vul de maat van de kamer en de rolbreedte in. De calculator legt de banen langs de langste wand, zodat je zo min mogelijk naden hebt, en telt per baan wat extra voor het afsnijden.</p>
+    <p>Met een patroonrapport wordt elke baan afgerond op een heel rapport, zodat het patroon bij de naden doorloopt. Je ziet hoeveel meter je van de rol koopt, de afgenomen m² en het verlies.</p>
+    <p class="calc-guide-tip">Tip: een kamer tot 4 m breed past op een rol van 4 m zonder naad. Dan koop je alleen kamerlengte + 10 cm.</p>
+    <h2>Veelgestelde vragen</h2>
+    <div class="faq-item">
+      <h3>Hoeveel meter tapijt heb ik nodig?</h3>
+      <p>Deel de kamerbreedte door de rolbreedte, rond naar boven af en vermenigvuldig met de kamerlengte plus 10 cm. Een kamer van 5 × 3,5 m met een rol van 4 m: 1 baan van 5,10 m.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Welke rolbreedte kies ik?</h3>
+      <p>De breedte waarmee je de kamer in zo min mogelijk banen legt. Vinyl en tapijt zijn er in 2, 3, 4 en 5 m.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Wat is een patroonrapport?</h3>
+      <p>De afstand waarna het patroon zich herhaalt. Elke baan moet op hetzelfde punt van het patroon beginnen, dus je verliest per baan wat materiaal.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hoeveel meter tapijt heb ik nodig?", "acceptedAnswer": {"@type": "Answer", "text": "Deel de kamerbreedte door de rolbreedte, rond naar boven af en vermenigvuldig met de kamerlengte plus 10 cm. Een kamer van 5 × 3,5 m met een rol van 4 m: 1 baan van 5,10 m."}}, {"@type": "Question", "name": "Welke rolbreedte kies ik?", "acceptedAnswer": {"@type": "Answer", "text": "De breedte waarmee je de kamer in zo min mogelijk banen legt. Vinyl en tapijt zijn er in 2, 3, 4 en 5 m."}}, {"@type": "Question", "name": "Wat is een patroonrapport?", "acceptedAnswer": {"@type": "Answer", "text": "De afstand waarna het patroon zich herhaalt. Elke baan moet op hetzelfde punt van het patroon beginnen, dus je verliest per baan wat materiaal."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;7,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a><a href="/nl/updates/">Updates</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/flooring.js"></script>
+</body>
+</html>

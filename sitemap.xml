@@ -95,4 +95,22 @@
   <url><loc>https://buildexact.app/nl/credits/</loc><priority>0.5</priority></url>
   <url><loc>https://buildexact.app/nl/blog/diamantboor-onderhoud/</loc><priority>0.7</priority></url>
   <url><loc>https://buildexact.app/nl/blog/kernboring-prijs-berekenen/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/calculators/plaster/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/plaster/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/excavation/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/excavation/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/round-column/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/round-column/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/sheets/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/sheets/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/steel/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/steel/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/tank/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/tank/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/flooring/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/flooring/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/converter/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/converter/</loc><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/updates/</loc><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/nl/updates/</loc><priority>0.6</priority></url>
 </urlset>

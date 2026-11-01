@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staalgewicht calculator | BuildExact</title>
+<meta name="description" content="Staalgewicht calculator: kg per meter voor wapeningsstaal en rond staal, gewicht van plaatstaal, totaal en kosten.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/nl/calculators/steel/">
+<meta property="og:title" content="Staalgewicht calculator | BuildExact">
+<meta property="og:description" content="Staalgewicht calculator: kg per meter voor wapeningsstaal en rond staal, gewicht van plaatstaal, totaal en kosten.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/nl/calculators/steel/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/steel/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/steel/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/steel/">EN</a><a href="/nl/calculators/steel/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Kruimelpad"><div class="container"><ol><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li aria-current="page">Staalgewicht calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/nl/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/nl/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Staalgewicht calculator", "item": "https://buildexact.app/nl/calculators/steel/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Staalgewicht calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Gewicht van wapening, rond staal en plaatstaal in kg, met kg per meter en kosten.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Rond staal / wapening</h3><div class="chips" id="diaChips"><button type="button" class="chip active" data-value="6">Ø6</button><button type="button" class="chip" data-value="8">Ø8</button><button type="button" class="chip" data-value="10">Ø10</button><button type="button" class="chip" data-value="12">Ø12</button><button type="button" class="chip" data-value="16">Ø16</button><button type="button" class="chip" data-value="20">Ø20</button><button type="button" class="chip" data-value="25">Ø25</button></div><div class="field-row"><div class="field"><label for="d">Diameter (mm)</label><input type="number" id="d" value="6" min="0" step="1"></div><div class="field"><label for="l">Lengte per staaf (m)</label><input type="number" id="l" value="6" min="0" step="0.1"></div></div><div class="field"><label for="n">Aantal staven</label><input type="number" id="n" value="10" min="0" step="1"></div><h3 style="margin-top:28px;">Plaatstaal (optioneel)</h3><div class="field-row"><div class="field"><label for="pl">Lengte (mm)</label><input type="number" id="pl" value="0" min="0" step="10"></div><div class="field"><label for="pw">Breedte (mm)</label><input type="number" id="pw" value="0" min="0" step="10"></div></div><div class="field-row"><div class="field"><label for="pt">Dikte (mm)</label><input type="number" id="pt" value="0" min="0" step="1"></div><div class="field"><label for="pn">Aantal platen</label><input type="number" id="pn" value="1" min="0" step="1"></div></div><h3 style="margin-top:28px;">Prijs</h3><div class="field"><label for="price">Prijs per kg (€, optioneel)</label><input type="number" id="price" value="0" min="0" step="0.05"></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Bereken (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Gewicht</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Rekent met staal van 7850 kg/m³.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>Zo werkt de staalgewicht calculator</h2>
+    <p>Kies een staafdiameter, vul de lengte per staaf en het aantal staven in. Het gewicht per meter is π × r² × 7850 kg/m³: voor Ø12 mm is dat 0,888 kg/m.</p>
+    <p>Voeg plaatstaal toe als je dat nodig hebt: lengte × breedte × dikte in mm. Met een prijs per kg zie je meteen wat al het staal kost.</p>
+    <p class="calc-guide-tip">Tip: wapening wordt vaak per staaf van 6 of 12 m verkocht. Reken bij verbindingen een overlap van ongeveer 40 × de diameter.</p>
+    <h2>Veelgestelde vragen</h2>
+    <div class="faq-item">
+      <h3>Hoeveel weegt wapeningsstaal per meter?</h3>
+      <p>Ø8 mm 0,395 kg/m, Ø10 mm 0,617 kg/m, Ø12 mm 0,888 kg/m, Ø16 mm 1,58 kg/m en Ø20 mm 2,47 kg/m.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Hoe bereken ik het gewicht van plaatstaal?</h3>
+      <p>Lengte × breedte × dikte in meters × 7850. Een plaat van 1000 × 500 × 10 mm weegt 39,3 kg.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Wat is de soortelijke massa van staal?</h3>
+      <p>Ongeveer 7850 kg per m³ voor gewoon constructiestaal.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hoeveel weegt wapeningsstaal per meter?", "acceptedAnswer": {"@type": "Answer", "text": "Ø8 mm 0,395 kg/m, Ø10 mm 0,617 kg/m, Ø12 mm 0,888 kg/m, Ø16 mm 1,58 kg/m en Ø20 mm 2,47 kg/m."}}, {"@type": "Question", "name": "Hoe bereken ik het gewicht van plaatstaal?", "acceptedAnswer": {"@type": "Answer", "text": "Lengte × breedte × dikte in meters × 7850. Een plaat van 1000 × 500 × 10 mm weegt 39,3 kg."}}, {"@type": "Question", "name": "Wat is de soortelijke massa van staal?", "acceptedAnswer": {"@type": "Answer", "text": "Ongeveer 7850 kg per m³ voor gewoon constructiestaal."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;7,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a><a href="/nl/updates/">Updates</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/steel.js"></script>
+</body>
+</html>

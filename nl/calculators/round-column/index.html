@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ronde kolom calculator | BuildExact</title>
+<meta name="description" content="Ronde kolom en betonbuis calculator: betonvolume in m³, zakken beton, bekistingsbuis en kosten.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/nl/calculators/round-column/">
+<meta property="og:title" content="Ronde kolom calculator | BuildExact">
+<meta property="og:description" content="Ronde kolom en betonbuis calculator: betonvolume in m³, zakken beton, bekistingsbuis en kosten.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/nl/calculators/round-column/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/round-column/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/round-column/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/round-column/">EN</a><a href="/nl/calculators/round-column/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Kruimelpad"><div class="container"><ol><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li aria-current="page">Ronde kolom calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/nl/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/nl/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Ronde kolom calculator", "item": "https://buildexact.app/nl/calculators/round-column/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Ronde kolom calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Beton voor ronde kolommen, bekistingsbuizen en betonbuizen: m³, zakken en kosten.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Kolom of buis</h3><div class="chips" id="diaChips"><button type="button" class="chip active" data-value="20">Ø 20 cm</button><button type="button" class="chip" data-value="25">Ø 25 cm</button><button type="button" class="chip" data-value="30">Ø 30 cm</button><button type="button" class="chip" data-value="40">Ø 40 cm</button><button type="button" class="chip" data-value="50">Ø 50 cm</button></div><div class="field-row"><div class="field"><label for="dia">Diameter (cm)</label><input type="number" id="dia" value="30" min="0" step="1"></div><div class="field"><label for="h">Hoogte (m)</label><input type="number" id="h" value="3" min="0" step="0.1"></div></div><div class="field-row"><div class="field"><label for="n">Aantal kolommen</label><input type="number" id="n" value="1" min="0" step="1"></div><div class="field"><label for="waste">Verlies (%)</label><input type="number" id="waste" value="5" min="0" step="1"></div></div><label class="toggle-row"><span>Betonbuis (hol)</span><input type="checkbox" id="hollow"></label><div id="wallField" style="display:none"><div class="field"><label for="wall">Wanddikte (cm)</label><input type="number" id="wall" value="5" min="0" step="0.5"></div></div><h3 style="margin-top:28px;">Beton</h3><div class="field-row"><div class="field"><label for="yield">Opbrengst per zak (L)</label><input type="number" id="yield" value="11.5" min="0" step="0.5"></div><div class="field"><label for="bagKg">Gewicht zak (kg)</label><input type="number" id="bagKg" value="25" min="0" step="1"></div></div><div class="field"><label for="price">Prijs betonmortel (€/m³, optioneel)</label><input type="number" id="price" value="0" min="0" step="5"></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Bereken (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Beton</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Alleen een schatting - kijk naar de opbrengst per zak op de verpakking.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>Zo werkt de ronde kolom calculator</h2>
+    <p>Vul de diameter in cm en de hoogte in meters in. Het volume van één kolom is π × r² × hoogte; de calculator vermenigvuldigt met het aantal kolommen en telt het verlies erbij op.</p>
+    <p>Voor een betonbuis zet je Hol aan en vul je de wanddikte in: dan telt alleen de ring mee. Je ziet betonmortel in m³, het aantal zakken beton en de lengte bekistingsbuis die je nodig hebt.</p>
+    <p class="calc-guide-tip">Tip: vanaf ongeveer 0,5 m³ is betonmortel uit de mixer meestal goedkoper en sterker dan zelf zakken mengen.</p>
+    <h2>Veelgestelde vragen</h2>
+    <div class="faq-item">
+      <h3>Hoeveel beton gaat er in een ronde kolom?</h3>
+      <p>π × straal² × hoogte. Een kolom van Ø30 cm en 3 m hoog: 3,1416 × 0,15² × 3 = 0,212 m³.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Hoeveel zakken beton voor een paalgat?</h3>
+      <p>Een gat van Ø30 cm en 80 cm diep is ongeveer 57 liter: 5 zakken van 25 kg met elk zo'n 11,5 liter.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Wat is een bekistingsbuis?</h3>
+      <p>Een kartonnen koker die je met beton vult om een ronde kolom of poer te storten. Je koopt hem per meter in de diameter die je nodig hebt.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hoeveel beton gaat er in een ronde kolom?", "acceptedAnswer": {"@type": "Answer", "text": "π × straal² × hoogte. Een kolom van Ø30 cm en 3 m hoog: 3,1416 × 0,15² × 3 = 0,212 m³."}}, {"@type": "Question", "name": "Hoeveel zakken beton voor een paalgat?", "acceptedAnswer": {"@type": "Answer", "text": "Een gat van Ø30 cm en 80 cm diep is ongeveer 57 liter: 5 zakken van 25 kg met elk zo'n 11,5 liter."}}, {"@type": "Question", "name": "Wat is een bekistingsbuis?", "acceptedAnswer": {"@type": "Answer", "text": "Een kartonnen koker die je met beton vult om een ronde kolom of poer te storten. Je koopt hem per meter in de diameter die je nodig hebt."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;7,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a><a href="/nl/updates/">Updates</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/round-column.js"></script>
+</body>
+</html>

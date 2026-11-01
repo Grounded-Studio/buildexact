@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eenheden omrekenen | BuildExact</title>
+<meta name="description" content="Gratis eenheden omrekenen voor de bouw: lengte, oppervlakte, volume, gewicht en helling in graden, procent en 1:x.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/nl/calculators/converter/">
+<meta property="og:title" content="Eenheden omrekenen | BuildExact">
+<meta property="og:description" content="Gratis eenheden omrekenen voor de bouw: lengte, oppervlakte, volume, gewicht en helling in graden, procent en 1:x.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/nl/calculators/converter/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/converter/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/converter/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/converter/">EN</a><a href="/nl/calculators/converter/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Kruimelpad"><div class="container"><ol><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li aria-current="page">Eenheden omrekenen</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/nl/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/nl/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Eenheden omrekenen", "item": "https://buildexact.app/nl/calculators/converter/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Eenheden omrekenen</h1>
+    <p class="lede" style="margin-bottom:32px;">Lengte, oppervlakte, volume, gewicht en helling (graden, % en 1:x). Gratis, zonder credits.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Wat reken je om?</h3><div class="chips" id="catChips"><button type="button" class="chip active" data-value="length">Lengte</button><button type="button" class="chip" data-value="area">Oppervlakte</button><button type="button" class="chip" data-value="volume">Volume</button><button type="button" class="chip" data-value="weight">Gewicht</button><button type="button" class="chip" data-value="slope">Helling</button></div><div class="field-row"><div class="field"><label for="val">Waarde</label><input type="number" id="val" value="1" step="any"></div><div class="field"><label for="from">Van</label><select id="from"></select></div></div>
+      </form>
+      <aside class="calc-result" data-no-lock="true">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Resultaat</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Gratis te gebruiken - zonder inloggen en zonder credits.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>Zo werkt het omrekenen</h2>
+    <p>Kies wat je omrekent, typ een waarde en kies de eenheid. Je ziet de waarde meteen in alle andere eenheden, dus je hoeft nooit een factor op te zoeken.</p>
+    <p>Helling reken je om tussen graden, procent en een verhouding 1:x, met de stijging per meter erbij. Handig voor hellingbanen, daken en het afschot van afvoeren en terrassen.</p>
+    <p class="calc-guide-tip">Tip: een afschot van 1:100 is 1% of 10 mm per meter, het gebruikelijke minimum voor een terras.</p>
+    <h2>Veelgestelde vragen</h2>
+    <div class="faq-item">
+      <h3>Hoeveel square feet is 1 m²?</h3>
+      <p>1 m² is 10,764 square feet. 1 square foot is 0,0929 m².</p>
+    </div>
+    <div class="faq-item">
+      <h3>Hoe reken ik een helling in graden om naar procent?</h3>
+      <p>Procent = tan(graden) × 100. 30° is 57,7%, 45° is 100%.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Wat betekent een afschot van 1:50?</h3>
+      <p>1 eenheid omhoog per 50 eenheden lengte: 2% of 20 mm per meter.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hoeveel square feet is 1 m²?", "acceptedAnswer": {"@type": "Answer", "text": "1 m² is 10,764 square feet. 1 square foot is 0,0929 m²."}}, {"@type": "Question", "name": "Hoe reken ik een helling in graden om naar procent?", "acceptedAnswer": {"@type": "Answer", "text": "Procent = tan(graden) × 100. 30° is 57,7%, 45° is 100%."}}, {"@type": "Question", "name": "Wat betekent een afschot van 1:50?", "acceptedAnswer": {"@type": "Answer", "text": "1 eenheid omhoog per 50 eenheden lengte: 2% of 20 mm per meter."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;7,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a><a href="/nl/updates/">Updates</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/converter.js"></script>
+</body>
+</html>

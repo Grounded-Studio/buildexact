@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stucwerk calculator | BuildExact</title>
+<meta name="description" content="Stucwerk calculator: zakken gips- of kalkcementpleister per m², laagdikte, verlies, voorstrijk en kosten.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/nl/calculators/plaster/">
+<meta property="og:title" content="Stucwerk calculator | BuildExact">
+<meta property="og:description" content="Stucwerk calculator: zakken gips- of kalkcementpleister per m², laagdikte, verlies, voorstrijk en kosten.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/nl/calculators/plaster/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/plaster/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/plaster/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/nl/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li><a href="/nl/features/">Functies</a></li><li><a href="/nl/pricing/">Prijzen</a></li><li><a href="/nl/blog/">Blog</a></li><li><a href="/nl/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/plaster/">EN</a><a href="/nl/calculators/plaster/" class="active">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Gratis</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Kruimelpad"><div class="container"><ol><li><a href="/nl/">Home</a></li><li><a href="/nl/calculators/">Calculators</a></li><li aria-current="page">Stucwerk calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/nl/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/nl/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Stucwerk calculator", "item": "https://buildexact.app/nl/calculators/plaster/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Stucwerk calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Zakken pleister voor wanden en plafonds, per laagdikte, met voorstrijk en kosten.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Oppervlak</h3><div class="chips" id="typeChips"><button type="button" class="chip active" data-value="gypsum" data-kg="1.0" data-mm="10">Gipspleister</button><button type="button" class="chip" data-value="cement" data-kg="1.6" data-mm="12">Kalkcementpleister</button><button type="button" class="chip" data-value="skim" data-kg="1.2" data-mm="2">Finish / schuurpleister</button></div><div class="field-row"><div class="field"><label for="area">Wand- of plafondoppervlak (m²)</label><input type="number" id="area" value="30" min="0" step="0.1"></div><div class="field"><label for="openings">Min openingen (m²)</label><input type="number" id="openings" value="2" min="0" step="0.1"></div></div><div class="field"><label for="mm">Laagdikte (mm)</label><input type="number" id="mm" value="10" min="0" step="1"></div><h3 style="margin-top:28px;">Materiaal</h3><div class="field-row"><div class="field"><label for="kg">Verbruik (kg/m² per mm)</label><input type="number" id="kg" value="1.0" min="0" step="0.1"></div><div class="field"><label for="bag">Inhoud zak (kg)</label><input type="number" id="bag" value="25" min="0" step="1"></div></div><div class="field-row"><div class="field"><label for="waste">Verlies (%)</label><input type="number" id="waste" value="10" min="0" step="1"></div><div class="field"><label for="price">Prijs per zak (€, optioneel)</label><input type="number" id="price" value="0" min="0" step="0.5"></div></div><label class="toggle-row"><span>Voorstrijkmiddel meerekenen</span><input type="checkbox" id="primer" checked></label><div id="primerField"><div class="field"><label for="primerCov">Verbruik voorstrijk (L/m²)</label><input type="number" id="primerCov" value="0.15" min="0" step="0.01"></div></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Bereken (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Resultaat</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Nodig</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Alleen een schatting - kijk naar het verbruik per mm op de zak; scheve wanden vragen meer.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>Zo werkt de stucwerk calculator</h2>
+    <p>Vul het oppervlak in dat je stuct en trek deuren en ramen eraf. Kies het soort pleister: dat vult een gebruikelijk verbruik per m² per mm en een normale laagdikte in. Pas beide aan naar wat op je zak staat.</p>
+    <p>De calculator rekent oppervlak × laagdikte × verbruik, telt het verlies erbij op en rondt af op hele zakken. Met voorstrijk aan krijg je ook de liters voorstrijkmiddel.</p>
+    <p class="calc-guide-tip">Marge-tip: wanden zijn zelden vlak. Meet de dikste plek en reken op oude muren 10-15% extra.</p>
+    <h2>Veelgestelde vragen</h2>
+    <div class="faq-item">
+      <h3>Hoeveel pleister heb ik nodig per m²?</h3>
+      <p>Ongeveer 1 kg per m² per mm gipspleister, dus 10 kg/m² bij een laag van 10 mm. Kalkcementpleister is zwaarder: zo'n 1,5 tot 1,8 kg per m² per mm.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Hoeveel zakken pleister voor een muur van 10 m²?</h3>
+      <p>Met 10 mm gipspleister (1 kg/m²/mm) heb je 100 kg nodig, met 10% verlies 110 kg: 5 zakken van 25 kg.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Hoe dik moet stucwerk zijn?</h3>
+      <p>Gipspleister op metselwerk of blokken is meestal 8 tot 15 mm, een finishlaag 1 tot 3 mm. Op beton is vaak een dunne laag van 3 tot 5 mm genoeg.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hoeveel pleister heb ik nodig per m²?", "acceptedAnswer": {"@type": "Answer", "text": "Ongeveer 1 kg per m² per mm gipspleister, dus 10 kg/m² bij een laag van 10 mm. Kalkcementpleister is zwaarder: zo'n 1,5 tot 1,8 kg per m² per mm."}}, {"@type": "Question", "name": "Hoeveel zakken pleister voor een muur van 10 m²?", "acceptedAnswer": {"@type": "Answer", "text": "Met 10 mm gipspleister (1 kg/m²/mm) heb je 100 kg nodig, met 10% verlies 110 kg: 5 zakken van 25 kg."}}, {"@type": "Question", "name": "Hoe dik moet stucwerk zijn?", "acceptedAnswer": {"@type": "Answer", "text": "Gipspleister op metselwerk of blokken is meestal 8 tot 15 mm, een finishlaag 1 tot 3 mm. Op beton is vaak een dunne laag van 3 tot 5 mm genoeg."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Liever onbeperkt + PDF-offertes? Installeer BuildExact (&euro;7,99 eenmalig in de app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Installeer op Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/nl/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first meten, offertes en facturen voor bouwers in heel Europa.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Ontdek het op Google Play"><img src="/assets/icons/google-play-badge-nl.svg" alt="Ontdek het op Google Play"></a></div>
+<div><h4>Product</h4><a href="/nl/calculators/">Calculators</a><a href="/nl/features/">Functies</a><a href="/nl/pricing/">Prijzen</a><a href="/nl/support/">Support</a><a href="/nl/updates/">Updates</a></div><div><h4>Bedrijf</h4><a href="/nl/about/">Over ons</a><a href="/nl/blog/">Blog</a><a href="/nl/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Juridisch</h4><a href="/nl/privacy/">Privacy</a><a href="/nl/terms/">Voorwaarden</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Gemaakt in Nederland 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/plaster.js"></script>
+</body>
+</html>

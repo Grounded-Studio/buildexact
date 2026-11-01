@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tank volume calculator | BuildExact</title>
+<meta name="description" content="Tank volume calculator: litres in a round upright, lying or rectangular tank, also when partly filled.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/calculators/tank/">
+<meta property="og:title" content="Tank volume calculator | BuildExact">
+<meta property="og:description" content="Tank volume calculator: litres in a round upright, lying or rectangular tank, also when partly filled.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/calculators/tank/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/tank/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/tank/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/tank/" class="active">EN</a><a href="/nl/calculators/tank/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><div class="container"><ol><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li aria-current="page">Tank volume calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Tank volume calculator", "item": "https://buildexact.app/calculators/tank/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Tank volume calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Litres in an upright, lying or rectangular tank, also at the current liquid level.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Tank shape</h3><div class="chips" id="shapeChips"><button type="button" class="chip active" data-value="upright">Round, upright</button><button type="button" class="chip" data-value="lying">Round, lying</button><button type="button" class="chip" data-value="box">Rectangular</button></div><div id="roundFields"><div class="field-row"><div class="field"><label for="dia">Diameter (cm)</label><input type="number" id="dia" value="100" min="0" step="1"></div><div class="field"><label for="len">Height or length (cm)</label><input type="number" id="len" value="120" min="0" step="1"></div></div></div><div id="boxFields" style="display:none"><div class="field-row"><div class="field"><label for="bl">Length (cm)</label><input type="number" id="bl" value="120" min="0" step="1"></div><div class="field"><label for="bw">Width (cm)</label><input type="number" id="bw" value="80" min="0" step="1"></div></div><div class="field"><label for="bh">Height (cm)</label><input type="number" id="bh" value="100" min="0" step="1"></div></div><h3 style="margin-top:28px;">Contents</h3><div class="field"><label for="level">Liquid level (cm from bottom, 0 = full)</label><input type="number" id="level" value="0" min="0" step="1"></div><p class="hint-line">For a lying tank the litres per cm are not linear; the calculator uses the exact circle segment.</p>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Calculate (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Result</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Capacity</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Inside dimensions give the real capacity; walls and fittings take some space.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>How the tank volume calculator works</h2>
+    <p>Pick the shape and enter the inside dimensions in cm. Upright round tanks use π × r² × height, rectangular tanks length × width × height.</p>
+    <p>Enter the liquid level to see how much is in the tank now. For a lying round tank the calculator uses the exact circle segment, because the middle of the tank holds much more per cm than the bottom.</p>
+    <p class="calc-guide-tip">Tip: 1 m³ is 1000 litres. A rain barrel of Ø60 cm and 90 cm high holds about 254 litres.</p>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>How do I calculate the litres in a round tank?</h3>
+      <p>π × radius² × height in dm. A tank of Ø100 cm and 100 cm high: 3.1416 × 5² × 10 = 785 litres.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much is in a lying tank that is half full?</h3>
+      <p>Exactly half of the capacity. Above or below half the litres per cm change; enter the level and the calculator does the segment maths.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many litres is 1 m³?</h3>
+      <p>1000 litres. 1 litre is 1 dm³.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate the litres in a round tank?", "acceptedAnswer": {"@type": "Answer", "text": "π × radius² × height in dm. A tank of Ø100 cm and 100 cm high: 3.1416 × 5² × 10 = 785 litres."}}, {"@type": "Question", "name": "How much is in a lying tank that is half full?", "acceptedAnswer": {"@type": "Answer", "text": "Exactly half of the capacity. Above or below half the litres per cm change; enter the level and the calculator does the segment maths."}}, {"@type": "Question", "name": "How many litres is 1 m³?", "acceptedAnswer": {"@type": "Answer", "text": "1000 litres. 1 litre is 1 dm³."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Want unlimited + branded PDF quotes? Install BuildExact (one-off &euro;7.99 in the app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Install on Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first measurement, quoting and invoicing for builders across Europe.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Get it on Google Play"><img src="/assets/icons/google-play-badge-en.svg" alt="Get it on Google Play"></a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a><a href="/updates/">Updates</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/tank.js"></script>
+</body>
+</html>

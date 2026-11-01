@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit converter | BuildExact</title>
+<meta name="description" content="Free unit converter for builders: length, area, volume, weight and slope in degrees, percent and 1:x.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/calculators/converter/">
+<meta property="og:title" content="Unit converter | BuildExact">
+<meta property="og:description" content="Free unit converter for builders: length, area, volume, weight and slope in degrees, percent and 1:x.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/calculators/converter/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/converter/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/converter/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/converter/" class="active">EN</a><a href="/nl/calculators/converter/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><div class="container"><ol><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li aria-current="page">Unit converter</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Unit converter", "item": "https://buildexact.app/calculators/converter/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Unit converter</h1>
+    <p class="lede" style="margin-bottom:32px;">Length, area, volume, weight and slope (degrees, % and 1:x). Free, no credits needed.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>What do you convert?</h3><div class="chips" id="catChips"><button type="button" class="chip active" data-value="length">Length</button><button type="button" class="chip" data-value="area">Area</button><button type="button" class="chip" data-value="volume">Volume</button><button type="button" class="chip" data-value="weight">Weight</button><button type="button" class="chip" data-value="slope">Slope</button></div><div class="field-row"><div class="field"><label for="val">Value</label><input type="number" id="val" value="1" step="any"></div><div class="field"><label for="from">From</label><select id="from"></select></div></div>
+      </form>
+      <aside class="calc-result" data-no-lock="true">
+        <h3>Result</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Result</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Free to use - no login and no credits.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>How the unit converter works</h2>
+    <p>Pick what you convert, type a value and choose its unit. You see the value in every other unit at once, so you never have to look up a factor.</p>
+    <p>Slope converts between degrees, percent and a ratio of 1:x, and shows the rise per metre. Handy for ramps, roofs and the fall of drains and terraces.</p>
+    <p class="calc-guide-tip">Tip: a fall of 1:100 is 1% or 10 mm per metre, which is the usual minimum for a terrace.</p>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>How many square feet is 1 m²?</h3>
+      <p>1 m² is 10.764 square feet. 1 square foot is 0.0929 m².</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I convert a slope in degrees to percent?</h3>
+      <p>Percent = tan(degrees) × 100. 30° is 57.7%, 45° is 100%.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What does a slope of 1:50 mean?</h3>
+      <p>1 unit up for every 50 units across: 2% or 20 mm per metre.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many square feet is 1 m²?", "acceptedAnswer": {"@type": "Answer", "text": "1 m² is 10.764 square feet. 1 square foot is 0.0929 m²."}}, {"@type": "Question", "name": "How do I convert a slope in degrees to percent?", "acceptedAnswer": {"@type": "Answer", "text": "Percent = tan(degrees) × 100. 30° is 57.7%, 45° is 100%."}}, {"@type": "Question", "name": "What does a slope of 1:50 mean?", "acceptedAnswer": {"@type": "Answer", "text": "1 unit up for every 50 units across: 2% or 20 mm per metre."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Want unlimited + branded PDF quotes? Install BuildExact (one-off &euro;7.99 in the app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Install on Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first measurement, quoting and invoicing for builders across Europe.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Get it on Google Play"><img src="/assets/icons/google-play-badge-en.svg" alt="Get it on Google Play"></a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a><a href="/updates/">Updates</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/converter.js"></script>
+</body>
+</html>

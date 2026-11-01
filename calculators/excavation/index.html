@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excavation calculator | BuildExact</title>
+<meta name="description" content="Excavation calculator: dig volume in m³, bulking, number of skips, tonnes of soil and truck loads.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BuildExact">
+<meta property="og:url" content="https://buildexact.app/calculators/excavation/">
+<meta property="og:title" content="Excavation calculator | BuildExact">
+<meta property="og:description" content="Excavation calculator: dig volume in m³, bulking, number of skips, tonnes of soil and truck loads.">
+<meta property="og:image" content="https://buildexact.app/assets/og/og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://buildexact.app/calculators/excavation/">
+<link rel="alternate" hreflang="en" href="https://buildexact.app/calculators/excavation/">
+<link rel="alternate" hreflang="nl" href="https://buildexact.app/nl/calculators/excavation/">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/icon-64.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512.png">
+<meta name="theme-color" content="#2563EB">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="/assets/js/lang.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="container"><nav class="nav">
+<a href="/" class="brand"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a>
+<ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li><a href="/features/">Features</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/blog/">Blog</a></li><li><a href="/support/">Support</a></li></ul>
+<div class="nav-right"><div class="lang-switch"><a href="/calculators/excavation/" class="active">EN</a><a href="/nl/calculators/excavation/">NL</a></div><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-sm">Get it free</a><button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><div class="container"><ol><li><a href="/">Home</a></li><li><a href="/calculators/">Calculators</a></li><li aria-current="page">Excavation calculator</li></ol></div></nav>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://buildexact.app/"}, {"@type": "ListItem", "position": 2, "name": "Calculators", "item": "https://buildexact.app/calculators/"}, {"@type": "ListItem", "position": 3, "name": "Excavation calculator", "item": "https://buildexact.app/calculators/excavation/"}]}</script>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <h1>Excavation calculator</h1>
+    <p class="lede" style="margin-bottom:32px;">Dig volume for pits, trenches and holes, with bulking, skips, tonnes and truck loads.</p>
+    <div class="calc-shell">
+      <form class="calc-form" novalidate>
+        <h3>Excavation</h3><div class="chips" id="shapeChips"><button type="button" class="chip active" data-value="pit">Pit / foundation</button><button type="button" class="chip" data-value="trench">Trench</button><button type="button" class="chip" data-value="round">Round hole</button></div><div id="boxFields"><div class="field-row"><div class="field"><label for="l">Length (m)</label><input type="number" id="l" value="6" min="0" step="0.1"></div><div class="field"><label for="w">Width (m)</label><input type="number" id="w" value="4" min="0" step="0.1"></div></div></div><div id="roundFields" style="display:none"><div class="field-row"><div class="field"><label for="dia">Diameter (m)</label><input type="number" id="dia" value="1.2" min="0" step="0.1"></div><div class="field"><label for="count">Number of holes</label><input type="number" id="count" value="1" min="0" step="1"></div></div></div><div class="field"><label for="d">Depth (m)</label><input type="number" id="d" value="0.6" min="0" step="0.05"></div><h3 style="margin-top:28px;">Removal</h3><div class="field-row"><div class="field"><label for="swell">Bulking (%)</label><input type="number" id="swell" value="25" min="0" step="1"></div><div class="field"><label for="density">Soil weight (t/m³)</label><input type="number" id="density" value="1.6" min="0" step="0.1"></div></div><div class="field-row"><div class="field"><label for="cont">Skip size (m³)</label><input type="number" id="cont" value="6" min="0" step="1"></div><div class="field"><label for="contPrice">Price per skip (€, optional)</label><input type="number" id="contPrice" value="0" min="0" step="5"></div></div><div class="field"><label for="truck">Truck load (t, optional)</label><input type="number" id="truck" value="0" min="0" step="1"></div>
+        <button type="button" id="calcBtn" class="calc-btn" data-action="calc">Calculate (&minus;1 credit)</button>
+      </form>
+      <aside class="calc-result">
+        <h3>Result</h3>
+        <div class="result-hero"><div class="label" id="heroLabel">Dig out</div><div><span class="value" id="heroValue">&ndash;</span></div></div>
+        <div class="result-rows" id="resultRows"></div>
+        <div class="calc-note">Estimates only - soil weight and bulking differ per soil type.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section calc-guide">
+  <div class="container calc-guide-inner">
+    <h2>How the excavation calculator works</h2>
+    <p>Choose a pit, a trench or round holes and enter the size and depth. The calculator gives the solid volume you dig out in m³.</p>
+    <p>Dug soil takes up more room than it did in the ground: that is bulking, usually 20-30% for sand and up to 40% for clay. The loose volume decides how many skips you need. The weight in tonnes uses the soil weight you enter.</p>
+    <p class="calc-guide-tip">Tip: a 6 m³ skip may not always be filled to the top with heavy soil because of its weight limit. Ask your supplier.</p>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>How do I calculate excavation volume?</h3>
+      <p>Length × width × depth, all in metres. A pit of 6 × 4 m and 0.6 m deep is 14.4 m³ of solid soil.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is bulking of soil?</h3>
+      <p>Soil loosens when you dig it. 1 m³ in the ground becomes about 1.2 to 1.4 m³ loose. Sand bulks less, clay more.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much does 1 m³ of soil weigh?</h3>
+      <p>Roughly 1.5 to 1.9 tonnes. Dry sand is around 1.6 t/m³, wet clay can be 1.9 t/m³ or more.</p>
+    </div>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate excavation volume?", "acceptedAnswer": {"@type": "Answer", "text": "Length × width × depth, all in metres. A pit of 6 × 4 m and 0.6 m deep is 14.4 m³ of solid soil."}}, {"@type": "Question", "name": "What is bulking of soil?", "acceptedAnswer": {"@type": "Answer", "text": "Soil loosens when you dig it. 1 m³ in the ground becomes about 1.2 to 1.4 m³ loose. Sand bulks less, clay more."}}, {"@type": "Question", "name": "How much does 1 m³ of soil weigh?", "acceptedAnswer": {"@type": "Answer", "text": "Roughly 1.5 to 1.9 tonnes. Dry sand is around 1.6 t/m³, wet clay can be 1.9 t/m³ or more."}}]}</script>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="container">
+    <p>Want unlimited + branded PDF quotes? Install BuildExact (one-off &euro;7.99 in the app)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-ghost btn-sm">&#9654; Install on Google Play</a>
+  </div>
+</section>
+
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="/" class="brand" style="color:#fff;"><img class="brand-mark" src="/assets/icons/icon-64.png" alt="BuildExact"><span class="brand-text">BuildExact</span></a><p>Offline-first measurement, quoting and invoicing for builders across Europe.</p><a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="store-badge store-badge-img" aria-label="Get it on Google Play"><img src="/assets/icons/google-play-badge-en.svg" alt="Get it on Google Play"></a></div>
+<div><h4>Product</h4><a href="/calculators/">Calculators</a><a href="/features/">Features</a><a href="/pricing/">Pricing</a><a href="/support/">Support</a><a href="/updates/">Updates</a></div><div><h4>Company</h4><a href="/about/">About</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a><a href="https://grounded-studio.app">Grounded Studio</a></div><div><h4>Legal</h4><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 Grounded Studio</span><span>Made in the Netherlands 🇳🇱</span></div>
+</div></footer>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/calculators/_helpers.js"></script>
+<script src="/assets/js/calculators/excavation.js"></script>
+</body>
+</html>
