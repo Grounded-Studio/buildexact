@@ -7,6 +7,25 @@ Each item is (title, text); keep the text to one or two sentences.
 """
 
 RELEASES = [
+    dict(version="2.2.7", date_en="November 2026", date_nl="november 2026",
+         en=dict(title="Work orders & hours", items=[
+             ("Work order with signature", "Open \"Work order & hours\" in a project, let the customer sign on your screen and share the PDF. Work done, hours, materials and photos are filled in for you."),
+             ("Hours timer", "Start and stop a timer per project or add hours by hand. Open hours go onto the next invoice as a labour line, rounded to the quarter hour."),
+             ("Calculation → quote", "Tap Quote under any calculator result: it lands in a quote for your project with quantity and unit filled in."),
+             ("Pay by QR", "Invoices carry a payment QR code: customers scan it with a banking app that supports EPC QR codes and amount, IBAN and reference are filled in."),
+             ("Tidier lists", "Instant calculations and your shortcuts are now clear lists, grouped by trade."),
+             ("Better spirit level", "Choose flat or on its edge yourself, hold a reading, and see the slope in mm per metre."),
+             ("Discounts shown correctly", "A PRO discount now shows the percentage and the struck-through full price."),
+         ]),
+         nl=dict(title="Werkbon & uren", items=[
+             ("Werkbon met handtekening", "Open \"Werkbon & uren\" in een project, laat de klant tekenen op je scherm en deel de PDF. Uitgevoerd werk, uren, materiaal en foto's staan er al in."),
+             ("Urenregistratie", "Start en stop een timer per project of voeg uren met de hand toe. Open uren komen als arbeidsregel op de volgende factuur, afgerond op het kwartier."),
+             ("Berekening → offerte", "Tik op Offerte onder elk resultaat: het komt in een offerte voor je project, met aantal en eenheid ingevuld."),
+             ("Betalen met QR", "Facturen hebben een betaal-QR: klanten scannen hem met een bank-app die EPC-QR-codes ondersteunt en bedrag, IBAN en kenmerk staan al ingevuld."),
+             ("Overzichtelijke lijsten", "Direct berekenen en je snelkoppelingen staan nu als duidelijke lijst, per vak gegroepeerd."),
+             ("Betere waterpas", "Kies zelf plat of op de rand, zet de meting vast en zie het afschot in mm per meter."),
+             ("Korting goed zichtbaar", "Een PRO-korting toont nu het percentage en de doorgestreepte volle prijs."),
+         ])),
     dict(version="2.2.6", date_en="November 2026", date_nl="november 2026",
          en=dict(title="New tools in your pocket", items=[
              ("Spirit level", "A bubble level when the phone lies flat and an edge level when it stands on its side. Turns green and vibrates when level; calibrate with one tap."),
