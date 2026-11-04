@@ -41,8 +41,9 @@
 }
 </script>
 
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=20261104">
 <script src="/assets/js/lang.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "BuildExact — Construction Calculator, Quotes & Invoices in One App", "description": "Measure. Quote. Get paid. See how BuildExact takes a job from measurement and material calculation to a branded quote, a signed work order and an invoice with pay-by-QR.", "thumbnailUrl": "https://buildexact.app/assets/video/demo-thumb-1280.webp", "uploadDate": "2026-11-01T13:49:02-08:00", "duration": "PT1M50S", "embedUrl": "https://www.youtube-nocookie.com/embed/fzk6RPxl134", "contentUrl": "https://www.youtube.com/watch?v=fzk6RPxl134", "publisher": {"@type": "Organization", "name": "Grounded Studio", "url": "https://grounded-studio.app/"}}</script>
 </head>
 <body>
 
@@ -89,6 +90,24 @@
       <img class="ph-main"           src="/assets/hero/screen-home.jpg" decoding="async" alt="BuildExact home screen">
       <img class="ph-side ph-right" src="/assets/hero/screen-quote.jpg" decoding="async" alt="Quote with priced line items for a client">
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">See it in action</span>
+      <h2>Measure. Quote. Get paid.</h2>
+      <p class="lede">Two minutes, the whole workflow: from measurement and materials to a branded quote, a signed work order and an invoice with pay-by-QR.</p>
+    </div>
+    <div class="yt-video">
+      <a href="https://www.youtube.com/watch?v=fzk6RPxl134" data-yt="fzk6RPxl134" aria-label="Play video: BuildExact in 2 minutes">
+        <img src="/assets/video/demo-thumb-1280.webp" srcset="/assets/video/demo-thumb-640.webp 640w, /assets/video/demo-thumb-1280.webp 1280w" sizes="(max-width: 920px) 100vw, 880px" width="1280" height="720" alt="BuildExact video: measure, quote, get paid" loading="lazy" decoding="async">
+        <span class="yt-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></span>
+        <span class="yt-badge">1:50 · Watch on YouTube</span>
+      </a>
+    </div>
+    <p class="yt-note">The video loads from YouTube (privacy-enhanced mode) once you press play.</p>
   </div>
 </section>
 
@@ -261,5 +280,18 @@
 </footer>
 
 <script src="/assets/js/main.js"></script>
+<script>
+document.querySelectorAll('.yt-video a[data-yt]').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
+    f.title = a.getAttribute('aria-label');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.allowFullScreen = true;
+    a.replaceWith(f);
+  });
+});
+</script>
 </body>
 </html>
