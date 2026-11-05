@@ -201,6 +201,31 @@
   }
 })();
 
+// ─── Measuring ────────────────────────────────────────────────────────
+// Google Play links carry the page they were clicked on, so the Play Console
+// (Acquisition reports → UTM) shows which pages bring installs.
+(function () {
+  const page = location.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+  const referrer = encodeURIComponent('utm_source=buildexact.app&utm_medium=website&utm_campaign=' + page);
+  document.querySelectorAll('a[href*="play.google.com/store/apps/details?id=com.metenweten.bouw"]').forEach((a) => {
+    if (!/[?&]referrer=/.test(a.href)) a.href += '&referrer=' + referrer;
+  });
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href*="play.google.com/store/apps/details?id=com.metenweten.bouw"]');
+    if (a && !/[?&]referrer=/.test(a.href)) a.href += '&referrer=' + referrer;
+  }, true);
+
+  // Cloudflare Web Analytics: cookie-free visitor counts. Empty token = off.
+  const CF_TOKEN = '';
+  if (CF_TOKEN) {
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_TOKEN }));
+    document.head.appendChild(s);
+  }
+})();
+
 // ─── PRO discount popup. Switched by _tools/promo_prices.py ───────────
 (function () {
   const PROMO_ON = true;

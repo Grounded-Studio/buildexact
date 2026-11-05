@@ -89,7 +89,8 @@ window.BE = {
 // Credit system — saldo staat op de server, gekoppeld aan het account
 //   - Inloggen (e-mailcode) geeft eenmalig 5 gratis credits
 //   - Elke klik op "Bereken" bij een betaalde calc = −1 credit via /spend.php
-//   - Niet ingelogd: de knop wordt "Log in — 5 gratis credits"
+//   - Niet ingelogd: eerst ANON_FREE berekeningen per calculator gratis (per
+//     browser, localStorage); daarna wordt de knop "Log in — 5 gratis credits"
 //   - Op 0: de knop wordt "Koop 50 credits — €2,99"
 //   - Simpele calcs (data-no-lock) blijven gratis, zonder knop
 //   Vereist window.BEAuth uit main.js (dat vóór dit bestand laadt).
@@ -97,6 +98,8 @@ window.BE = {
 (function () {
   const PACK = { size: 50, price: '€ 2,99', firstBonus: 10 };
   const FREE = 5;
+  const ANON_FREE = 3;
+  const ANON_KEY = 'be_anon_uses_v1';
   const Auth = window.BEAuth;
 
   const isNl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
@@ -105,6 +108,8 @@ window.BE = {
     chipBalance: (n) => `${n} credit${n === 1 ? '' : 's'} over`,
     chipZero:    'Geen credits meer — koop een pakket',
     chipLogin:   `Log in voor ${FREE} gratis credits`,
+    chipAnon:    (n) => `Nog ${n} keer gratis, zonder inloggen`,
+    calcBtnFree: 'Bereken (gratis)',
     chipLoading: 'Saldo ophalen…',
     calcBtn:     'Bereken (−1 credit)',
     calcBtnBuy:  `Koop ${PACK.size} credits — ${PACK.price}`,
@@ -122,6 +127,8 @@ window.BE = {
     chipBalance: (n) => `${n} credit${n === 1 ? '' : 's'} left`,
     chipZero:    'Out of credits — buy a pack',
     chipLogin:   `Log in for ${FREE} free credits`,
+    chipAnon:    (n) => `${n} free ${n === 1 ? 'try' : 'tries'} left, no login`,
+    calcBtnFree: 'Calculate (free)',
     chipLoading: 'Loading balance…',
     calcBtn:     'Calculate (−1 credit)',
     calcBtnBuy:  `Buy ${PACK.size} credits — ${PACK.price}`,
@@ -160,11 +167,32 @@ window.BE = {
     return location.pathname.split('/').filter(Boolean).pop() || '';
   }
 
+  // Free tries before login, counted per calculator in this browser. Without
+  // storage (private mode) a visitor simply keeps calculating for free.
+  function anonUses() {
+    try { return JSON.parse(localStorage.getItem(ANON_KEY) || '{}') || {}; } catch (_) { return null; }
+  }
+  function anonLeft() {
+    const u = anonUses();
+    return u ? Math.max(0, ANON_FREE - (u[calcName()] | 0)) : ANON_FREE;
+  }
+  function useAnon() {
+    const u = anonUses();
+    if (!u) return;
+    u[calcName()] = (u[calcName()] | 0) + 1;
+    try { localStorage.setItem(ANON_KEY, JSON.stringify(u)); } catch (_) {}
+  }
+  const anonMode = () => !!(acct && !acct.loggedIn && anonLeft() > 0);
+
   function makeChip() {
     const chip = document.createElement(acct && !acct.loggedIn ? 'a' : 'div');
     if (!acct) {
       chip.className = 'credit-chip';
       chip.textContent = '🪙 ' + STR.chipLoading;
+    } else if (anonMode()) {
+      chip.className = 'credit-chip';
+      chip.href = Auth.loginUrl();
+      chip.textContent = '🎁 ' + STR.chipAnon(anonLeft());
     } else if (!acct.loggedIn) {
       chip.className = 'credit-chip';
       chip.href = Auth.loginUrl();
@@ -201,7 +229,10 @@ window.BE = {
     const btn = document.getElementById('calcBtn');
     if (!btn || btn.disabled) return;
     btn.classList.remove('calc-btn-buy');
-    if (acct && !acct.loggedIn) {
+    if (anonMode()) {
+      btn.textContent = STR.calcBtnFree;
+      btn.dataset.action = 'free';
+    } else if (acct && !acct.loggedIn) {
       btn.textContent = STR.calcBtnLogin;
       btn.dataset.action = 'login';
     } else if (acct && acct.credits <= 0) {
@@ -284,6 +315,15 @@ window.BE = {
       if (btn.disabled) return;
       if (btn.dataset.action === 'buy') { location.href = CREDITS_URL; return; }
       if (btn.dataset.action === 'login') { location.href = Auth.loginUrl(); return; }
+      if (btn.dataset.action === 'free' && anonMode()) {
+        useAnon();
+        recalcFn();
+        setStale(false);
+        if (resultCard) resultCard.setAttribute('data-ready', 'true');
+        updateAllChips();
+        showResult();
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = STR.calcBusy;
@@ -305,7 +345,17 @@ window.BE = {
       recalcFn();
       setStale(false);
       if (resultCard) resultCard.setAttribute('data-ready', 'true');
+      showResult();
     });
+
+    // On a phone the result sits below the form: bring it into view.
+    function showResult() {
+      if (!resultCard) return;
+      const r = resultCard.getBoundingClientRect();
+      if (r.top > window.innerHeight * 0.6 || r.bottom < 0) {
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
     // Mark stale on any input change
     (staleIds || []).forEach(id => {
       const el = document.getElementById(id);

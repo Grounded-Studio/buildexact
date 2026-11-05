@@ -17,6 +17,10 @@ import html
 import json
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from icons import svg  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://buildexact.app"
@@ -612,10 +616,10 @@ CATALOG = [
     ("converter", "🔁", "tools", None, None, ["free", "new"]),
 ]
 APP_TOOLS = [
-    ("📏", ("Spirit level", "Waterpas"), ("Bubble and edge level with calibration.", "Bel- en randwaterpas met kalibratie.")),
-    ("📐", ("On-screen ruler", "Liniaal op je scherm"), ("cm or inch, calibrate with a bank card.", "cm of inch, kalibreren met een bankpas.")),
+    ("level", ("Spirit level", "Waterpas"), ("Bubble and edge level with calibration.", "Bel- en randwaterpas met kalibratie.")),
+    ("ruler", ("On-screen ruler", "Liniaal op je scherm"), ("cm or inch, calibrate with a bank card.", "cm of inch, kalibreren met een bankpas.")),
 ]
-TAG_TXT = {"free": ("Free", "Gratis"), "new": ("New", "Nieuw"), "credit": ("1 credit", "1 credit"), "app": ("In the app", "In de app")}
+TAG_TXT = {"free": ("Free", "Gratis"), "new": ("New", "Nieuw"), "credit": ("3× free", "3× gratis"), "app": ("In the app", "In de app")}
 
 
 # ---------------------------------------------------------------- page chrome
@@ -709,11 +713,11 @@ def build_upgrade(spec):
     print("upgraded", spec["slug"])
 
 
-def tile(lang, slug, icon, title, desc, tags, href=None):
+def tile(lang, slug, icon, title, desc, tags, href=None, group=""):
     href = href or f"{prefix(lang)}/calculators/{slug}/"
     tg = "".join(f'<span class="tag {k}">{L(TAG_TXT[k], lang)}</span>' for k in tags)
     keys = esc((title + " " + desc).lower())
-    return (f'<a href="{href}" class="calc-mini" data-k="{keys}"><span class="ci">{icon}</span>'
+    return (f'<a href="{href}" class="calc-mini" data-k="{keys}"><span class="ci g-{group}">{svg(icon)}</span>'
             f'<span class="ct">{esc(title)}</span><span class="cd">{esc(desc)}</span>'
             f'<span class="tags">{tg}</span></a>')
 
@@ -740,10 +744,10 @@ def build_index():
                 tg = list(tags)
                 if "free" not in tg:
                     tg.insert(0, "credit")
-                tiles.append(tile(lang, slug, icon, title_s, desc_s, tg))
+                tiles.append(tile(lang, slug, slug, title_s, desc_s, tg, group=group))
             if gid == "tools":
                 for icon, title, desc in APP_TOOLS:
-                    tiles.append(tile(lang, "", icon, L(title, lang), L(desc, lang), ["app", "new"], href=PLAY))
+                    tiles.append(tile(lang, "", icon, L(title, lang), L(desc, lang), ["app", "new"], href=PLAY, group="tools"))
             groups.append(f'<div class="calc-group"><h2>{L(gname, lang)}</h2><div class="calc-grid">{"".join(tiles)}</div></div>')
         if lang == "nl":
             head = f'''<div class="section-head">
@@ -752,7 +756,7 @@ def build_index():
       <p class="lede">Browserversies van de BuildExact calculators, met dezelfde formules als de app. Plus gratis eenheden omrekenen. <a href="{PLAY}">Installeer de app</a> voor opslaan in projecten, PDF-offertes, de waterpas en de liniaal.</p>
     </div>
     <div class="calc-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="calcSearch" placeholder="Zoek een calculator, bijv. beton, stuc, tank…" aria-label="Zoek een calculator"></div>'''
-            foot = f'<p class="calc-empty" id="calcEmpty">Geen calculator gevonden.</p>\n    <p class="muted" style="margin-top:20px;text-align:center;font-size:.88rem;">Gratis calculators werken zonder inloggen. De andere kosten 1 credit per berekening: je krijgt 5 gratis credits, daarna 50 credits voor € 2,99 — <a href="/nl/credits/">bekijk prijzen</a>. Liever onbeperkt? <a href="{PLAY}">Installeer de app</a>.</p>'
+            foot = f'<p class="calc-empty" id="calcEmpty">Geen calculator gevonden.</p>\n    <p class="muted" style="margin-top:20px;text-align:center;font-size:.88rem;">Elke calculator kun je 3 keer gratis gebruiken, zonder inloggen; de gratis calculators zelfs onbeperkt. Daarna kost een berekening 1 credit: log in voor 5 gratis credits, daarna 50 credits voor € 2,99 — <a href="/nl/credits/">bekijk prijzen</a>. Liever onbeperkt? <a href="{PLAY}">Installeer de app</a>.</p>'
         else:
             head = f'''<div class="section-head">
       <span class="eyebrow">Same engine as the app</span>
@@ -760,7 +764,7 @@ def build_index():
       <p class="lede">Browser versions of the BuildExact calculators, with the same formulas as the app. Plus a free unit converter. <a href="{PLAY}">Install the app</a> for saving to projects, PDF quotes, the spirit level and the ruler.</p>
     </div>
     <div class="calc-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="calcSearch" placeholder="Search a calculator, e.g. concrete, plaster, tank…" aria-label="Search a calculator"></div>'''
-            foot = f'<p class="calc-empty" id="calcEmpty">No calculator found.</p>\n    <p class="muted" style="margin-top:20px;text-align:center;font-size:.88rem;">Free calculators work without logging in. The others cost 1 credit per calculation: you get 5 free credits, then 50 credits for € 2,99 — <a href="/credits/">see pricing</a>. Prefer unlimited? <a href="{PLAY}">Install the app</a>.</p>'
+            foot = f'<p class="calc-empty" id="calcEmpty">No calculator found.</p>\n    <p class="muted" style="margin-top:20px;text-align:center;font-size:.88rem;">Every calculator can be used 3 times for free without logging in, and the free ones without limit. After that a calculation costs 1 credit: log in for 5 free credits, then 50 credits for € 2.99 — <a href="/credits/">see pricing</a>. Prefer unlimited? <a href="{PLAY}">Install the app</a>.</p>'
         search_js = '''<script>
 (function () {
   var input = document.getElementById('calcSearch');
@@ -812,10 +816,25 @@ def update_sitemap():
     print("sitemap +", added)
 
 
+def update_home_icons():
+    """The hand-written home pages show a selection of tiles: same icons."""
+    groups = {c[0]: c[2] for c in CATALOG}
+    for path in ("index.html", "nl/index.html"):
+        page = read(path)
+        page, n = re.subn(
+            r'(<a href="(?:/nl)?/calculators/([a-z-]+)/" class="calc-mini">)<span class="ci[^"]*">.*?</span>',
+            lambda m: f'{m.group(1)}<span class="ci g-{groups[m.group(2)]}">{svg(m.group(2))}</span>', page, flags=re.S)
+        write(path, page)
+        print("home icons", path, n)
+
+
 if __name__ == "__main__":
     for s in NEW:
         build_new(s)
     for s in UPGRADE:
         build_upgrade(s)
     build_index()
+    update_home_icons()
     update_sitemap()
+    import seo
+    seo.apply_all()
