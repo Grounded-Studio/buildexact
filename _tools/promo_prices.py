@@ -46,8 +46,8 @@ PAIRS = [
     ("Gratis kern, eenmalig €7,99 voor PRO.", "Gratis kern, eenmalig €5,99 voor PRO (normaal €7,99)."),
     ("<strong>one-off €7.99</strong>", "<strong>one-off €5.99</strong> (normally €7.99)"),
     ("<strong>eenmalig €7,99</strong>", "<strong>eenmalig €5,99</strong> (normaal €7,99)"),
-    ("BuildExact PRO costs €7.99 one-time via Google Play.", "BuildExact PRO costs €7.99 one-time via Google Play, reduced to €5.99 until 2 December 2026."),
-    ("BuildExact PRO kost eenmalig €7,99 via Google Play.", "BuildExact PRO kost eenmalig €7,99 via Google Play, afgeprijsd naar €5,99 tot 2 december 2026."),
+    ("BuildExact PRO costs €7.99 one-time via Google Play.", "BuildExact PRO costs €7.99 one-time via Google Play, reduced to €5.99 for a limited time."),
+    ("BuildExact PRO kost eenmalig €7,99 via Google Play.", "BuildExact PRO kost eenmalig €7,99 via Google Play, tijdelijk afgeprijsd naar €5,99."),
     # grounded-studio.app
     ("PRO costs €7.99 one-time and unlocks", "PRO costs €5.99 one-time (normally €7.99) and unlocks"),
     ("PRO kost €7,99 eenmalig en ontgrendelt", "PRO kost €5,99 eenmalig (normaal €7,99) en ontgrendelt"),

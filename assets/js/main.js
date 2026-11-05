@@ -206,7 +206,7 @@
   const PROMO_ON = true;
   const KEY = 'be_promo25_seen';
   const REPEAT_MS = 7 * 24 * 60 * 60 * 1000;
-  const PROMO_END = Date.UTC(2026, 11, 2, 14); // Google Play offer: 2 Nov - 2 Dec 2026
+  const PROMO_END = Date.UTC(2026, 11, 2, 14); // Safety stop. Move this if the Google Play offer is extended.
   if (!PROMO_ON || Date.now() >= PROMO_END || typeof HTMLDialogElement === 'undefined') return;
   if (/\/(login|account|credits|privacy|terms|delete-data)(\/|$)/.test(location.pathname)) return;
 
@@ -220,12 +220,12 @@
     tag: '25% korting op PRO', title: 'BuildExact PRO nu €5,99', was: '€7,99',
     text: 'Eén keer betalen, geen abonnement: alle 25 calculators, offertes, facturen en werkbonnen.',
     alt: 'Ontdek het op Google Play', badge: 'nl', close: 'Sluiten',
-    note: 'Actie tot 2 december. Android-app. De prijs in Google Play is leidend.',
+    note: 'Tijdelijke actie. Android-app. De prijs in Google Play is leidend.',
   } : {
     tag: '25% off PRO', title: 'BuildExact PRO now €5.99', was: '€7.99',
     text: 'Pay once, no subscription: all 25 calculators, quotes, invoices and work orders.',
     alt: 'Get it on Google Play', badge: 'en', close: 'Close',
-    note: 'Offer until 2 December. Android app. The price shown in Google Play applies.',
+    note: 'Limited-time offer. Android app. The price shown in Google Play applies.',
   };
 
   function show() {
