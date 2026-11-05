@@ -216,7 +216,7 @@
   }, true);
 
   // Cloudflare Web Analytics: cookie-free visitor counts. Empty token = off.
-  const CF_TOKEN = '';
+  const CF_TOKEN = '2ac2030d525d454dbdd58ae5126df80d';
   if (CF_TOKEN) {
     const s = document.createElement('script');
     s.defer = true;
