@@ -623,6 +623,21 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   padding: 4px 20px; margin: 1.4em 0;
   color: var(--muted); font-style: italic;
 }
+.article ol { padding-left: 1.4em; margin-bottom: 1em; }
+.article ol li { padding-left: .2em; }
+.article h3 { font-size: 1.05rem; margin: 0 0 6px; }
+.article .table-wrap { overflow-x: auto; margin: 1.4em 0; }
+.article table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.article th { text-align: left; background: var(--blue-50); color: var(--ink); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.article td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-2); vertical-align: top; }
+.article tr:last-child td { border-bottom: none; }
+.article .tip {
+  background: var(--blue-50); border-left: 3px solid var(--blue-600);
+  border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 1.6em 0;
+}
+.article .tip p { margin: 0; font-size: 1rem; }
+.article figure { margin: 1.6em 0; text-align: center; }
+.article figure img { display: block; margin: 0 auto; width: 280px; max-width: 100%; height: auto; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {

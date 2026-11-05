@@ -113,4 +113,12 @@
   <url><loc>https://buildexact.app/nl/calculators/converter/</loc><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/updates/</loc><priority>0.6</priority></url>
   <url><loc>https://buildexact.app/nl/updates/</loc><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/blog/digital-work-order-with-customer-signature/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/digitale-werkbon-met-handtekening-klant/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/blog/track-hours-per-job-and-invoice/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/urenregistratie-zzp-bouw-uren-factureren/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/blog/payment-qr-code-on-invoices/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/betaal-qr-code-op-factuur/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/blog/phone-spirit-level-accuracy/</loc><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/waterpas-app-hoe-nauwkeurig/</loc><priority>0.7</priority></url>
 </urlset>
