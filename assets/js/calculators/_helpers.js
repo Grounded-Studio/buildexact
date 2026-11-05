@@ -117,7 +117,7 @@ window.BE = {
     lockTitle:   'Je credits zijn op',
     lockBody:    `Koop een pakket van ${PACK.size} credits voor ${PACK.price} om door te rekenen op de website. Eenmalig, geen abonnement. Bij je eerste aankoop krijg je er ${PACK.firstBonus} extra.`,
     lockBuy:     `Koop ${PACK.size} credits — ${PACK.price}`,
-    installFoot: 'Liever onbeperkt + PDF-offertes? Installeer BuildExact (€7,99 eenmalig in de app)',
+    installFoot: 'Liever onbeperkt + PDF-offertes? Installeer BuildExact (nu €5,99 in plaats van €7,99, eenmalig in de app)',
   } : {
     chipBalance: (n) => `${n} credit${n === 1 ? '' : 's'} left`,
     chipZero:    'Out of credits — buy a pack',
@@ -134,7 +134,7 @@ window.BE = {
     lockTitle:   'Out of credits',
     lockBody:    `Buy a pack of ${PACK.size} credits for ${PACK.price} to keep calculating on the website. One-off, no subscription. Your first purchase comes with ${PACK.firstBonus} extra.`,
     lockBuy:     `Buy ${PACK.size} credits — ${PACK.price}`,
-    installFoot: 'Want unlimited + branded PDF quotes? Install BuildExact (one-off €7.99 in the app)',
+    installFoot: 'Want unlimited + branded PDF quotes? Install BuildExact (now €5.99 instead of €7.99, one-off in the app)',
   };
 
   // null = nog onbekend, anders { loggedIn, credits }

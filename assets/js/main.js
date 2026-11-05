@@ -200,3 +200,59 @@
     });
   }
 })();
+
+// ─── PRO discount popup. Switched by _tools/promo_prices.py ───────────
+(function () {
+  const PROMO_ON = true;
+  const KEY = 'be_promo25_seen';
+  const REPEAT_MS = 7 * 24 * 60 * 60 * 1000;
+  const PROMO_END = Date.UTC(2026, 11, 2, 14); // Google Play offer: 2 Nov - 2 Dec 2026
+  if (!PROMO_ON || Date.now() >= PROMO_END || typeof HTMLDialogElement === 'undefined') return;
+  if (/\/(login|account|credits|privacy|terms|delete-data)(\/|$)/.test(location.pathname)) return;
+
+  // Without storage we can't remember a dismissal, so don't show it at all.
+  try {
+    if (Date.now() - Number(localStorage.getItem(KEY) || 0) < REPEAT_MS) return;
+  } catch (_) { return; }
+
+  const nl = (document.documentElement.lang || '').toLowerCase().startsWith('nl');
+  const t = nl ? {
+    tag: '25% korting op PRO', title: 'BuildExact PRO nu €5,99', was: '€7,99',
+    text: 'Eén keer betalen, geen abonnement: alle 25 calculators, offertes, facturen en werkbonnen.',
+    alt: 'Ontdek het op Google Play', badge: 'nl', close: 'Sluiten',
+    note: 'Actie tot 2 december. Android-app. De prijs in Google Play is leidend.',
+  } : {
+    tag: '25% off PRO', title: 'BuildExact PRO now €5.99', was: '€7.99',
+    text: 'Pay once, no subscription: all 25 calculators, quotes, invoices and work orders.',
+    alt: 'Get it on Google Play', badge: 'en', close: 'Close',
+    note: 'Offer until 2 December. Android app. The price shown in Google Play applies.',
+  };
+
+  function show() {
+    // Never interrupt someone who is typing in a calculator or form.
+    if (document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+      setTimeout(show, 5000);
+      return;
+    }
+    const d = document.createElement('dialog');
+    d.className = 'promo-dialog';
+    d.setAttribute('aria-labelledby', 'promoTitle');
+    d.innerHTML =
+      '<button type="button" class="promo-close" aria-label="' + t.close + '">&times;</button>' +
+      '<span class="badge">' + t.tag + '</span>' +
+      '<h2 id="promoTitle">' + t.title + ' <s class="price-was">' + t.was + '</s></h2>' +
+      '<p>' + t.text + '</p>' +
+      '<a class="store-badge store-badge-img" href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" target="_blank" rel="noopener">' +
+      '<img src="/assets/icons/google-play-badge-' + t.badge + '.svg" alt="' + t.alt + '"></a>' +
+      '<p class="promo-note">' + t.note + '</p>';
+    d.querySelector('.promo-close').addEventListener('click', () => d.close());
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+    d.addEventListener('close', () => d.remove());
+    document.body.appendChild(d);
+    d.tabIndex = -1;
+    d.showModal();
+    d.focus();
+    try { localStorage.setItem(KEY, String(Date.now())); } catch (_) {}
+  }
+  setTimeout(show, 6000);
+})();
