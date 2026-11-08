@@ -7,6 +7,19 @@ Each item is (title, text); keep the text to one or two sentences.
 """
 
 RELEASES = [
+    dict(version="2.2.8", date_en="November 2026", date_nl="november 2026",
+         en=dict(title="Calculate faster", items=[
+             ("Clearer input fields", "Every field shows what to enter, such as \"Enter meters\" or \"Enter cm\"."),
+             ("Calculators first", "Instant calculations now sit at the top of the start screen, with your most-used calculators one tap away."),
+             ("Pick up where you left off", "Your recently used calculators are at the top of the list, and each one remembers what you last entered."),
+             ("Simpler first start", "One question instead of three screens: language and units now come from your phone and can be changed in Settings."),
+         ]),
+         nl=dict(title="Sneller rekenen", items=[
+             ("Duidelijkere invoervelden", "Elk veld laat zien wat je invult, zoals \"Vul meters in\" of \"Vul cm in\"."),
+             ("Calculators bovenaan", "Direct berekenen staat nu bovenaan het startscherm, en je meestgebruikte calculators open je met één tik."),
+             ("Verder waar je gebleven was", "Je laatst gebruikte calculators staan bovenaan de lijst, en elke calculator onthoudt wat je het laatst invulde."),
+             ("Eenvoudiger eerste start", "Eén vraag in plaats van drie schermen: taal en eenheden komen nu van je telefoon en zijn aan te passen in Instellingen."),
+         ])),
     dict(version="2.2.7", date_en="November 2026", date_nl="november 2026",
          en=dict(title="Work orders & hours", items=[
              ("Work order with signature", "Open \"Work order & hours\" in a project, let the customer sign on your screen and share the PDF. Work done, hours, materials and photos are filled in for you."),
