@@ -21,6 +21,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from icons import svg  # noqa: E402
+from calc_content import EXTRA  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://buildexact.app"
@@ -659,17 +660,40 @@ def calc_block(lang, form_html, hero, note, monetised):
     </div>'''
 
 
-def guide_block(t):
-    faq = "".join(f'\n    <div class="faq-item">\n      <h3>{esc(q)}</h3>\n      <p>{esc(a)}</p>\n    </div>' for q, a in t["faq"])
+def table_html(head, rows):
+    th = "".join(f"<th>{esc(h)}</th>" for h in head) if head else ""
+    trs = "".join(f"\n      <tr><td>{esc(a)}</td><td>{esc(b)}</td></tr>" for a, b in rows)
+    return f'\n    <div class="table-wrap"><table>{"<tr>" + th + "</tr>" if th else ""}{trs}\n    </table></div>'
+
+
+def extra_html(x):
+    """Worked example and extra sections from calc_content.EXTRA."""
+    if not x:
+        return ""
+    out = ""
+    if "example" in x:
+        title, intro, rows, outro = x["example"]
+        out += f"\n    <h2>{esc(title)}</h2>\n    <p>{esc(intro)}</p>{table_html(None, rows)}\n    <p>{esc(outro)}</p>"
+    for i, (title, paras) in enumerate(x.get("more", [])):
+        out += f"\n    <h2>{esc(title)}</h2>" + "".join(f"\n    <p>{esc(p)}</p>" for p in paras)
+        if i == 0 and "table" in x:
+            a, b, rows = x["table"]
+            out += table_html((a, b), rows)
+    return out
+
+
+def guide_block(t, x=None):
+    faqs = list(t["faq"]) + list((x or {}).get("faq", []))
+    faq = "".join(f'\n    <div class="faq-item">\n      <h3>{esc(q)}</h3>\n      <p>{esc(a)}</p>\n    </div>' for q, a in faqs)
     ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]]},
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]},
         ensure_ascii=False)
     paras = "".join(f"\n    <p>{esc(p)}</p>" for p in t["guide"])
     faqh = "Veelgestelde vragen" if t["how"].startswith("Zo") else "Frequently asked questions"
     return f'''<section class="section calc-guide">
   <div class="container calc-guide-inner">
     <h2>{esc(t["how"])}</h2>{paras}
-    <p class="calc-guide-tip">{esc(t["tip"])}</p>
+    <p class="calc-guide-tip">{esc(t["tip"])}</p>{extra_html(x)}
     <h2>{faqh}</h2>{faq}
     <script type="application/ld+json">{ld}</script>
   </div>
@@ -688,7 +712,7 @@ def build_new(spec):
   </div>
 </section>
 
-{guide_block(t)}
+{guide_block(t, EXTRA.get(spec["slug"], {}).get(lang))}
 
 '''
         scripts = ["/assets/js/calculators/_helpers.js", f"/assets/js/calculators/{spec['js']}.js"]
@@ -785,6 +809,9 @@ def build_index():
   });
 })();
 </script>'''
+        # Drop the search script(s) of earlier runs; one copy is added below.
+        page = re.sub(r"<script>\s*\(function \(\) \{\s*var input = document\.getElementById\('calcSearch'\);.*?</script>\n?",
+                      "", page, flags=re.S)
         a = page.index('<section class="section">')
         b = page.index("</section>", a) + len("</section>")
         section_html = f'''<section class="section">

@@ -870,6 +870,14 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .calc-guide h2 { margin-top: 32px; }
 .calc-guide h2:first-child { margin-top: 0; }
 .calc-guide-tip { background: var(--blue-50); border-left: 3px solid var(--blue-600); padding: 12px 16px; border-radius: 10px; }
+.calc-guide .table-wrap { overflow-x: auto; margin: 1em 0 1.2em; }
+.calc-guide table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.calc-guide th { text-align: left; background: var(--blue-50); color: var(--ink); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.calc-guide td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-2); vertical-align: top; }
+.calc-guide td:first-child { color: var(--ink); font-weight: 600; }
+.calc-guide tr:last-child td { border-bottom: none; }
+.related-articles { padding-left: 1.2em; }
+.related-articles li { margin: 6px 0; }
 .faq-item { border-top: 1px solid var(--border); padding: 14px 0 4px; }
 .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; }
 

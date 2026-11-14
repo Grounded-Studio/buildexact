@@ -66,46 +66,6 @@
   });
 })();
 </script>
-<script>
-(function () {
-  var input = document.getElementById('calcSearch');
-  if (!input) return;
-  input.addEventListener('input', function () {
-    var q = input.value.trim().toLowerCase(), any = false;
-    document.querySelectorAll('.calc-group').forEach(function (g) {
-      var shown = 0;
-      g.querySelectorAll('.calc-mini').forEach(function (a) {
-        var hit = !q || a.dataset.k.indexOf(q) !== -1;
-        a.style.display = hit ? '' : 'none';
-        if (hit) shown++;
-      });
-      g.style.display = shown ? '' : 'none';
-      if (shown) any = true;
-    });
-    document.getElementById('calcEmpty').style.display = any ? 'none' : 'block';
-  });
-})();
-</script>
-<script>
-(function () {
-  var input = document.getElementById('calcSearch');
-  if (!input) return;
-  input.addEventListener('input', function () {
-    var q = input.value.trim().toLowerCase(), any = false;
-    document.querySelectorAll('.calc-group').forEach(function (g) {
-      var shown = 0;
-      g.querySelectorAll('.calc-mini').forEach(function (a) {
-        var hit = !q || a.dataset.k.indexOf(q) !== -1;
-        a.style.display = hit ? '' : 'none';
-        if (hit) shown++;
-      });
-      g.style.display = shown ? '' : 'none';
-      if (shown) any = true;
-    });
-    document.getElementById('calcEmpty').style.display = any ? 'none' : 'block';
-  });
-})();
-</script>
 
 <footer class="site-footer"><div class="container">
 <div class="footer-grid">
