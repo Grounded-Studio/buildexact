@@ -57,6 +57,244 @@ POSTS = [
     #     },
     # },
     {
+        "date": "2026-11-14",
+        "minutes": 6,
+        "en": {
+            "slug": "how-many-fence-posts-and-panels-do-i-need",
+            "title": "How Many Fence Posts and Panels?",
+            "h1": "How Many Fence Posts and Panels Do I Need? Count Your Fence Exactly",
+            "desc": "Work out fence posts, panels and the end panel from the length of your fence, with corners and gates, and a worked example for a 12 m fence.",
+            "badge": "🏗️ Calculations",
+            "card_badge": "Fences",
+            "card_text": "Posts, panels and the cut end panel from the length of your fence.",
+            "intro": "Dividing the length of your fence by the panel width gives you the wrong answer. The posts take up room too, the last panel almost never fits and every corner and gate changes the count. Here is how to get it right before you order.",
+            "body": """
+<h2>Why length ÷ panel width is wrong</h2>
+<p>A 12 m fence with 180 cm panels looks like 12 ÷ 1.8 = 6.7 panels. But between every two panels there is a post, and with 10 cm posts those add up to almost a metre over that length. Forget them and you end up with a gap at the end, or with one panel too many.</p>
+
+<h2>The formula for a straight fence</h2>
+<p>For a straight run with a post at both ends, each panel needs its own width plus one post:</p>
+<ul>
+  <li><strong>Panels</strong> = (length − post width) ÷ (panel width + post width), rounded <strong>up</strong></li>
+  <li><strong>Posts</strong> = panels + 1</li>
+</ul>
+<p>The last panel is usually shorter: you cut a full panel to size. That cut piece is called the <strong>end panel</strong>.</p>
+
+<h2>Worked example: 12 m fence</h2>
+<div class="table-wrap"><table>
+  <tr><th>Input</th><th>Value</th></tr>
+  <tr><td>Fence length</td><td>12.00 m</td></tr>
+  <tr><td>Panel width</td><td>180 cm</td></tr>
+  <tr><td>Post width</td><td>10 cm</td></tr>
+</table></div>
+<ol>
+  <li>(1200 − 10) ÷ (180 + 10) = 6.26, so <strong>7 panels</strong>: 6 full ones and 1 end panel.</li>
+  <li>Posts: 7 + 1 = <strong>8 posts</strong>.</li>
+  <li>End panel: 1200 − 6 × 180 − 8 × 10 = <strong>40 cm</strong>.</li>
+</ol>
+<p>Check: 6 × 180 + 40 + 8 × 10 = 1200 cm. It fits exactly.</p>
+
+<div class="tip"><h3>💡 Two equal end panels look better</h3><p>A 40 cm piece at one end catches the eye. You can also split the leftover over both ends. For the same 12 m that gives 5 full panels and two end panels of 110 cm, still with 8 posts. Many people find that tidier, especially along a back line that everyone sees.</p></div>
+
+<h2>Corners and gates</h2>
+<ul>
+  <li><strong>Corners:</strong> measure every straight line separately. A corner post belongs to both lines, so count it once. An L-shape is 2 lines with 1 corner, a U-shape 3 lines with 2 corners.</li>
+  <li><strong>Gates:</strong> a gate takes up its own width plus the beams or frame on both sides. It needs a post on each side. These are often heavier, or posts without a groove for panels.</li>
+  <li><strong>Very small gaps:</strong> an end panel of just a few centimetres is not worth cutting. Move a post or use slightly wider panels instead.</li>
+</ul>
+
+<h2>How long should the posts be?</h2>
+<p>Put at least 60 cm of the post in the ground, and more in soft soil or in a spot that catches a lot of wind. For a 180 cm high fence that means posts of 240 to 270 cm. In concrete, dig a hole about 25 × 25 cm. Work out the volume of the hole, subtract the post, and check on the bag how many litres a bag of postmix or concrete makes.</p>
+
+<h2>Calculate it in seconds</h2>
+<p>The <a href="/calculators/fence/">fence calculator</a> does all of the above for you. Enter the length of each line, the number of corners and your gates, and you get the posts, panels and end panel width. You can try it free online, without logging in.</p>
+<p>In the BuildExact app you find it under <strong>Instant calculations</strong> &rarr; <strong>Fence</strong>. Share the result as a card via WhatsApp, or save it to a project and turn it into a quote.</p>
+
+<h2>Summary</h2>
+<p>Count each panel together with one post, round up, add one post for the end and cut the last panel to size. Measure each line separately, count corner posts once and give gates their own posts. That way you order exactly what you need.</p>
+""",
+        },
+        "nl": {
+            "slug": "schutting-berekenen-hoeveel-palen-en-schermen",
+            "title": "Schutting berekenen: palen en schermen",
+            "h1": "Schutting berekenen: hoeveel palen en schermen heb je nodig?",
+            "desc": "Reken uit hoeveel palen, schermen en welk pasvak je nodig hebt voor je schutting, met hoeken en poorten en een rekenvoorbeeld voor 12 meter.",
+            "badge": "🏗️ Berekeningen",
+            "card_badge": "Schutting",
+            "card_text": "Palen, schermen en het pasvak uit de lengte van je schutting.",
+            "intro": "De lengte van je schutting delen door de breedte van een scherm geeft het verkeerde antwoord. De palen nemen ook ruimte in, het laatste scherm past bijna nooit precies en elke hoek en poort verandert de telling. Zo reken je het goed uit voordat je bestelt.",
+            "body": """
+<h2>Waarom lengte ÷ schermbreedte niet klopt</h2>
+<p>Een schutting van 12 meter met schermen van 180 cm lijkt 12 ÷ 1,8 = 6,7 schermen. Maar tussen elke twee schermen staat een paal, en met palen van 10 cm tikt dat over die lengte op tot bijna een meter. Vergeet je ze, dan hou je aan het eind een gat over of heb je een scherm te veel.</p>
+
+<h2>De formule voor een rechte schutting</h2>
+<p>Voor een rechte lijn met aan beide kanten een paal neemt elk scherm zijn eigen breedte plus één paal in beslag:</p>
+<ul>
+  <li><strong>Schermen</strong> = (lengte − paalbreedte) ÷ (schermbreedte + paalbreedte), naar <strong>boven</strong> afgerond</li>
+  <li><strong>Palen</strong> = schermen + 1</li>
+</ul>
+<p>Het laatste scherm is meestal korter: dat zaag je op maat uit een heel scherm. Dat stuk heet het <strong>pasvak</strong>.</p>
+
+<h2>Rekenvoorbeeld: schutting van 12 meter</h2>
+<div class="table-wrap"><table>
+  <tr><th>Invoer</th><th>Waarde</th></tr>
+  <tr><td>Lengte schutting</td><td>12,00 m</td></tr>
+  <tr><td>Schermbreedte</td><td>180 cm</td></tr>
+  <tr><td>Paalbreedte</td><td>10 cm</td></tr>
+</table></div>
+<ol>
+  <li>(1200 − 10) ÷ (180 + 10) = 6,26, dus <strong>7 schermen</strong>: 6 hele en 1 pasvak.</li>
+  <li>Palen: 7 + 1 = <strong>8 palen</strong>.</li>
+  <li>Pasvak: 1200 − 6 × 180 − 8 × 10 = <strong>40 cm</strong>.</li>
+</ol>
+<p>Controle: 6 × 180 + 40 + 8 × 10 = 1200 cm. Het past precies.</p>
+
+<div class="tip"><h3>💡 Twee gelijke pasvakken staan mooier</h3><p>Een stukje van 40 cm aan één kant valt op. Je kunt de rest ook over beide uiteinden verdelen. Voor dezelfde 12 meter geeft dat 5 hele schermen en twee pasvakken van 110 cm, nog steeds met 8 palen. Veel mensen vinden dat rustiger, zeker langs een achterlijn waar iedereen tegenaan kijkt.</p></div>
+
+<h2>Hoeken en poorten</h2>
+<ul>
+  <li><strong>Hoeken:</strong> meet elke rechte lijn apart. Een hoekpaal hoort bij twee lijnen, dus tel je hem maar één keer. Een L-vorm is 2 lijnen met 1 hoek, een U-vorm 3 lijnen met 2 hoeken.</li>
+  <li><strong>Poorten:</strong> een poort neemt zijn eigen breedte in plus de balken of het frame aan beide kanten. Aan elke kant komt een paal, vaak een zwaardere of een eindpaal zonder sponning.</li>
+  <li><strong>Heel kleine restjes:</strong> een pasvak van een paar centimeter is het zagen niet waard. Verschuif dan liever een paal of kies iets bredere schermen.</li>
+</ul>
+
+<h2>Hoe lang moeten de palen zijn?</h2>
+<p>Zet minstens 60 cm van de paal in de grond, en meer in slappe grond of op een plek waar veel wind staat. Voor een schutting van 180 cm hoog kom je dan op palen van 240 tot 270 cm. Zet je ze in beton, graaf dan een gat van ongeveer 25 × 25 cm. Reken de inhoud van het gat uit, trek de paal eraf en kijk op de zak hoeveel liter een zak snelbeton of beton oplevert.</p>
+
+<h2>In een paar seconden uitgerekend</h2>
+<p>De <a href="/nl/calculators/fence/">schuttingcalculator</a> doet dit allemaal voor je. Vul de lengte van elke lijn in, het aantal hoeken en je poorten, en je krijgt de palen, schermen en de breedte van het pasvak. Je kunt hem gratis online proberen, zonder in te loggen.</p>
+<p>In de BuildExact-app vind je hem onder <strong>Direct berekenen</strong> &rarr; <strong>Schutting</strong>. Deel de uitkomst als kaartje via WhatsApp, of bewaar hem in een project en maak er een offerte van.</p>
+
+<h2>Samenvatting</h2>
+<p>Tel elk scherm samen met één paal, rond naar boven af, tel één paal extra voor het eind en zaag het laatste scherm op maat. Meet elke lijn apart, tel hoekpalen één keer en geef poorten hun eigen palen. Zo bestel je precies wat je nodig hebt.</p>
+""",
+        },
+    },
+    {
+        "date": "2026-11-14",
+        "minutes": 6,
+        "en": {
+            "slug": "how-many-bricks-per-m2",
+            "title": "How Many Bricks per m²?",
+            "h1": "How Many Bricks per m² Do I Need? Bricks and Mortar for Your Wall",
+            "desc": "How many bricks per m² for common brick sizes, how to work it out for any brick, and how much mortar, waste, lintels and wall ties to add.",
+            "badge": "🏗️ Calculations",
+            "card_badge": "Masonry",
+            "card_text": "Bricks per m² for common sizes, plus mortar, waste and lintels.",
+            "intro": "Order too few bricks and you wait for a second delivery that may not match the colour of the first. Order too many and you are left with pallets in the garden. With the size of your brick and the joint width you can work out exactly how many you need per m².",
+            "body": """
+<h2>The formula</h2>
+<p>Every brick takes up its own size <strong>plus one joint</strong> in length and in height. For a single-leaf wall, one brick thick:</p>
+<p><strong>Bricks per m² = 1 ÷ ((length + joint) × (height + joint))</strong>, with all sizes in metres.</p>
+<p>Example for a 215 × 102.5 × 65 mm brick with 10 mm joints: 1 ÷ (0.225 × 0.075) = 59.3 bricks per m². That is why you often hear "60 bricks per m²".</p>
+
+<h2>Bricks per m² for common sizes</h2>
+<div class="table-wrap"><table>
+  <tr><th>Brick size (mm)</th><th>10 mm joint</th><th>12 mm joint</th></tr>
+  <tr><td>210 × 100 × 50</td><td>76</td><td>73</td></tr>
+  <tr><td>210 × 100 × 65</td><td>61</td><td>59</td></tr>
+  <tr><td>215 × 102.5 × 65</td><td>59</td><td>57</td></tr>
+  <tr><td>240 × 115 × 71</td><td>49</td><td>48</td></tr>
+</table></div>
+<p>These numbers are for a wall one brick thick (a half-brick wall), without waste. A wall two bricks thick needs about twice as many.</p>
+
+<h2>Step by step for your wall</h2>
+<ol>
+  <li><strong>Measure the wall:</strong> length × height = gross area.</li>
+  <li><strong>Subtract openings:</strong> width × height of every window and door.</li>
+  <li><strong>Multiply</strong> the net area by the bricks per m² for your brick.</li>
+  <li><strong>Add waste:</strong> 5% for straightforward work, up to 10% with lots of cutting or reclaimed bricks.</li>
+</ol>
+
+<h2>Worked example</h2>
+<p>A wall of 6.0 × 2.5 m with a window of 1.2 × 1.0 m and a door of 0.9 × 2.1 m, built with 215 × 102.5 × 65 bricks:</p>
+<ul>
+  <li>Gross: 6.0 × 2.5 = 15.00 m²</li>
+  <li>Openings: 1.20 + 1.89 = 3.09 m²</li>
+  <li>Net: 15.00 − 3.09 = 11.91 m²</li>
+  <li>Bricks: 11.91 × 60 = 715, plus 5% waste = <strong>751 bricks</strong></li>
+</ul>
+
+<h2>How much mortar?</h2>
+<p>For a half-brick wall the joints come to about 18 to 20 litres of mortar per m². In dry mix that is roughly 30 to 40 kg per m², depending on the brick, the joints and how much you lose. The <a href="/calculators/bricks/">brick calculator</a> starts at 35 kg per m², which you can change. For the example wall: 11.91 × 35 = 417 kg, or <strong>17 bags of 25 kg</strong>. The bag always says how much mortar it makes, so check it.</p>
+
+<h2>Lintels and wall ties</h2>
+<ul>
+  <li><strong>Lintels:</strong> every opening needs one, longer than the opening so it rests on the brickwork on both sides. The calculator adds 20 cm per side. A 1.2 m window then needs a 1.6 m lintel.</li>
+  <li><strong>Wall ties:</strong> in a cavity wall the two leaves are tied together. The number per m² depends on local rules and the engineer's spec, usually a few per m² plus extra around openings. The calculator starts at 5 per m².</li>
+</ul>
+
+<div class="tip"><h3>💡 Order from one batch</h3><p>Bricks from different production runs can differ slightly in colour. Order everything in one go, including the waste, and mix bricks from several pallets as you lay them.</p></div>
+
+<h2>Calculate it in seconds</h2>
+<p>With the <a href="/calculators/bricks/">brick calculator</a> you enter the wall, the openings and the bricks per m², and you get the bricks, mortar bags, lintels and wall ties. You can try it free online, without logging in. In the BuildExact app you find it under <strong>Instant calculations</strong> &rarr; <strong>Brick calculator</strong>.</p>
+
+<h2>Summary</h2>
+<p>Bricks per m² = 1 ÷ ((length + joint) × (height + joint)). For a 215 × 65 mm brick with 10 mm joints that is about 60 per m². Subtract openings, add 5 to 10% waste, count on about 35 kg of mortar per m² and give every opening a lintel that is 40 cm longer.</p>
+""",
+        },
+        "nl": {
+            "slug": "hoeveel-stenen-per-m2-metselwerk",
+            "title": "Hoeveel stenen per m²?",
+            "h1": "Hoeveel stenen per m² heb je nodig? Bakstenen en mortel voor je muur",
+            "desc": "Hoeveel bakstenen per m² voor waalformaat en andere formaten, met de formule, een rekenvoorbeeld en hoeveel mortel, lateien en ankers erbij komen.",
+            "badge": "🏗️ Berekeningen",
+            "card_badge": "Metselwerk",
+            "card_text": "Stenen per m² per formaat, plus mortel, snijverlies en lateien.",
+            "intro": "Bestel je te weinig stenen, dan wacht je op een tweede levering die misschien net een andere kleur heeft. Bestel je te veel, dan staan er pallets in de tuin. Met het formaat van je steen en de voegbreedte reken je precies uit hoeveel je er per m² nodig hebt.",
+            "body": """
+<h2>De formule</h2>
+<p>Elke steen neemt zijn eigen maat in <strong>plus één voeg</strong>, in de lengte en in de hoogte. Voor een halfsteens muur:</p>
+<p><strong>Stenen per m² = 1 ÷ ((lengte + voeg) × (hoogte + voeg))</strong>, met alle maten in meters.</p>
+<p>Voorbeeld voor waalformaat (210 × 100 × 50 mm) met een voeg van 12 mm: 1 ÷ (0,222 × 0,062) = 72,7 stenen per m². Daarom hoor je vaak "73 stenen per m²".</p>
+
+<h2>Stenen per m² per formaat</h2>
+<div class="table-wrap"><table>
+  <tr><th>Formaat (mm)</th><th>Voeg 10 mm</th><th>Voeg 12 mm</th></tr>
+  <tr><td>Waalformaat 210 × 100 × 50</td><td>76</td><td>73</td></tr>
+  <tr><td>Waaldikformaat 210 × 100 × 65</td><td>61</td><td>59</td></tr>
+  <tr><td>215 × 102,5 × 65</td><td>59</td><td>57</td></tr>
+  <tr><td>240 × 115 × 71</td><td>49</td><td>48</td></tr>
+</table></div>
+<p>Deze aantallen gelden voor een halfsteens muur, zonder snijverlies. Een steens muur heeft ongeveer twee keer zoveel nodig.</p>
+
+<h2>Stap voor stap voor je muur</h2>
+<ol>
+  <li><strong>Meet de muur:</strong> lengte × hoogte = bruto oppervlak.</li>
+  <li><strong>Trek openingen af:</strong> breedte × hoogte van elk raam en elke deur.</li>
+  <li><strong>Vermenigvuldig</strong> het netto oppervlak met het aantal stenen per m² van jouw steen.</li>
+  <li><strong>Tel snijverlies op:</strong> 5% bij eenvoudig werk, tot 10% bij veel zaagwerk of gebruikte stenen.</li>
+</ol>
+
+<h2>Rekenvoorbeeld</h2>
+<p>Een muur van 6,0 × 2,5 m met een raam van 1,2 × 1,0 m en een deur van 0,9 × 2,1 m, in waalformaat met een voeg van 12 mm:</p>
+<ul>
+  <li>Bruto: 6,0 × 2,5 = 15,00 m²</li>
+  <li>Openingen: 1,20 + 1,89 = 3,09 m²</li>
+  <li>Netto: 15,00 − 3,09 = 11,91 m²</li>
+  <li>Stenen: 11,91 × 73 = 870, plus 5% snijverlies = <strong>913 stenen</strong></li>
+</ul>
+
+<h2>Hoeveel mortel?</h2>
+<p>Bij een halfsteens muur zit er ongeveer 18 tot 20 liter mortel in de voegen per m². In droge mortel is dat ruwweg 30 tot 40 kg per m², afhankelijk van de steen, de voegen en wat je morst. De <a href="/nl/calculators/bricks/">stenencalculator</a> rekent standaard met 35 kg per m², en dat kun je aanpassen. Voor de voorbeeldmuur: 11,91 × 35 = 417 kg, oftewel <strong>17 zakken van 25 kg</strong>. Op de zak staat altijd hoeveel mortel hij oplevert, dus kijk dat even na.</p>
+
+<h2>Lateien en spouwankers</h2>
+<ul>
+  <li><strong>Lateien:</strong> boven elke opening komt er een, langer dan de opening zelf, zodat hij aan beide kanten op het metselwerk rust. De calculator telt er 20 cm per kant bij op. Een raam van 1,2 m krijgt dan een latei van 1,6 m.</li>
+  <li><strong>Spouwankers:</strong> bij een spouwmuur verbind je het binnen- en buitenblad. Hoeveel per m² hangt af van de regels en de opgave van de constructeur, meestal een paar per m² plus extra langs openingen. De calculator rekent standaard met 5 per m².</li>
+</ul>
+
+<div class="tip"><h3>💡 Bestel uit één partij</h3><p>Stenen uit verschillende productieruns kunnen net iets van kleur verschillen. Bestel alles in één keer, inclusief het snijverlies, en meng tijdens het metselen stenen van meerdere pallets.</p></div>
+
+<h2>In een paar seconden uitgerekend</h2>
+<p>In de <a href="/nl/calculators/bricks/">stenencalculator</a> vul je de muur, de openingen en het aantal stenen per m² in, en je krijgt de stenen, mortelzakken, lateien en spouwankers. Je kunt hem gratis online proberen, zonder in te loggen. In de BuildExact-app vind je hem onder <strong>Direct berekenen</strong> &rarr; <strong>Bakstenen</strong>.</p>
+
+<h2>Samenvatting</h2>
+<p>Stenen per m² = 1 ÷ ((lengte + voeg) × (hoogte + voeg)). Voor waalformaat met een voeg van 12 mm is dat ongeveer 73 per m². Trek openingen af, tel 5 tot 10% snijverlies op, reken op ongeveer 35 kg mortel per m² en geef elke opening een latei die 40 cm langer is.</p>
+""",
+        },
+    },
+    {
         "date": "2026-11-05",
         "minutes": 6,
         "en": {
