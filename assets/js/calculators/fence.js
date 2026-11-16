@@ -156,13 +156,14 @@
         }
       }
       if (!absorbed) {
-        const pasvakNeedsPost = endWithPost;
-        const pasvakAvailable = pasvakNeedsPost ? leftover - postW : leftover;
+        // The pasvak always adds one post, between the last full section and
+        // the pasvak: against a wall or corner post the last panel still
+        // needs a post on its far side. Same as fence_calculator.dart.
+        const pasvakAvailable = leftover - postW;
         if (pasvakAvailable >= MIN_PASVAK_CM) {
           pasvakWidth = pasvakAvailable;
-          if (pasvakNeedsPost) postCount += 1;
-          used = length - (leftover - pasvakAvailable - (pasvakNeedsPost ? postW : 0));
-          used = Math.max(0, Math.min(length, used));
+          postCount += 1;
+          used = length;
         } else {
           unfilled = leftover;
         }

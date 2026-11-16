@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://buildexact.app"
 PLAY = "https://play.google.com/store/apps/details?id=com.metenweten.bouw"
 LANGS = ("en", "nl")
-JS_VER = "20261118"  # bump when assets/js/calculators changes, so browsers fetch the new files
+JS_VER = "20261119"  # bump when assets/js/calculators changes, so browsers fetch the new files
 
 
 def esc(s):
