@@ -5,6 +5,7 @@ Per slug and language:
             example with the calculator's default values
   more    – [(heading, [paragraph, ...]), ...]: extra explanation
   faq     – [(question, answer), ...]: added after the existing FAQ
+A section in "more" may carry its own table as a third element: (header_tuple, rows).
 
 All numbers follow the formulas in assets/js/calculators/<slug>.js.
 """
@@ -247,3 +248,30 @@ EXTRA = {
                  ("Wat is 1:12 in procent en graden?", "8,3%, of 4,8 graden.")]),
     },
 }
+
+# Extra sections added on 2026-11-16 (pages were under 600 words).
+EXTRA["converter"]["en"]["more"].append((
+    "Area and volume units trip people up",
+    ["Square and cubic units don't scale like lengths. 1 m is 100 cm, but 1 m² is 10,000 cm² and 1 m³ is 1,000,000 cm³. The same goes for imperial: 1 yard is 3 feet, but 1 square yard is 9 square feet and 1 cubic yard is 27 cubic feet.",
+     "So never convert an area with the factor for a length. Convert each side, then multiply, or use the area units in the converter directly."],
+    (("From", "To"),
+     [("1 square foot", "0.0929 m²"), ("1 square yard", "0.836 m²"), ("1 cubic foot", "0.0283 m³ (28.3 L)"),
+      ("1 cubic yard", "0.765 m³"), ("1 US gallon", "3.785 L"), ("1 UK gallon", "4.546 L")])))
+EXTRA["converter"]["nl"]["more"].append((
+    "Oppervlakte- en inhoudsmaten zijn verraderlijk",
+    ["Vierkante en kubieke eenheden schalen niet zoals lengtes. 1 m is 100 cm, maar 1 m² is 10.000 cm² en 1 m³ is 1.000.000 cm³. Bij Engelse maten net zo: 1 yard is 3 feet, maar 1 square yard is 9 square feet en 1 cubic yard is 27 cubic feet.",
+     "Reken een oppervlak dus nooit om met de factor voor lengte. Reken elke zijde om en vermenigvuldig dan, of gebruik direct de oppervlakte-eenheden in de omrekenaar."],
+    (("Van", "Naar"),
+     [("1 square foot", "0,0929 m²"), ("1 square yard", "0,836 m²"), ("1 cubic foot", "0,0283 m³ (28,3 L)"),
+      ("1 cubic yard", "0,765 m³"), ("1 US gallon", "3,785 L"), ("1 UK gallon", "4,546 L")])))
+EXTRA["steel"]["en"]["more"].append((
+    "Laps, offcuts and ordering",
+    ["Bars are sold in fixed lengths, often 6 or 12 m. Where two bars meet they overlap; a common rule of thumb is 40 to 50 times the bar diameter, so about 40 to 50 cm for Ø10. Follow the engineer's drawings where they give a lap length.",
+     "Every lap and every short offcut adds weight you pay for. Add 5 to 10% to the calculated weight for laps and cutting, more for a design with many short bars."]))
+EXTRA["steel"]["nl"]["more"].append((
+    "Overlappingen, restjes en bestellen",
+    ["Staven worden verkocht in vaste lengtes, vaak 6 of 12 m. Waar twee staven elkaar raken, overlappen ze; een gangbare vuistregel is 40 tot 50 keer de diameter, dus zo'n 40 tot 50 cm bij Ø10. Volg de tekening van de constructeur als daar een overlaplengte op staat.",
+     "Elke overlapping en elk kort restje voegt gewicht toe dat je betaalt. Tel 5 tot 10% op bij het berekende gewicht voor overlappingen en zaagwerk, meer bij een ontwerp met veel korte staven."]))
+
+# The hand-written calculator pages get their content from calc_content_hand.py (put on the pages by calc_extend.py).
+from calc_content_hand import HAND  # noqa: E402,F401

@@ -662,20 +662,26 @@ def calc_block(lang, form_html, hero, note, monetised):
 
 def table_html(head, rows):
     th = "".join(f"<th>{esc(h)}</th>" for h in head) if head else ""
-    trs = "".join(f"\n      <tr><td>{esc(a)}</td><td>{esc(b)}</td></tr>" for a, b in rows)
+    trs = "".join("\n      <tr>" + "".join(f"<td>{esc(c)}</td>" for c in r) + "</tr>" for r in rows)
     return f'\n    <div class="table-wrap"><table>{"<tr>" + th + "</tr>" if th else ""}{trs}\n    </table></div>'
 
 
 def extra_html(x):
-    """Worked example and extra sections from calc_content.EXTRA."""
+    """Worked example and extra sections from calc_content.EXTRA.
+
+    A section in "more" is (heading, [paragraphs]) or (heading, [paragraphs], (header_tuple, rows)).
+    The old "table" key (a, b, rows) still goes after the first section."""
     if not x:
         return ""
     out = ""
     if "example" in x:
         title, intro, rows, outro = x["example"]
         out += f"\n    <h2>{esc(title)}</h2>\n    <p>{esc(intro)}</p>{table_html(None, rows)}\n    <p>{esc(outro)}</p>"
-    for i, (title, paras) in enumerate(x.get("more", [])):
+    for i, sec in enumerate(x.get("more", [])):
+        title, paras = sec[0], sec[1]
         out += f"\n    <h2>{esc(title)}</h2>" + "".join(f"\n    <p>{esc(p)}</p>" for p in paras)
+        if len(sec) > 2:
+            out += table_html(*sec[2])
         if i == 0 and "table" in x:
             a, b, rows = x["table"]
             out += table_html((a, b), rows)
