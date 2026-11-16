@@ -7,6 +7,8 @@ Run from the site root, after the other build scripts:
   and "Read more" (matching blog articles), above the install strip.
 - Every blog article that matches a calculator gets a box with links to those
   calculators, above the share buttons.
+- Every blog article gets "Read also" with three related articles (READ_ALSO).
+- Both homepages get "Latest guides": the six newest articles.
 - Every page with an English version gets <link hreflang="x-default"> to it.
 - sitemap.xml gets a <lastmod> per page: the date of the last commit of that
   file, or today for files changed since.
@@ -49,8 +51,13 @@ ARTICLES = {
         "steel": ["how-much-concrete-do-i-need"],
         "fence": ["how-many-fence-posts-and-panels-do-i-need"],
         "excavation": ["how-much-concrete-do-i-need"],
-        "cost": ["renovation-cost-estimate", "how-to-write-construction-quote", "bathroom-renovation-cost"],
-        "converter": ["how-to-measure-a-room-accurately"],
+        "cost": ["renovation-cost-estimate", "how-to-write-construction-quote", "track-hours-per-job-and-invoice"],
+        "converter": ["how-to-measure-a-room-accurately", "phone-spirit-level-accuracy"],
+        "drilling": ["digital-work-order-with-customer-signature", "track-hours-per-job-and-invoice", "payment-qr-code-on-invoices"],
+        "stairs": ["phone-spirit-level-accuracy", "how-to-measure-a-room-accurately"],
+        "wood": ["how-many-fence-posts-and-panels-do-i-need", "phone-spirit-level-accuracy"],
+        "sheets": ["how-much-insulation-do-i-need", "renovation-cost-estimate"],
+        "tank": ["how-much-concrete-do-i-need"],
     },
     "nl": {
         "volume": ["hoeveel-m3-beton-berekenen"],
@@ -61,12 +68,60 @@ ARTICLES = {
         "round-column": ["hoeveel-m3-beton-berekenen"],
         "bricks": ["hoeveel-stenen-per-m2-metselwerk"],
         "steel": ["hoeveel-m3-beton-berekenen"],
-        "drilling": ["kernboring-prijs-berekenen", "diamantboor-onderhoud"],
-        "fence": ["schutting-berekenen-hoeveel-palen-en-schermen"],
+        "drilling": ["kernboring-prijs-berekenen", "diamantboor-onderhoud", "digitale-werkbon-met-handtekening-klant"],
+        "fence": ["schutting-berekenen-hoeveel-palen-en-schermen", "waterpas-app-hoe-nauwkeurig"],
         "excavation": ["hoeveel-m3-beton-berekenen"],
-        "cost": ["materialenprijzen-2026-bouwprijzen-per-m2", "van-meting-tot-factuur-in-5-minuten"],
+        "cost": ["materialenprijzen-2026-bouwprijzen-per-m2", "urenregistratie-zzp-bouw-uren-factureren", "van-meting-tot-factuur-in-5-minuten"],
+        "stairs": ["waterpas-app-hoe-nauwkeurig"],
+        "wood": ["schutting-berekenen-hoeveel-palen-en-schermen", "waterpas-app-hoe-nauwkeurig"],
+        "converter": ["waterpas-app-hoe-nauwkeurig"],
     },
 }
+# "Read also" under every blog article: three related articles in the same language.
+READ_ALSO = {
+    "en": {
+        "bathroom-renovation-cost": ["how-to-calculate-tiles", "renovation-cost-estimate", "how-to-write-construction-quote"],
+        "client-management-for-contractors": ["recurring-invoices-maintenance-contracts", "send-quotes-invoices-whatsapp", "track-hours-per-job-and-invoice"],
+        "contractor-hourly-rates-netherlands": ["track-hours-per-job-and-invoice", "how-to-write-construction-quote", "renovation-cost-estimate"],
+        "digital-signatures-construction-quotes": ["digital-work-order-with-customer-signature", "how-to-write-construction-quote", "send-quotes-invoices-whatsapp"],
+        "digital-work-order-with-customer-signature": ["digital-signatures-construction-quotes", "track-hours-per-job-and-invoice", "payment-qr-code-on-invoices"],
+        "from-measurement-to-invoice-5-minutes": ["how-to-measure-a-room-accurately", "how-to-write-construction-quote", "payment-qr-code-on-invoices"],
+        "how-many-bricks-per-m2": ["how-much-concrete-do-i-need", "how-many-fence-posts-and-panels-do-i-need", "how-much-insulation-do-i-need"],
+        "how-many-fence-posts-and-panels-do-i-need": ["how-much-concrete-do-i-need", "how-many-bricks-per-m2", "phone-spirit-level-accuracy"],
+        "how-much-concrete-do-i-need": ["how-many-bricks-per-m2", "how-many-fence-posts-and-panels-do-i-need", "how-to-measure-a-room-accurately"],
+        "how-much-insulation-do-i-need": ["how-much-paint-do-i-need", "how-many-bricks-per-m2", "renovation-cost-estimate"],
+        "how-much-laminate-do-i-need": ["how-to-calculate-tiles", "how-to-measure-a-room-accurately", "how-much-paint-do-i-need"],
+        "how-much-paint-do-i-need": ["how-much-wallpaper-do-i-need", "how-to-measure-a-room-accurately", "how-much-laminate-do-i-need"],
+        "how-much-wallpaper-do-i-need": ["how-much-paint-do-i-need", "how-to-measure-a-room-accurately", "how-much-laminate-do-i-need"],
+        "how-to-calculate-tiles": ["how-much-laminate-do-i-need", "bathroom-renovation-cost", "how-to-measure-a-room-accurately"],
+        "how-to-measure-a-room-accurately": ["phone-spirit-level-accuracy", "how-to-calculate-tiles", "how-much-paint-do-i-need"],
+        "how-to-write-construction-quote": ["digital-signatures-construction-quotes", "send-quotes-invoices-whatsapp", "from-measurement-to-invoice-5-minutes"],
+        "payment-qr-code-on-invoices": ["track-hours-per-job-and-invoice", "recurring-invoices-maintenance-contracts", "send-quotes-invoices-whatsapp"],
+        "phone-spirit-level-accuracy": ["how-to-measure-a-room-accurately", "how-many-fence-posts-and-panels-do-i-need", "how-to-calculate-tiles"],
+        "recurring-invoices-maintenance-contracts": ["client-management-for-contractors", "payment-qr-code-on-invoices", "track-hours-per-job-and-invoice"],
+        "renovation-cost-estimate": ["bathroom-renovation-cost", "contractor-hourly-rates-netherlands", "how-to-write-construction-quote"],
+        "send-quotes-invoices-whatsapp": ["digital-signatures-construction-quotes", "payment-qr-code-on-invoices", "how-to-write-construction-quote"],
+        "track-hours-per-job-and-invoice": ["contractor-hourly-rates-netherlands", "digital-work-order-with-customer-signature", "payment-qr-code-on-invoices"],
+    },
+    "nl": {
+        "betaal-qr-code-op-factuur": ["urenregistratie-zzp-bouw-uren-factureren", "onderhoudscontract-terugkerende-facturen-opzetten", "offerte-versturen-via-whatsapp"],
+        "diamantboor-onderhoud": ["kernboring-prijs-berekenen", "waterpas-app-hoe-nauwkeurig", "materialenprijzen-2026-bouwprijzen-per-m2"],
+        "digitale-werkbon-met-handtekening-klant": ["urenregistratie-zzp-bouw-uren-factureren", "offerte-versturen-via-whatsapp", "betaal-qr-code-op-factuur"],
+        "hoeveel-m3-beton-berekenen": ["hoeveel-stenen-per-m2-metselwerk", "schutting-berekenen-hoeveel-palen-en-schermen", "snijverlies-berekenen-tegels-laminaat"],
+        "hoeveel-stenen-per-m2-metselwerk": ["hoeveel-m3-beton-berekenen", "schutting-berekenen-hoeveel-palen-en-schermen", "materialenprijzen-2026-bouwprijzen-per-m2"],
+        "kernboring-prijs-berekenen": ["diamantboor-onderhoud", "materialenprijzen-2026-bouwprijzen-per-m2", "digitale-werkbon-met-handtekening-klant"],
+        "materialenprijzen-2026-bouwprijzen-per-m2": ["snijverlies-berekenen-tegels-laminaat", "hoeveel-stenen-per-m2-metselwerk", "van-meting-tot-factuur-in-5-minuten"],
+        "offerte-versturen-via-whatsapp": ["digitale-werkbon-met-handtekening-klant", "betaal-qr-code-op-factuur", "van-meting-tot-factuur-in-5-minuten"],
+        "onderhoudscontract-terugkerende-facturen-opzetten": ["betaal-qr-code-op-factuur", "urenregistratie-zzp-bouw-uren-factureren", "offerte-versturen-via-whatsapp"],
+        "schutting-berekenen-hoeveel-palen-en-schermen": ["hoeveel-m3-beton-berekenen", "hoeveel-stenen-per-m2-metselwerk", "waterpas-app-hoe-nauwkeurig"],
+        "snijverlies-berekenen-tegels-laminaat": ["materialenprijzen-2026-bouwprijzen-per-m2", "hoeveel-m3-beton-berekenen", "waterpas-app-hoe-nauwkeurig"],
+        "urenregistratie-zzp-bouw-uren-factureren": ["digitale-werkbon-met-handtekening-klant", "betaal-qr-code-op-factuur", "onderhoudscontract-terugkerende-facturen-opzetten"],
+        "van-meting-tot-factuur-in-5-minuten": ["offerte-versturen-via-whatsapp", "betaal-qr-code-op-factuur", "materialenprijzen-2026-bouwprijzen-per-m2"],
+        "waterpas-app-hoe-nauwkeurig": ["schutting-berekenen-hoeveel-palen-en-schermen", "snijverlies-berekenen-tegels-laminaat", "diamantboor-onderhoud"],
+    },
+}
+RA_START, RA_END = "<!-- readalso:start -->", "<!-- readalso:end -->"
+G_START, G_END = "<!-- guides:start -->", "<!-- guides:end -->"
 # Fill-up articles when a calculator has fewer than three matches.
 FALLBACK = {
     "en": ["from-measurement-to-invoice-5-minutes", "how-to-write-construction-quote", "renovation-cost-estimate"],
@@ -74,9 +129,13 @@ FALLBACK = {
 }
 TXT = {
     "en": dict(calcs="Related calculators", read="Read more", box="🧮 Calculate it yourself",
-               all="All calculators", blog="/blog/", calc="/calculators/"),
+               all="All calculators", blog="/blog/", calc="/calculators/", also="Read also",
+               guides="Latest guides", guides_h="Practical guides from the job site",
+               all_guides="All guides", home=""),
     "nl": dict(calcs="Andere calculators", read="Lees ook", box="🧮 Zelf uitrekenen",
-               all="Alle calculators", blog="/nl/blog/", calc="/nl/calculators/"),
+               all="Alle calculators", blog="/nl/blog/", calc="/nl/calculators/", also="Lees ook",
+               guides="Nieuwste artikelen", guides_h="Praktische uitleg van de bouwplaats",
+               all_guides="Alle artikelen", home="nl/"),
 }
 
 
@@ -143,14 +202,90 @@ def related_calcs(info, slug):
     return (same + near)[:6]
 
 
-def put_block(page, block, anchors):
-    page = re.sub(re.escape(START) + r".*?" + re.escape(END) + r"\n?", "", page, flags=re.S)
+def put_block(page, block, anchors, start=START, end=END):
+    page = re.sub(re.escape(start) + r".*?" + re.escape(end) + r"\n?", "", page, flags=re.S)
     for a in anchors:
         k = page.find(a)
         if k >= 0:
             k = page.rfind("\n", 0, k) + 1  # keep the anchor's indentation
-            return page[:k] + f"{START}\n{block}\n{END}\n" + page[k:]
+            return page[:k] + f"{start}\n{block}\n{end}\n" + page[k:]
     return None
+
+
+def article_meta(lang, slug):
+    """(title, description, datePublished) of a blog article, or None."""
+    path = f"{'nl/' if lang == 'nl' else ''}blog/{slug}/index.html"
+    if not os.path.exists(os.path.join(ROOT, path)):
+        return None
+    page = read(path)
+    if 'content="noindex' in page:
+        return None
+    d = re.search(r'<meta name="description" content="([^"]*)"', page)
+    p = re.search(r'"datePublished":\s*"([^"]+)"', page)
+    return article_title(lang, slug), html.unescape(d.group(1)) if d else "", p.group(1) if p else ""
+
+
+def read_also_pages():
+    """Three related articles under every blog article, above the share buttons."""
+    for lang in ("en", "nl"):
+        t = TXT[lang]
+        for art, picks in READ_ALSO[lang].items():
+            path = f"{t['home']}blog/{art}/index.html"
+            if not os.path.exists(os.path.join(ROOT, path)):
+                continue
+            items = ""
+            for s in picks:
+                meta = article_meta(lang, s)
+                if meta:
+                    items += f'\n    <li><a href="{t["blog"]}{s}/">{esc(meta[0])}</a></li>'
+            block = f'''<div class="read-also">
+  <h2>{t["also"]}</h2>
+  <ul class="related-articles">{items}
+  </ul>
+</div>'''
+            page = put_block(read(path), block, ['<div class="share-section">', "</article>"], RA_START, RA_END)
+            if page is None:
+                print("  ! no place for read-also in", path)
+                continue
+            write(path, page)
+
+
+def home_guides():
+    """The six newest articles on the homepage, after the calculator block."""
+    for lang in ("en", "nl"):
+        t = TXT[lang]
+        folder = os.path.join(ROOT, t["home"], "blog")
+        arts = []
+        for slug in os.listdir(folder):
+            meta = article_meta(lang, slug) if os.path.isdir(os.path.join(folder, slug)) else None
+            if meta and meta[2]:
+                arts.append((meta[2], slug, meta))
+        arts.sort(reverse=True)
+        cards = "".join(
+            f'\n      <a href="{t["blog"]}{slug}/" class="card"><h3>{esc(m[0])}</h3><p>{esc(m[1])}</p></a>'
+            for _d, slug, m in arts[:6])
+        block = f'''<section class="section latest-guides">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">{t["guides"]}</span>
+      <h2>{t["guides_h"]}</h2>
+    </div>
+    <div class="grid grid-3">{cards}
+    </div>
+    <div style="text-align:center;margin-top:28px;">
+      <a href="{t["blog"]}" class="btn btn-ghost">{t["all_guides"]} &rarr;</a>
+    </div>
+  </div>
+</section>'''
+        path = f"{t['home']}index.html"
+        page = read(path)
+        page = re.sub(r"\n?" + re.escape(G_START) + r".*?" + re.escape(G_END) + r"\n?", "", page, flags=re.S)
+        btn = page.find(f'<a href="{t["calc"]}" class="btn btn-ghost">')
+        k = page.find("</section>", btn) + len("</section>\n")
+        if btn < 0 or k < len("</section>\n"):
+            print("  ! no place for the guides on", path)
+            continue
+        write(path, page[:k] + f"\n{G_START}\n{block}\n{G_END}\n" + page[k:])
 
 
 def calc_pages():
@@ -197,7 +332,7 @@ def blog_pages():
                 f'<li><a href="{t["calc"]}{s}/">{esc(info[s][0])}</a>{" &ndash; " + esc(info[s][1]) if info[s][1] else ""}</li>'
                 for s in slugs[:4])
             block = f'<div class="tip"><h3>{t["box"]}</h3><ul>{items}</ul></div>'
-            page = put_block(read(path), block, ['<div class="share-section">', "</article>"])
+            page = put_block(read(path), block, [RA_START, '<div class="share-section">', "</article>"])
             if page is None:
                 print("  ! no place for the box in", path)
                 continue
@@ -261,9 +396,11 @@ def sitemap_lastmod():
 def main():
     calc_pages()
     blog_pages()
+    read_also_pages()
+    home_guides()
     hreflang_xdefault()
     sitemap_lastmod()
-    print("Done: related blocks, x-default and sitemap dates.")
+    print("Done: related blocks, read-also, homepage guides, x-default and sitemap dates.")
 
 
 if __name__ == "__main__":

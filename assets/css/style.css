@@ -879,6 +879,11 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .calc-guide tr:last-child td { border-bottom: none; }
 .related-articles { padding-left: 1.2em; }
 .related-articles li { margin: 6px 0; }
+.read-also { margin: 40px 0 8px; padding-top: 24px; border-top: 1px solid var(--border); }
+.read-also h2 { font-size: 1.3rem; margin: 0 0 8px; }
+.latest-guides .card { display: block; color: inherit; text-decoration: none; }
+.latest-guides .card h3 { font-size: 1.05rem; margin: 0 0 6px; }
+.latest-guides .card p { color: var(--ink-2); font-size: .92rem; margin: 0; }
 .faq-item { border-top: 1px solid var(--border); padding: 14px 0 4px; }
 .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; }
 
