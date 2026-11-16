@@ -11,13 +11,20 @@
   };
   function fmt(v, d) { d = d == null ? 2 : d; return isNl ? v.toFixed(d).replace('.', ',') : v.toFixed(d); }
 
+  // Tins in litres, or in US gallons and quarts when imperial is chosen.
+  const SIZES = BE.imp() ? [5, 1, 0.25] : [10, 5, 2.5, 1];
   function canBreakdown(liters) {
-    const sizes = [10, 5, 2.5, 1];
+    const sizes = SIZES;
     const counts = {};
-    let remaining = liters;
-    sizes.forEach(s => { counts[s] = Math.floor(remaining / s); remaining -= counts[s] * s; });
-    if (remaining > 0.01) counts[1] += 1;
+    let remaining = BE.fromMetric('L', liters);
+    sizes.forEach(s => { counts[s] = Math.floor(remaining / s + 1e-9); remaining -= counts[s] * s; });
+    if (remaining > 0.01) counts[sizes[sizes.length - 1]] += 1;
     return counts;
+  }
+  function canLabel(s) {
+    if (!BE.imp()) return STR.rowCansSize(s);
+    if (s === 0.25) return isNl ? 'Quarts (0,25 gal)' : 'Quarts';
+    return isNl ? `Blikken van ${s} gal` : `${s} gal ${s === 5 ? 'buckets' : 'cans'}`;
   }
 
   function recalc() {
@@ -37,25 +44,26 @@
     }
     const topcoat = (area / coverage) * coats * (1 + waste / 100);
     const primerL = primer && primerCov > 0 ? (area / primerCov) * (1 + waste / 100) : 0;
-    hero.textContent = fmt(topcoat, 1) + ' L';
+    hero.textContent = BE.q('L', topcoat, 1);
 
     const parts = [
-      `<div class="result-row"><span class="k">${STR.rowTopcoat}</span><span class="v">${fmt(topcoat, 1)} L</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowTopcoat}</span><span class="v">${BE.q('L', topcoat, 1)}</span></div>`,
     ];
     if (primer) {
-      parts.push(`<div class="result-row"><span class="k">${STR.rowPrimer}</span><span class="v">${fmt(primerL, 1)} L</span></div>`);
+      parts.push(`<div class="result-row"><span class="k">${STR.rowPrimer}</span><span class="v">${BE.q('L', primerL, 1)}</span></div>`);
     }
     parts.push(`<div class="result-row"><span class="k">${STR.rowWaste}</span><span class="v">${waste}%</span></div>`);
     const counts = canBreakdown(topcoat);
     Object.keys(counts).map(Number).sort((a, b) => b - a).forEach(s => {
       if (counts[s] > 0) {
-        parts.push(`<div class="result-row"><span class="k">${STR.rowCansSize(s)}</span><span class="v">${counts[s]}</span></div>`);
+        parts.push(`<div class="result-row"><span class="k">${canLabel(s)}</span><span class="v">${counts[s]}</span></div>`);
       }
     });
     rows.innerHTML = parts.join('');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    BE.units({ area: 'm2', coverage: 'm2L', primerCov: 'm2L' }, { area: 430, coverage: 400, primerCov: 400 });
     BE.chip('methodChips', () => {
       const btn = document.querySelector('#methodChips .chip.active');
       const waste = btn ? +btn.dataset.waste : 5;

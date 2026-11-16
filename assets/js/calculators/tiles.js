@@ -45,16 +45,18 @@
 
     hero.textContent = STR.heroTiles(tiles);
     const parts = [
-      `<div class="result-row"><span class="k">${STR.rowAreaWaste}</span><span class="v">${fmt(areaWaste)} m²</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowAreaWaste}</span><span class="v">${BE.q('m2', areaWaste)}</span></div>`,
       `<div class="result-row"><span class="k">${spareBox ? STR.rowBoxes : STR.rowBoxesPlain}</span><span class="v">${boxes}</span></div>`,
       `<div class="result-row"><span class="k">${STR.rowAdhesiveBags}</span><span class="v">${bags}</span></div>`,
-      `<div class="result-row"><span class="k">${STR.rowAdhesiveKg}</span><span class="v">${fmt(adhKg, 1)} kg</span></div>`,
+      `<div class="result-row"><span class="k">${STR.rowAdhesiveKg}</span><span class="v">${BE.q('kg', adhKg, 1)}</span></div>`,
     ];
-    if (edgeM > 0) parts.push(`<div class="result-row"><span class="k">${STR.rowEdge}</span><span class="v">${fmt(edgeM)} m</span></div>`);
+    if (edgeM > 0) parts.push(`<div class="result-row"><span class="k">${STR.rowEdge}</span><span class="v">${BE.q('m', edgeM)}</span></div>`);
     rows.innerHTML = parts.join('');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    BE.units({ area: 'm2', tileW: 'cm', tileH: 'cm', groutMm: 'mm', adhesive: 'kgm2', bagKg: 'kg', edgeM: 'm' },
+      { area: 215, tileW: 24, tileH: 24, groutMm: 0.125, adhesive: 1.2, bagKg: 50 });
     BE.chip('patternChips', (val) => {
       const btn = document.querySelector('#patternChips .chip.active');
       const waste = btn ? +btn.dataset.waste : 10;

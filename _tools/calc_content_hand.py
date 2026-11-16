@@ -757,3 +757,14 @@ FAQ = {
 for _slug, _langs in FAQ.items():
     for _lang, _items in _langs.items():
         HAND[_slug][_lang]["faq"] = _items
+
+# Imperial examples (English pages). The numbers come from the calculators in imperial mode.
+IMPERIAL = {
+    "area": "Switch the calculator to Imperial at the top of the form and enter feet. A room of 16 × 13 ft is 208 sq ft; with 10% waste you buy 229 sq ft of flooring. To convert by hand: 1 m² is 10.764 sq ft, and 1 sq ft is 0.0929 m².",
+    "tiles": "Switch to Imperial and enter square feet and inches. 215 sq ft of 24 × 24 in tiles with a 1/8 in joint and 10% waste comes to 59 tiles. At 1.2 lb of thinset per sq ft that is 258 lb, or 6 bags of 50 lb.",
+    "paint": "In Imperial the calculator works in square feet and US gallons. 430 sq ft, two coats at 400 sq ft per gallon and 5% waste need 2.3 gallons: two 1-gallon cans and a quart.",
+    "concrete": "Switch to Imperial for feet, inches and cubic yards. A slab of 16 × 13 ft and 4 in thick with 10% waste is 2.82 cubic yards, so you order 3 cubic yards of ready-mix (rounded up to the next quarter yard). Mixing it yourself, the calculator counts 94 lb bags of cement: about 6.3 bags per cubic yard.",
+    "fence": "In Imperial you enter the line in feet and the posts and panels in inches. A 16 ft line with 4 in posts and 6 ft (72 in) panels gives 4 posts, 2 full panels and an end cut of 2′ 8¼″.",
+}
+for _slug, _text in IMPERIAL.items():
+    HAND[_slug]["en"]["more"].append(("Working in feet and inches", [_text]))

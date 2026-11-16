@@ -27,6 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://buildexact.app"
 PLAY = "https://play.google.com/store/apps/details?id=com.metenweten.bouw"
 LANGS = ("en", "nl")
+JS_VER = "20261118"  # bump when assets/js/calculators changes, so browsers fetch the new files
 
 
 def esc(s):
@@ -721,7 +722,7 @@ def build_new(spec):
 {guide_block(t, EXTRA.get(spec["slug"], {}).get(lang))}
 
 '''
-        scripts = ["/assets/js/calculators/_helpers.js", f"/assets/js/calculators/{spec['js']}.js"]
+        scripts = [f"/assets/js/calculators/_helpers.js?v={JS_VER}", f"/assets/js/calculators/{spec['js']}.js?v={JS_VER}"]
         write(f"{'nl/' if lang == 'nl' else ''}calculators/{spec['slug']}/index.html",
               top + body + chrome_bottom(lang, scripts))
     print("new", spec["slug"])

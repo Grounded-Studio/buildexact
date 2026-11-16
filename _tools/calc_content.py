@@ -273,5 +273,9 @@ EXTRA["steel"]["nl"]["more"].append((
     ["Staven worden verkocht in vaste lengtes, vaak 6 of 12 m. Waar twee staven elkaar raken, overlappen ze; een gangbare vuistregel is 40 tot 50 keer de diameter, dus zo'n 40 tot 50 cm bij Ø10. Volg de tekening van de constructeur als daar een overlaplengte op staat.",
      "Elke overlapping en elk kort restje voegt gewicht toe dat je betaalt. Tel 5 tot 10% op bij het berekende gewicht voor overlappingen en zaagwerk, meer bij een ontwerp met veel korte staven."]))
 
+EXTRA["flooring"]["en"]["more"].append((
+    "Working in feet and inches",
+    ["Switch to Imperial at the top of the form for feet and inches; rolls in the US are usually 12 or 15 ft wide. A room of 16 × 11.5 ft with a 12 ft roll needs one strip of 16 ft 4 in: 196 sq ft bought for 184 sq ft of floor."]))
+
 # The hand-written calculator pages get their content from calc_content_hand.py (put on the pages by calc_extend.py).
 from calc_content_hand import HAND  # noqa: E402,F401

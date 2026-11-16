@@ -20,14 +20,14 @@
     rowRegularPosts: 'Palen (10×10)',
     rowGatePosts: 'Eindpalen zonder sponning (voor poort)',
     rowCornerPosts: 'Hoekpalen',
-    rowStandardPanels: (w) => `Standaard schermen (${w} cm)`,
-    rowLongPanels: (w) => `Lange schermen (${w} cm)`,
-    rowPasvak: (base) => `Pasvak (ingekort van ${base} cm)`,
-    rowPasvakTwoEnd: (base) => `2× pasvak (begin + eind, ingekort van ${base} cm)`,
+    rowStandardPanels: (w) => `Standaard schermen (${w})`,
+    rowLongPanels: (w) => `Lange schermen (${w})`,
+    rowPasvak: (base) => `Pasvak (ingekort van ${base})`,
+    rowPasvakTwoEnd: (base) => `2× pasvak (begin + eind, ingekort van ${base})`,
     twoEndLabel: '2 gelijke pasvakken (begin + eind)',
     twoEndSub: 'App rekent uit welke breedte beide pasvakken moeten hebben',
     rowCoverCaps: 'Afdekkappen (op schermen)',
-    rowGate: (i, w, b, dbl) => `${dbl ? 'Dubbele p' : 'P'}oort ${i} (${w} cm + 2×${b} cm balk)`,
+    rowGate: (i, w, b, dbl) => `${dbl ? 'Dubbele p' : 'P'}oort ${i} (${w} + 2×${b} balk)`,
     rowGateBeam: (i) => `Bovenbalk poort ${i}`,
     rowUnfilled: 'Niet opgevuld (te klein voor pasvak)',
   } : {
@@ -45,14 +45,14 @@
     rowRegularPosts: 'Posts (10×10)',
     rowGatePosts: 'End posts without rebate (for gate)',
     rowCornerPosts: 'Corner posts',
-    rowStandardPanels: (w) => `Standard panels (${w} cm)`,
-    rowLongPanels: (w) => `Long panels (${w} cm)`,
-    rowPasvak: (base) => `End cut (from ${base} cm panel)`,
-    rowPasvakTwoEnd: (base) => `2× end panel (begin + end, cut from ${base} cm)`,
+    rowStandardPanels: (w) => `Standard panels (${w})`,
+    rowLongPanels: (w) => `Long panels (${w})`,
+    rowPasvak: (base) => `End cut (from ${base} panel)`,
+    rowPasvakTwoEnd: (base) => `2× end panel (begin + end, cut from ${base})`,
     twoEndLabel: '2 equal end panels (begin + end)',
     twoEndSub: 'App figures out the width both end panels need',
     rowCoverCaps: 'Cover caps (on panels)',
-    rowGate: (i, w, b, dbl) => `${dbl ? 'Double g' : 'G'}ate ${i} (${w} cm + 2×${b} cm beam)`,
+    rowGate: (i, w, b, dbl) => `${dbl ? 'Double g' : 'G'}ate ${i} (${w} + 2×${b} beam)`,
     rowGateBeam: (i) => `Top beam gate ${i}`,
     rowUnfilled: 'Unfilled gap (too small for a pasvak)',
   };
@@ -62,8 +62,22 @@
     return v.toFixed(1);
   }
 
+  // A size in cm or, in imperial, in inches: "180 cm" / "72 in".
+  function size(cm) {
+    return BE.imp() ? fmt(Math.round(cm / 2.54 * 10) / 10) + ' in' : fmt(cm) + ' cm';
+  }
+  // Feet and inches to the nearest quarter inch: 5′ 3¼″.
+  function feetInches(cm) {
+    let inch = Math.round(cm / 2.54 * 4) / 4;
+    const ft = Math.floor(inch / 12 + 1e-9);
+    inch -= ft * 12;
+    const whole = Math.floor(inch), frac = { 0.25: '¼', 0.5: '½', 0.75: '¾' }[inch - whole] || '';
+    const ins = (whole || !frac ? whole : '') + frac + '″';
+    return ft > 0 ? `${ft}′ ${ins}` : ins;
+  }
   // Lengths like the app: from 100 cm in metres ("1,6 m" / "1.6 m"), shorter in cm.
   function fmtLen(cm) {
+    if (BE.imp()) return feetInches(cm);
     if (cm >= 100) {
       const m = (cm / 100).toFixed(2).replace(/\.?0+$/, '');
       return (isNl ? m.replace('.', ',') : m) + ' m';
@@ -91,7 +105,7 @@
 
   // State
   let cornerCount = 0;
-  let segments = [500];
+  let segments = [BE.imp() ? 488 : 500]; // 16 ft in imperial
   let twoEndPerSegment = [false];
   let gates = [];
   let gateSeq = 0;
@@ -224,14 +238,14 @@
   function renderSegments() {
     const wrap = document.getElementById('segments');
     const total = cornerCount + 1;
-    while (segments.length < total) segments.push(400);
+    while (segments.length < total) segments.push(BE.imp() ? 396 : 400);
     if (segments.length > total) segments = segments.slice(0, total);
     while (twoEndPerSegment.length < total) twoEndPerSegment.push(false);
     if (twoEndPerSegment.length > total) twoEndPerSegment = twoEndPerSegment.slice(0, total);
     const segmentBlock = (i, label, value, twoEnd) => `
       <div class="field">
-        <label for="seg${i}">${label}</label>
-        <input type="number" id="seg${i}" value="${value / 100}" min="0" step="0.01" inputmode="decimal">
+        <label for="seg${i}">${BE.relabel(label, 'm')}</label>
+        <input type="number" id="seg${i}" value="${Math.round(BE.fromMetric('m', value / 100) * 100) / 100}" min="0" step="any" inputmode="decimal">
       </div>
       <label class="toggle-row">
         <span class="toggle-stacked">
@@ -250,7 +264,7 @@
     for (let i = 0; i < total; i++) {
       document.getElementById('seg' + i).addEventListener('input', (e) => {
         // Entered in metres (like the app), stored in cm for the calculation.
-        segments[i] = Math.round((parseFloat(String(e.target.value).replace(',', '.')) || 0) * 100);
+        segments[i] = Math.round(BE.toMetric('m', parseFloat(String(e.target.value).replace(',', '.')) || 0) * 100);
         BE.markStale();
       });
     }
@@ -280,12 +294,12 @@
           </div>
           <div class="field-row">
             <div class="field">
-              <label>${STR.gateWidth}</label>
-              <input type="number" class="g-width" value="${g.widthCm}" min="40" step="5">
+              <label>${BE.relabel(STR.gateWidth, 'cm')}</label>
+              <input type="number" class="g-width" value="${Math.round(BE.fromMetric('cm', g.widthCm) * 100) / 100}" min="0" step="any">
             </div>
             <div class="field">
-              <label>${STR.gateBeam}</label>
-              <input type="number" class="g-beam" value="${g.beamCm}" min="2" step="0.5">
+              <label>${BE.relabel(STR.gateBeam, 'cm')}</label>
+              <input type="number" class="g-beam" value="${Math.round(BE.fromMetric('cm', g.beamCm) * 100) / 100}" min="0" step="any">
             </div>
           </div>
           <label class="toggle-row">
@@ -299,8 +313,8 @@
       const id = card.dataset.id;
       const g = gates.find(x => x.id === id);
       if (!g) return;
-      card.querySelector('.g-width').addEventListener('input', (e) => { g.widthCm = parseFloat(e.target.value) || 0; BE.markStale(); });
-      card.querySelector('.g-beam').addEventListener('input', (e) => { g.beamCm = parseFloat(e.target.value) || 0; BE.markStale(); });
+      card.querySelector('.g-width').addEventListener('input', (e) => { g.widthCm = BE.toMetric('cm', parseFloat(e.target.value) || 0); BE.markStale(); });
+      card.querySelector('.g-beam').addEventListener('input', (e) => { g.beamCm = BE.toMetric('cm', parseFloat(e.target.value) || 0); BE.markStale(); });
       card.querySelector('.g-double').addEventListener('change', (e) => { g.isDouble = e.target.checked; BE.markStale(); });
       card.querySelector('.gate-remove').addEventListener('click', () => {
         gates = gates.filter(x => x.id !== id);
@@ -311,7 +325,8 @@
   }
 
   function addGate() {
-    gates.push({ id: 'g' + (++gateSeq), widthCm: 100, beamCm: 5, isDouble: false });
+    gates.push(BE.imp() ? { id: 'g' + (++gateSeq), widthCm: 91.44, beamCm: 5.08, isDouble: false } // 36 in + 2 in
+      : { id: 'g' + (++gateSeq), widthCm: 100, beamCm: 5, isDouble: false });
     renderGates();
     BE.markStale();
   }
@@ -334,25 +349,25 @@
     const totalPanels = standardPlusLongPlusPasvak(result);
     const gatePosts = 2 * result.gates.length;
     const regularPosts = Math.max(result.postCount - gatePosts, 0);
-    const panelW = parseFloat(document.getElementById('panelCm').value) || 180;
+    const panelW = BE.v('panelCm', 0) || 180;
     const parts = [];
-    parts.push(line(STR.rowRegularPosts, regularPosts));
+    parts.push(line(BE.imp() ? STR.rowRegularPosts.replace('10×10', '4×4') : STR.rowRegularPosts, regularPosts));
     if (gatePosts > 0) parts.push(line(STR.rowGatePosts, gatePosts));
     if (result.cornerCount > 0) parts.push(line(STR.rowCornerPosts, result.cornerCount));
-    parts.push(line(STR.rowStandardPanels(fmt(panelW)), result.standardPanelCount));
-    if (result.longPanelCount > 0) parts.push(line(STR.rowLongPanels(fmt(result.longPanelWidthCm)), result.longPanelCount));
+    parts.push(line(STR.rowStandardPanels(size(panelW)), result.standardPanelCount));
+    if (result.longPanelCount > 0) parts.push(line(STR.rowLongPanels(size(result.longPanelWidthCm)), result.longPanelCount));
     const pasvakList = result.pasvakWidthsCm || [];
     if (pasvakList.length === 1) {
-      parts.push(line(STR.rowPasvak(fmt(panelW)), fmtLen(pasvakList[0])));
+      parts.push(line(STR.rowPasvak(size(panelW)), fmtLen(pasvakList[0])));
     } else if (pasvakList.length >= 2) {
       // Width is the same for a two-end layout — show it once.
-      parts.push(line(STR.rowPasvakTwoEnd(fmt(panelW)), fmtLen(pasvakList[0])));
+      parts.push(line(STR.rowPasvakTwoEnd(size(panelW)), fmtLen(pasvakList[0])));
     }
     if (totalPanels > 0) parts.push(line(STR.rowCoverCaps, totalPanels));
     for (let i = 0; i < result.gates.length; i++) {
       const g = result.gates[i];
       const span = g.widthCm + 2 * g.beamCm;
-      parts.push(line(STR.rowGate(i + 1, fmt(g.widthCm), fmt(g.beamCm), g.isDouble), 1));
+      parts.push(line(STR.rowGate(i + 1, size(g.widthCm), size(g.beamCm), g.isDouble), 1));
       parts.push(line(STR.rowGateBeam(i + 1), fmtLen(span)));
     }
     if (result.unfilledGapCm > 0) parts.push(line(STR.rowUnfilled, fmtLen(result.unfilledGapCm), true));
@@ -373,12 +388,12 @@
     return {
       segmentLengthsCm: segments.slice(0, cornerCount + 1),
       twoEndPasvakkenPerSegment: twoEndPerSegment.slice(0, cornerCount + 1),
-      postWidthCm: parseFloat(document.getElementById('postCm').value) || 10,
-      panelWidthCm: parseFloat(document.getElementById('panelCm').value) || 180,
+      postWidthCm: BE.v('postCm', 0) || 10,
+      panelWidthCm: BE.v('panelCm', 0) || 180,
       startWithPost: document.getElementById('startWithPost').checked,
       endWithPost: document.getElementById('endWithPost').checked,
       allowLongPanels: document.getElementById('allowLong').checked,
-      longPanelMaxCm: parseFloat(document.getElementById('longMaxCm').value) || 200,
+      longPanelMaxCm: BE.v('longMaxCm', 0) || 200,
       gates: gates.map(g => ({ widthCm: g.widthCm, beamCm: g.beamCm, isDouble: g.isDouble })),
       cornerCount,
     };
@@ -393,6 +408,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cornersSubtitle').textContent = STR.cornersSubtitle;
     document.getElementById('addGateBtn').textContent = STR.addGate;
+    BE.units({ postCm: 'cm', panelCm: 'cm', longMaxCm: 'cm' }, { postCm: 4, panelCm: 72, longMaxCm: 96 });
     renderCornerStepper();
     renderSegments();
     renderGates();
@@ -422,8 +438,8 @@
         aantal_hoeken: cornerCount,
         aantal_lijnen: cornerCount + 1,
         totale_lengte_cm: segments.slice(0, cornerCount + 1).reduce((a, b) => a + b, 0),
-        paal_breedte_cm: parseFloat(document.getElementById('postCm').value) || 10,
-        scherm_breedte_cm: parseFloat(document.getElementById('panelCm').value) || 180,
+        paal_breedte_cm: BE.v('postCm', 0) || 10,
+        scherm_breedte_cm: BE.v('panelCm', 0) || 180,
         start_met_paal: document.getElementById('startWithPost').checked,
         eind_met_paal: document.getElementById('endWithPost').checked,
         lange_schermen_toegestaan: document.getElementById('allowLong').checked,

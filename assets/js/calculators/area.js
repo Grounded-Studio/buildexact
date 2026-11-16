@@ -14,7 +14,7 @@
   const LABELS = { rect: [T.l, T.w], tri: [T.base, T.h], circle: [T.d], trap: [T.a, T.b, T.h] };
 
   function input(k, label, v) {
-    return `<div class="field"><label>${label}</label><input type="number" data-k="${k}" value="${v ?? ''}" min="0" step="0.01"></div>`;
+    return `<div class="field"><label>${BE.relabel(label, 'm')}</label><input type="number" data-k="${k}" data-unit="m" value="${v ?? ''}" min="0" step="any"></div>`;
   }
   function fields(type, d) {
     const ls = LABELS[type];
@@ -46,19 +46,20 @@
     const out = shapes.map((s, i) => {
       const a = areaOf(s);
       total += s.minus ? -a : a;
-      return [`${i + 1}. ${T[s.type]}`, (s.minus ? '− ' : '') + BE.num(a, 2) + ' m²'];
+      return [`${i + 1}. ${T[s.type]}`, (s.minus ? '− ' : '') + BE.q('m2', a)];
     });
     total = Math.max(total, 0);
     if (total <= 0) { hero.textContent = T.empty; rows.innerHTML = BE.rows(out); return; }
     const withWaste = total * (1 + waste / 100);
-    hero.innerHTML = BE.num(waste > 0 ? withWaste : total, 2) + ' m<sup>2</sup>';
-    out.push([T.total, BE.num(total, 2) + ' m²', 'total']);
-    if (waste > 0) out.push([`${T.waste} (${BE.num(waste, 0)}%)`, BE.num(withWaste, 2) + ' m²', 'total']);
+    hero.textContent = BE.q('m2', waste > 0 ? withWaste : total);
+    out.push([T.total, BE.q('m2', total), 'total']);
+    if (waste > 0) out.push([`${T.waste} (${BE.num(waste, 0)}%)`, BE.q('m2', withWaste), 'total']);
     rows.innerHTML = BE.rows(out);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    BE.list('shapes', template, [{ type: 'rect', x: 5, y: 4 }], () => ({ type: 'rect' }), recalc);
+    BE.unitToggle();
+    BE.list('shapes', template, [BE.imp() ? { type: 'rect', x: 16, y: 13 } : { type: 'rect', x: 5, y: 4 }], () => ({ type: 'rect' }), recalc);
     // Changing the shape type swaps the input fields of that row.
     document.getElementById('shapes').addEventListener('change', (e) => {
       if (e.target.dataset.k !== 'type') return;

@@ -86,6 +86,120 @@ window.BE = {
 };
 
 // =====================================================================
+// Units: metric or imperial
+//   The calculators keep computing in metric. A field marked with
+//   data-unit (via BE.units) is shown in the chosen system, and BE.v() /
+//   BE.listValues() turn its value back into metric. BE.q() prints a
+//   metric value in the chosen system. The choice comes from ?units= in
+//   the URL, else from this browser (localStorage, no cookie), else
+//   imperial for an English page in an en-US browser, else metric.
+// =====================================================================
+(function () {
+  const KEY = 'be_units';
+  // metric unit -> [metric label, imperial label, metric value of 1 imperial unit]
+  const U = {
+    m: ['m', 'ft', 0.3048], cm: ['cm', 'in', 2.54], mm: ['mm', 'in', 25.4],
+    m2: ['m²', 'sq ft', 0.09290304], m3: ['m³', 'cu yd', 0.764554858],
+    kg: ['kg', 'lb', 0.45359237], L: ['L', 'gal', 3.785411784],
+    m2L: ['m²/L', 'sq ft/gal', 0.09290304 / 3.785411784], kgm2: ['kg/m²', 'lb/sq ft', 0.45359237 / 0.09290304],
+    kgm3: ['kg/m³', 'lb/cu yd', 0.45359237 / 0.764554858], eurm2: ['€/m²', '€/sq ft', 1 / 0.09290304],
+  };
+  // How a unit is written inside a field label, and its imperial replacement.
+  const LABEL = {
+    m: [[/\(m\)/g, '(ft)'], [/\(m,/g, '(ft,'], [/linear met(er|re)s/gi, 'linear feet']],
+    cm: [[/\(cm\b/g, '(in']], mm: [[/\(mm\b/g, '(in']],
+    m2: [[/\(m²\)/g, '(sq ft)']], m3: [[/\(m³\)/g, '(cu yd)']],
+    kg: [[/\(kg\)/g, '(lb)']], L: [[/\(L\)/g, '(gal)']],
+    m2L: [[/m²\/L/g, 'sq ft/gal']], kgm2: [[/kg\/m²/g, 'lb/sq ft']], kgm3: [[/kg\/m³/g, 'lb/cu yd']],
+    eurm2: [[/m²/g, 'sq ft']],
+  };
+  function chosen() {
+    try {
+      const p = new URLSearchParams(location.search).get('units');
+      if (p === 'imperial' || p === 'metric') return p;
+    } catch (_) {}
+    try {
+      const s = localStorage.getItem(KEY);
+      if (s === 'imperial' || s === 'metric') return s;
+    } catch (_) {}
+    const en = !BE.isNl();
+    return en && /^en-US$/i.test(navigator.language || '') ? 'imperial' : 'metric';
+  }
+  const imp = chosen() === 'imperial';
+  const round = (v) => Math.round(v * 1000) / 1000;
+
+  BE.imp = () => imp;
+  BE.u = (k) => (U[k] ? U[k][imp ? 1 : 0] : k);
+  BE.toMetric = (k, v) => (imp && U[k] ? v * U[k][2] : v);
+  BE.fromMetric = (k, v) => (imp && U[k] ? v / U[k][2] : v);
+  // A metric value printed in the chosen system, e.g. BE.q('m2', 20) → "215.28 sq ft".
+  BE.q = (k, v, d) => BE.num(BE.fromMetric(k, v), d == null ? 2 : d) + ' ' + BE.u(k);
+  // Put a metric value into a field that may be shown in imperial.
+  BE.setU = (id, metric) => {
+    const el = document.getElementById(id);
+    if (el) el.value = round(BE.fromMetric(el.dataset.unit, metric));
+  };
+
+  const rawV = BE.v;
+  BE.v = function (id, fallback) {
+    const el = document.getElementById(id);
+    const v = rawV.call(BE, id, fallback);
+    return el && el.dataset.unit && isFinite(parseFloat(el.value)) ? BE.toMetric(el.dataset.unit, v) : v;
+  };
+  const rawList = BE.listValues;
+  BE.listValues = function (listId) {
+    const rows = rawList.call(BE, listId);
+    document.querySelectorAll('#' + listId + ' .dyn-row').forEach((row, i) => {
+      row.querySelectorAll('[data-k][data-unit]').forEach(el => {
+        rows[i][el.dataset.k] = BE.toMetric(el.dataset.unit, rows[i][el.dataset.k]);
+      });
+    });
+    return rows;
+  };
+  BE.relabel = (text, k) => (imp && LABEL[k] ? LABEL[k].reduce((t, [re, s]) => t.replace(re, s), text) : text);
+
+  // Mark the fields of a page: map = { fieldId: unit }. In imperial the label
+  // and the value change; impDefaults = { fieldId: nice imperial value }.
+  BE.units = (map, impDefaults) => {
+    Object.keys(map).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.dataset.unit = map[id];
+      if (!imp) return;
+      const lab = document.querySelector(`label[for="${id}"]`) || (el.closest('.field') || {}).querySelector?.('label');
+      if (lab) lab.textContent = BE.relabel(lab.textContent, map[id]);
+      const d = impDefaults && impDefaults[id];
+      el.value = d != null ? d : (el.value === '' ? '' : round(BE.fromMetric(map[id], parseFloat(el.value) || 0)));
+      el.step = 'any';
+    });
+    BE.unitToggle();
+  };
+
+  // "Metric | Imperial" switch at the top of the calculator form.
+  BE.unitToggle = () => {
+    const form = document.querySelector('form.calc-form');
+    if (!form || form.querySelector('.unit-toggle')) return;
+    const nl = BE.isNl();
+    const box = document.createElement('div');
+    box.className = 'unit-toggle';
+    box.setAttribute('role', 'group');
+    box.setAttribute('aria-label', nl ? 'Eenheden' : 'Units');
+    box.innerHTML =
+      `<button type="button" data-u="metric" aria-pressed="${!imp}" class="${imp ? '' : 'active'}">${nl ? 'Metrisch (m, cm)' : 'Metric (m, cm)'}</button>` +
+      `<button type="button" data-u="imperial" aria-pressed="${imp}" class="${imp ? 'active' : ''}">${nl ? 'Imperial (ft, in)' : 'Imperial (ft, in)'}</button>`;
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-u]');
+      if (!b || b.dataset.u === (imp ? 'imperial' : 'metric')) return;
+      try { localStorage.setItem(KEY, b.dataset.u); } catch (_) {}
+      const url = new URL(location.href);
+      url.searchParams.set('units', b.dataset.u);
+      location.replace(url.toString());
+    });
+    form.insertBefore(box, form.firstChild);
+  };
+})();
+
+// =====================================================================
 // Credit system — saldo staat op de server, gekoppeld aan het account
 //   - Inloggen (e-mailcode) geeft eenmalig 5 gratis credits
 //   - Elke klik op "Bereken" bij een betaalde calc = −1 credit via /spend.php
