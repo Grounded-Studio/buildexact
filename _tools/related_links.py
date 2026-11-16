@@ -7,6 +7,7 @@ Run from the site root, after the other build scripts:
   and "Read more" (matching blog articles), above the install strip.
 - Every blog article that matches a calculator gets a box with links to those
   calculators, above the share buttons.
+- Every page with an English version gets <link hreflang="x-default"> to it.
 - sitemap.xml gets a <lastmod> per page: the date of the last commit of that
   file, or today for files changed since.
 
@@ -203,6 +204,27 @@ def blog_pages():
             write(path, page)
 
 
+def hreflang_xdefault():
+    """Every page with an English version gets x-default -> that English URL, after its other hreflang tags.
+    Dutch-only pages get none (there is no international version to send people to)."""
+    for folder, dirs, names in os.walk(ROOT):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ("_tools", "__pycache__")]
+        for name in names:
+            if name != "index.html":
+                continue
+            path = os.path.relpath(os.path.join(folder, name), ROOT)
+            page = read(path)
+            en = re.search(r'<link rel="alternate" hreflang="en" href="([^"]+)">', page)
+            if not en:
+                continue
+            new = re.sub(r'<link rel="alternate" hreflang="x-default" href="[^"]*">\r?\n?', "", page)
+            last = list(re.finditer(r'<link rel="alternate" hreflang="[^"]+" href="[^"]+">\r?\n', new))[-1]
+            tag = f'<link rel="alternate" hreflang="x-default" href="{en.group(1)}">\n'
+            new = new[:last.end()] + tag + new[last.end():]
+            if new != page:
+                write(path, new)
+
+
 def url_to_file(url):
     rel = url[len(SITE):].strip("/")
     return os.path.join(rel, "index.html") if rel else "index.html"
@@ -239,8 +261,9 @@ def sitemap_lastmod():
 def main():
     calc_pages()
     blog_pages()
+    hreflang_xdefault()
     sitemap_lastmod()
-    print("Done: related blocks and sitemap dates.")
+    print("Done: related blocks, x-default and sitemap dates.")
 
 
 if __name__ == "__main__":
