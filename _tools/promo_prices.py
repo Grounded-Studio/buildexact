@@ -2,11 +2,15 @@
 
 Run from the site root:  python -I _tools/promo_prices.py on|off
 
-"on" swaps every price text in the table below and switches the popup on
-(PROMO_ON in assets/js/main.js); "off" puts it all back. Running it twice is
-safe. New page with the price on it? Add its sentence to PAIRS. Website credits
-(EUR 2.99) are a different product and are not part of this.
+"on" swaps every price text in the table below; "off" puts it all back.
+Running it twice is safe. New page with the price on it? Add its sentence to
+PAIRS. Website credits (EUR 2.99) are a different product and are not part of this.
 The Google Play offer itself is set in the Play Console, not here.
+
+On buildexact.app the discount price is shown as the plain current price
+(EUR 5.99 one-time, no subscription): no struck-through old price and no
+"25% off" (the user's choice, 2026-11-16). The popup in main.js stays off.
+The grounded-studio.app sentences at the bottom still say "normally EUR 7.99".
 """
 import os
 import sys
@@ -15,39 +19,40 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GS = os.path.join(os.path.dirname(ROOT), "groundedstudio")
 GS_FILES = ["index.html", "contact.html", "blog/van-meting-tot-factuur-in-5-minuten.html"]
 
-CARD_EN = '<s class="price-was">€7.99</s> <span class="price-off">-25%</span>'
-CARD_NL = '<s class="price-was">€7,99</s> <span class="price-off">-25%</span>'
+NOTE_EN = '<span class="price-note">one-time, no subscription</span>'
+NOTE_NL = '<span class="price-note">eenmalig, geen abonnement</span>'
 
 # (normal text, discount text). The normal text must not occur in the discount text.
 PAIRS = [
-    ("const PROMO_ON = false;", "const PROMO_ON = true;"),
     # Calculator pages
-    ("(one-off &euro;7.99 in the app)", "(now &euro;5.99 instead of &euro;7.99, one-off in the app)"),
-    ("(one-off €7.99 in the app)", "(now €5.99 instead of €7.99, one-off in the app)"),
-    ("(&euro;7,99 eenmalig in de app)", "(nu &euro;5,99 in plaats van &euro;7,99, eenmalig in de app)"),
-    ("(€7,99 eenmalig in de app)", "(nu €5,99 in plaats van €7,99, eenmalig in de app)"),
+    ("(one-off &euro;7.99 in the app)", "(&euro;5.99 one-time in the app, no subscription)"),
+    ("(one-off €7.99 in the app)", "(€5.99 one-time in the app, no subscription)"),
+    ("(&euro;7,99 eenmalig in de app)", "(&euro;5,99 eenmalig in de app, geen abonnement)"),
+    ("(€7,99 eenmalig in de app)", "(€5,99 eenmalig in de app, geen abonnement)"),
     # Price cards on home and pricing
-    ('margin:4px 0 14px;">€7.99</p>', f'margin:4px 0 14px;">€5.99 {CARD_EN}</p>'),
-    ('margin:4px 0 14px;">€7,99</p>', f'margin:4px 0 14px;">€5,99 {CARD_NL}</p>'),
+    ('margin:4px 0 14px;">€7.99</p>', f'margin:4px 0 14px;">€5.99 {NOTE_EN}</p>'),
+    ('margin:4px 0 14px;">€7,99</p>', f'margin:4px 0 14px;">€5,99 {NOTE_NL}</p>'),
+    # Structured data (SoftwareApplication offer on both homepages)
+    ('"name": "BuildExact PRO", "price": "7.99"', '"name": "BuildExact PRO", "price": "5.99"'),
     # Home
-    ("PRO unlocks unlimited · €7.99 one-time", "PRO unlocks unlimited · <strong>€5.99</strong> <s>€7.99</s> one-time"),
-    ("PRO unlockt alles · €7,99 eenmalig", "PRO unlockt alles · <strong>€5,99</strong> <s>€7,99</s> eenmalig"),
-    ("PRO is a single €7.99 payment", "PRO is a single payment of €5.99 instead of €7.99"),
-    ("PRO is één betaling van €7,99", "PRO is één betaling van €5,99 in plaats van €7,99"),
+    ("PRO unlocks unlimited · €7.99 one-time", "PRO unlocks unlimited · <strong>€5.99</strong> one-time, no subscription"),
+    ("PRO unlockt alles · €7,99 eenmalig", "PRO unlockt alles · <strong>€5,99</strong> eenmalig, geen abonnement"),
+    ("PRO is a single €7.99 payment", "PRO is a single €5.99 payment"),
+    ("PRO is één betaling van €7,99", "PRO is één betaling van €5,99"),
     # Pricing
-    ("Android app: one-off €7.99 PRO.", "Android app: PRO one-off €5.99 (normally €7.99)."),
-    ("Android app: eenmalig €7,99 PRO.", "Android app: PRO eenmalig €5,99 (normaal €7,99)."),
+    ("Android app: one-off €7.99 PRO.", "Android app: one-off €5.99 PRO."),
+    ("Android app: eenmalig €7,99 PRO.", "Android app: eenmalig €5,99 PRO."),
     ("Then the app and one-off €7.99 pays off.", "Then the app and one-off €5.99 pays off."),
     ("Dan loont de app en de eenmalige €7,99.", "Dan loont de app en de eenmalige €5,99."),
-    ("Yes. Pay €7.99 once on Google Play", "Yes. Pay once on Google Play (now €5.99 instead of €7.99)"),
-    ("Ja. Betaal eenmalig €7,99 via Google Play", "Ja. Betaal eenmalig via Google Play (nu €5,99 in plaats van €7,99)"),
+    ("Yes. Pay €7.99 once on Google Play", "Yes. Pay €5.99 once on Google Play"),
+    ("Ja. Betaal eenmalig €7,99 via Google Play", "Ja. Betaal eenmalig €5,99 via Google Play"),
     # About, credits, terms
-    ("Free core, one-time €7.99 for PRO.", "Free core, one-time €5.99 for PRO (normally €7.99)."),
-    ("Gratis kern, eenmalig €7,99 voor PRO.", "Gratis kern, eenmalig €5,99 voor PRO (normaal €7,99)."),
-    ("<strong>one-off €7.99</strong>", "<strong>one-off €5.99</strong> (normally €7.99)"),
-    ("<strong>eenmalig €7,99</strong>", "<strong>eenmalig €5,99</strong> (normaal €7,99)"),
-    ("BuildExact PRO costs €7.99 one-time via Google Play.", "BuildExact PRO costs €7.99 one-time via Google Play, reduced to €5.99 for a limited time."),
-    ("BuildExact PRO kost eenmalig €7,99 via Google Play.", "BuildExact PRO kost eenmalig €7,99 via Google Play, tijdelijk afgeprijsd naar €5,99."),
+    ("Free core, one-time €7.99 for PRO.", "Free core, one-time €5.99 for PRO."),
+    ("Gratis kern, eenmalig €7,99 voor PRO.", "Gratis kern, eenmalig €5,99 voor PRO."),
+    ("<strong>one-off €7.99</strong>", "<strong>one-off €5.99</strong>"),
+    ("<strong>eenmalig €7,99</strong>", "<strong>eenmalig €5,99</strong>"),
+    ("BuildExact PRO costs €7.99 one-time via Google Play.", "BuildExact PRO costs €5.99 one-time via Google Play."),
+    ("BuildExact PRO kost eenmalig €7,99 via Google Play.", "BuildExact PRO kost eenmalig €5,99 via Google Play."),
     # grounded-studio.app
     ("PRO costs €7.99 one-time and unlocks", "PRO costs €5.99 one-time (normally €7.99) and unlocks"),
     ("PRO kost €7,99 eenmalig en ontgrendelt", "PRO kost €5,99 eenmalig (normaal €7,99) en ontgrendelt"),

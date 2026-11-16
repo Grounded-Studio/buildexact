@@ -228,7 +228,7 @@
 
 // ─── PRO discount popup. Switched by _tools/promo_prices.py ───────────
 (function () {
-  const PROMO_ON = true;
+  const PROMO_ON = false;
   const KEY = 'be_promo25_seen';
   const REPEAT_MS = 7 * 24 * 60 * 60 * 1000;
   const PROMO_END = Date.UTC(2026, 11, 2, 14); // Safety stop. Move this if the Google Play offer is extended.

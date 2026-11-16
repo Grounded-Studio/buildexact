@@ -33,15 +33,18 @@
   "name": "BuildExact",
   "operatingSystem": "Android",
   "applicationCategory": "BusinessApplication",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "offers": [
+    { "@type": "Offer", "name": "BuildExact (free)", "price": "0", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "BuildExact PRO", "price": "5.99", "priceCurrency": "EUR", "description": "One-time in-app purchase, no subscription" }
+  ],
   "downloadUrl": "https://play.google.com/store/apps/details?id=com.metenweten.bouw",
-  "description": "Offline-first construction calculator with 25 trade calculators, branded PDF quotes, invoices and client manager.",
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "12", "bestRating": "5", "worstRating": "1" },
+  "installUrl": "https://play.google.com/store/apps/details?id=com.metenweten.bouw",
+  "description": "Construction calculator app with 25 trade calculators, branded PDF quotes, invoices and a client manager. Works offline.",
   "author": { "@type": "Organization", "name": "Grounded Studio", "url": "https://grounded-studio.app" }
 }
 </script>
 
-<link rel="stylesheet" href="/assets/css/style.css?v=20261104">
+<link rel="stylesheet" href="/assets/css/style.css?v=20261116">
 <script src="/assets/js/lang.js"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoObject", "name": "BuildExact — Construction Calculator, Quotes & Invoices in One App", "description": "Measure. Quote. Get paid. See how BuildExact takes a job from measurement and material calculation to a branded quote, a signed work order and an invoice with pay-by-QR.", "thumbnailUrl": "https://buildexact.app/assets/video/demo-thumb-1280.webp", "uploadDate": "2026-11-01T13:49:02-08:00", "duration": "PT1M50S", "embedUrl": "https://www.youtube-nocookie.com/embed/fzk6RPxl134", "contentUrl": "https://www.youtube.com/watch?v=fzk6RPxl134", "publisher": {"@type": "Organization", "name": "Grounded Studio", "url": "https://grounded-studio.app/"}}</script>
 </head>
@@ -83,7 +86,7 @@
         <a href="https://play.google.com/store/apps/details?id=com.metenweten.bouw" class="btn btn-primary btn-lg">Install on Google Play</a>
         <a href="/calculators/" class="btn btn-ghost btn-lg">Try the calculators</a>
       </div>
-      <p class="muted" style="margin-top:22px;font-size:.88rem;">Free forever on the first 2 projects · PRO unlocks unlimited · <strong>€5.99</strong> <s>€7.99</s> one-time</p>
+      <p class="muted" style="margin-top:22px;font-size:.88rem;">Free forever on the first 2 projects · PRO unlocks unlimited · <strong>€5.99</strong> one-time, no subscription</p>
     </div>
     <div class="hero-phones">
       <img class="ph-side ph-left"  src="/assets/hero/screen-project.jpg" decoding="async" alt="Bathroom renovation project with tile, paint and sealant calculations">
@@ -200,7 +203,7 @@
   <div class="container">
     <div class="section-head">
       <h2>Honest pricing. One-time.</h2>
-      <p class="lede">The core is free forever. PRO is a single payment of €5.99 instead of €7.99 — no subscriptions, no cloud fees.</p>
+      <p class="lede">The core is free forever. PRO is a single €5.99 payment — no subscriptions, no cloud fees.</p>
     </div>
     <div class="grid grid-2" style="max-width:860px;margin:0 auto;">
       <div class="card">
@@ -217,7 +220,7 @@
       <div class="card" style="border:2px solid var(--blue-600);box-shadow:var(--shadow-lg);">
         <span class="badge">PRO · one-time</span>
         <h3 style="margin-top:10px;">BuildExact PRO</h3>
-        <p style="font-size:2.2rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€5.99 <s class="price-was">€7.99</s> <span class="price-off">-25%</span></p>
+        <p style="font-size:2.2rem;font-weight:800;color:var(--blue-600);margin:4px 0 14px;">€5.99 <span class="price-note">one-time, no subscription</span></p>
         <ul style="padding-left:1.1em;color:var(--ink-2);">
           <li>All 25 calculators</li>
           <li>Unlimited projects &amp; cards</li>

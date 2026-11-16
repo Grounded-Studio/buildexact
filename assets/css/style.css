@@ -640,6 +640,7 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 .article figure img { display: block; margin: 0 auto; width: 280px; max-width: 100%; height: auto; }
 
 /* ---------- PRO discount: struck-through price + popup ---------- */
+.price-note { display: block; font-size: .4em; font-weight: 600; color: var(--muted); margin-top: 2px; }
 .price-was { font-size: .5em; font-weight: 600; color: var(--muted); }
 .price-off {
   display: inline-block; vertical-align: middle;
