@@ -478,6 +478,25 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
   padding: 24px 0; text-align: center; margin-top: 60px;
 }
 .install-strip p { margin: 0; font-size: .9rem; color: var(--muted); }
+.install-strip .install-title { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.install-points { list-style: none; padding: 0; margin: 0 auto 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; font-size: .92rem; color: var(--ink-2); }
+.install-points li::before { content: '\2713'; color: var(--ok, #16a34a); font-weight: 700; margin-right: 6px; }
+/* Free vs PRO table on the homepage */
+.compare-wrap { max-width: 860px; margin: 0 auto; overflow-x: auto; }
+.compare { width: 100%; table-layout: fixed; border-collapse: collapse; background: var(--surface); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-lg); }
+.compare th, .compare td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: center; font-size: .95rem; }
+.compare thead th:first-child { width: 36%; }
+.compare th[scope=row] { text-align: left; font-weight: 600; color: var(--ink-2); }
+.compare thead th { font-size: 1.05rem; color: var(--ink); }
+.compare .pro { background: color-mix(in srgb, var(--blue-600) 7%, transparent); }
+.compare thead th.pro { color: var(--blue-600); }
+.compare .yes { color: var(--ok, #16a34a); font-weight: 800; }
+.compare .no { color: var(--muted); }
+.compare tfoot td, .compare tfoot th { border-bottom: 0; }
+.compare tfoot p { margin: 4px 0; }
+.compare-price { font-size: 2.2rem; font-weight: 800; color: var(--ink); }
+.compare-btns { text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 560px) { .compare th, .compare td { padding: 10px 8px; font-size: .85rem; } .compare tfoot p[style] { font-size: 1.6rem !important; } }
 .install-strip a {
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: 8px; font-weight: 700; color: var(--blue-600);

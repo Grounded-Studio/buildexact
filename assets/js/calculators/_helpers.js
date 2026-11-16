@@ -122,7 +122,7 @@ window.BE = {
     lockTitle:   'Je credits zijn op',
     lockBody:    `Koop een pakket van ${PACK.size} credits voor ${PACK.price} om door te rekenen op de website. Eenmalig, geen abonnement. Bij je eerste aankoop krijg je er ${PACK.firstBonus} extra.`,
     lockBuy:     `Koop ${PACK.size} credits — ${PACK.price}`,
-    installFoot: 'Liever onbeperkt + PDF-offertes? Installeer BuildExact (€5,99 eenmalig in de app, geen abonnement)',
+    installFoot: 'Bewaar, combineer met de andere 24 calculators en maak er een offerte-PDF van in de app. PRO: €5,99 eenmalig, geen abonnement.',
   } : {
     chipBalance: (n) => `${n} credit${n === 1 ? '' : 's'} left`,
     chipZero:    'Out of credits — buy a pack',
@@ -141,7 +141,7 @@ window.BE = {
     lockTitle:   'Out of credits',
     lockBody:    `Buy a pack of ${PACK.size} credits for ${PACK.price} to keep calculating on the website. One-off, no subscription. Your first purchase comes with ${PACK.firstBonus} extra.`,
     lockBuy:     `Buy ${PACK.size} credits — ${PACK.price}`,
-    installFoot: 'Want unlimited + branded PDF quotes? Install BuildExact (€5.99 one-time in the app, no subscription)',
+    installFoot: 'Save it, combine it with the other 24 calculators and turn it into a quote PDF in the app. PRO: €5.99 one-time, no subscription.',
   };
 
   // null = nog onbekend, anders { loggedIn, credits }

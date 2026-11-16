@@ -628,3 +628,132 @@ HAND = {
                    ["Kleine klussen: één gat kost bijna evenveel voorbereiding als vijf, dus werk met een minimumtarief. Lastig bereikbaar: werken op hoogte, in een kruipruimte of boven je hoofd duurt langer; reken een toeslag in plaats van je uurtarief te verlagen."])]),
     },
 }
+
+# Extra FAQ per page (added after the existing three), based on what people search for.
+FAQ = {
+    "area": {
+        "en": [("How many square feet are in a square metre?", "1 m² is 10.764 sq ft. A room of 20 m² is about 215 sq ft."),
+               ("How much extra flooring should I buy?", "5 to 10% for laminate or vinyl laid straight, 15% when laid diagonally, and always round up to whole packs."),
+               ("How do I measure a room with a bay window?", "Measure the main room as a rectangle. Treat the bay as a trapezium: (front width + back width) ÷ 2 × depth, and add the two together.")],
+        "nl": [("Hoeveel m² is een kamer van 3 bij 4 meter?", "3 × 4 = 12 m². Tel er voor vloer of tegels het snijverlies bij op, bijvoorbeeld 10%: 13,2 m²."),
+               ("Hoeveel extra vloer moet ik kopen?", "5 tot 10% voor laminaat of pvc dat recht gelegd wordt, 15% bij diagonaal leggen, en rond altijd af naar hele pakken."),
+               ("Hoe meet je een kamer met een erker?", "Meet de kamer als rechthoek. Reken de erker als trapezium: (breedte voor + breedte achter) ÷ 2 × diepte, en tel beide op.")],
+    },
+    "volume": {
+        "en": [("How many tonnes is 1 m³ of sand?", "About 1.5 to 1.6 tonnes when dry, and up to 2 tonnes when wet."),
+               ("How do I convert m³ to cubic yards?", "Multiply by 1.308. One cubic yard is 0.765 m³, so 5 m³ is about 6.5 cubic yards."),
+               ("How much gravel do I need for 10 m² at 5 cm deep?", "10 × 0.05 = 0.5 m³, which weighs about 0.75 to 0.85 tonnes.")],
+        "nl": [("Hoeveel ton is 1 m³ zand?", "Ongeveer 1,5 tot 1,6 ton als het droog is, en tot 2 ton als het nat is."),
+               ("Hoeveel liter is 1 m³?", "1000 liter. Een emmer van 10 liter is dus 0,01 m³."),
+               ("Hoeveel grind heb ik nodig voor 10 m² en 5 cm dik?", "10 × 0,05 = 0,5 m³, en dat weegt ongeveer 0,75 tot 0,85 ton.")],
+    },
+    "linear": {
+        "en": [("What is the difference between linear metres and square metres?", "Linear metres measure only length, for things like skirting and trim. Square metres measure area: length × width."),
+               ("How do I convert metres to feet?", "Multiply by 3.281. 10 metres is 32.8 feet; one foot is 0.3048 m."),
+               ("How much sealant do I need?", "Divide 310,000 by the joint size in mm². A 310 ml cartridge fills about 8.6 m of a 6 × 6 mm joint.")],
+        "nl": [("Wat is het verschil tussen strekkende meter en m²?", "Een strekkende meter meet alleen lengte, voor bijvoorbeeld plinten en lijsten. Een m² meet oppervlak: lengte × breedte."),
+               ("Hoeveel plinten heb ik nodig?", "Tel alle wanden op, trek de deuren af, tel 5 tot 10% op voor verstek en deel door de lengte van één plint. Rond af naar boven."),
+               ("Hoeveel kit heb ik nodig?", "Deel 310.000 door de voegmaat in mm². Een koker van 310 ml vult ongeveer 8,6 m van een voeg van 6 × 6 mm.")],
+    },
+    "perimeter": {
+        "en": [("How much skirting do I need for a 4 × 4 m room?", "16 m minus a door of about 0.8 m is 15.2 m. With 5% for mitres that is 16 m, or 7 lengths of 2.4 m."),
+               ("Should I subtract doorways for skirting?", "Yes, subtract the width of every door opening. Architraves around the door are a separate length."),
+               ("How do I find the perimeter of an L-shaped room?", "Add up every wall. A quick check: it equals 2 × (overall length + overall width) of the rectangle around the room.")],
+        "nl": [("Hoeveel plint heb ik nodig voor een kamer van 4 × 4 m?", "16 m min een deur van ongeveer 0,8 m is 15,2 m. Met 5% voor verstek is dat 16 m, of 7 plinten van 2,4 m."),
+               ("Moet ik deuren aftrekken voor de plinten?", "Ja, trek de breedte van elke deuropening af. Deurlijsten rond het kozijn reken je apart."),
+               ("Hoe bereken je de omtrek van een L-vormige kamer?", "Tel alle wanden op. Snelle controle: het is gelijk aan 2 × (totale lengte + totale breedte) van de rechthoek om de kamer.")],
+    },
+    "wall-area": {
+        "en": [("How do I calculate the wall area of a room?", "Perimeter × ceiling height, minus doors and windows. A room of 4 × 3.5 m and 2.6 m high has 39 m² of wall before openings."),
+               ("Should I subtract windows and doors when painting?", "Subtract large openings such as patio doors. Small windows you can leave in, because cutting in around them uses extra paint."),
+               ("How do I calculate a gable wall?", "Add the triangle on top of the rectangle: width × height ÷ 2. A gable 6 m wide and 2.5 m high adds 7.5 m².")],
+        "nl": [("Hoe bereken je het wandoppervlak van een kamer?", "Omtrek × plafondhoogte, min deuren en ramen. Een kamer van 4 × 3,5 m en 2,6 m hoog heeft 39 m² wand voor aftrek van openingen."),
+               ("Moet je ramen en deuren aftrekken bij verven?", "Trek grote openingen zoals tuindeuren af. Kleine ramen mag je laten staan, want het uitsnijden eromheen kost extra verf."),
+               ("Hoe bereken je een puntgevel?", "Tel de driehoek bovenop de rechthoek: breedte × hoogte ÷ 2. Een gevel van 6 m breed en 2,5 m hoog geeft 7,5 m² extra.")],
+    },
+    "cost": {
+        "en": [("How do I add VAT to a price?", "Multiply by 1 plus the rate. €1,000 at 21% VAT is €1,000 × 1.21 = €1,210."),
+               ("How much contingency should I add?", "5 to 10% on older buildings, where you find problems only once a wall or floor is open. Show it as its own line."),
+               ("What is the difference between markup and margin?", "Markup is on top of your cost, margin is part of the selling price. A 25% markup gives a 20% margin.")],
+        "nl": [("Hoe reken je btw erbij?", "Vermenigvuldig met 1 plus het tarief. € 1.000 met 21% btw is € 1.000 × 1,21 = € 1.210."),
+               ("Hoeveel onvoorzien reken je?", "5 tot 10% bij oudere panden, waar je problemen pas ziet als een wand of vloer open ligt. Zet het als eigen regel op de offerte."),
+               ("Wat is het verschil tussen opslag en marge?", "Opslag komt bovenop je inkoop, marge is een deel van de verkoopprijs. 25% opslag geeft 20% marge.")],
+    },
+    "tiles": {
+        "en": [("How many tiles are in a square metre?", "With a 3 mm joint: about 2.75 tiles of 60 × 60 cm, or 10.9 tiles of 30 × 30 cm, before waste."),
+               ("Should I buy a spare box of tiles?", "Yes. Tiles from a later batch can differ in colour, so a spare box from the same batch saves a repair later.")],
+        "nl": [("Hoeveel tegels gaan er in een m²?", "Met een voeg van 3 mm: ongeveer 2,75 tegels van 60 × 60 cm, of 10,9 tegels van 30 × 30 cm, zonder snijverlies."),
+               ("Moet ik een reservedoos tegels kopen?", "Ja. Tegels uit een latere partij kunnen in kleur afwijken, dus een reservedoos uit dezelfde partij scheelt later een probleem bij een reparatie.")],
+    },
+    "paint": {
+        "en": [("How many litres of paint do I need for a room?", "For the walls of a 4 × 3.5 m room, 2.5 m high: about 34 m², so two coats at 10 m² per litre is roughly 7 litres."),
+               ("How many coats of paint do I need?", "Usually two. Fresh plaster needs a thinned mist coat first, and a big colour change may need a primer.")],
+        "nl": [("Hoeveel liter verf heb ik nodig voor een kamer?", "Voor de wanden van een kamer van 4 × 3,5 m, 2,5 m hoog: zo'n 34 m², dus twee lagen à 10 m² per liter is ongeveer 7 liter."),
+               ("Hoeveel lagen verf heb ik nodig?", "Meestal twee. Vers stucwerk heeft eerst een verdunde nevellaag nodig, en bij een grote kleurwissel soms een grondverf.")],
+    },
+    "drywall": {
+        "en": [("How many plasterboards do I need for a wall?", "Divide the area by the board size and add 10%. A wall of 4 × 2.6 m with boards of 120 × 260 cm needs 4 boards on one side."),
+               ("What stud spacing should I use for drywall?", "60 cm for 12.5 mm board. Use 40 cm for wall tiles, heavy cabinets or thinner board.")],
+        "nl": [("Hoeveel gipsplaten heb ik nodig voor een wand?", "Deel het oppervlak door de plaatmaat en tel er 10% bij. Een wand van 4 × 2,6 m met platen van 120 × 260 cm heeft aan één kant 4 platen nodig."),
+               ("Welke stijlafstand voor gipsplaat?", "60 cm bij platen van 12,5 mm. Neem 40 cm bij wandtegels, zware kasten of dunnere platen.")],
+    },
+    "insulation": {
+        "en": [("How thick should insulation be for R 6?", "Thickness = R × lambda. With λ 0.035 that is 6 × 0.035 = 0.21 m, so 210 mm."),
+               ("What R-value do I need?", "It depends on where you build and on the part of the house. In the Netherlands new homes need Rc 6.3 for the roof, 4.7 for the walls and 3.7 for the floor.")],
+        "nl": [("Hoe dik moet isolatie zijn voor Rc 6?", "Dikte = R × lambda. Met λ 0,035 is dat 6 × 0,035 = 0,21 m, dus 210 mm."),
+               ("Welke Rc-waarde heb ik nodig?", "Voor nieuwbouw in Nederland: Rc 6,3 voor het dak, 4,7 voor de gevel en 3,7 voor de vloer. Bij renovatie gelden lagere eisen; controleer wat voor jouw situatie geldt.")],
+    },
+    "bricks": {
+        "en": [("How many bricks are in a square metre?", "It depends on the brick and the joint. With a 10 mm joint: about 76 bricks of 210 × 100 × 50 mm, or about 59 of the UK size 215 × 102.5 × 65 mm."),
+               ("How much mortar do I need per m²?", "Around 30 to 40 kg per m² for a half-brick wall. The calculator uses 35 kg by default; change it to what your mortar bag says.")],
+        "nl": [("Hoeveel stenen gaan er in een m²?", "Dat hangt af van de steen en de voeg. Met een voeg van 10 mm: ongeveer 76 waalformaat (210 × 100 × 50 mm) of 61 dikformaat (210 × 100 × 65 mm)."),
+               ("Hoeveel mortel heb ik nodig per m²?", "Ongeveer 30 tot 40 kg per m² voor een halfsteens muur. De calculator gaat uit van 35 kg; pas het aan naar wat er op je zak staat.")],
+    },
+    "concrete": {
+        "en": [("How many bags of cement are in a cubic metre of concrete?", "About 14 bags of 25 kg, or 350 kg of cement per m³, for a common mix."),
+               ("How much concrete do I need for a 3 × 3 m slab?", "At 10 cm thick: 3 × 3 × 0.1 = 0.9 m³, or 0.95 m³ with 5% extra. Order 1 m³ of ready-mix.")],
+        "nl": [("Hoeveel zakken cement gaan er in een kuub beton?", "Ongeveer 14 zakken van 25 kg, oftewel 350 kg cement per m³, bij een gangbaar mengsel."),
+               ("Hoeveel beton heb ik nodig voor een vloer van 3 × 3 m?", "Bij 10 cm dik: 3 × 3 × 0,1 = 0,9 m³, of 0,95 m³ met 5% extra. Bestel 1 m³ betonmortel.")],
+    },
+    "fence": {
+        "en": [("How many fence posts do I need?", "One more than the number of panels in each straight line, plus posts for corners and gates. A 12 m line with 180 cm panels needs 8 posts."),
+               ("How deep should fence posts go?", "About a third of the height above ground: 60 to 75 cm for a 1.8 m fence, deeper in soft soil or where it's windy.")],
+        "nl": [("Hoeveel schuttingpalen heb ik nodig?", "Eén meer dan het aantal schermen per rechte lijn, plus palen voor hoeken en poorten. Een lijn van 12 m met schermen van 180 cm heeft 8 palen nodig."),
+               ("Hoe diep moeten schuttingpalen?", "Ongeveer een derde van de hoogte boven de grond: 60 tot 75 cm voor een schutting van 1,8 m, dieper in slappe grond of op een winderige plek.")],
+    },
+    "paving": {
+        "en": [("How many pavers do I need per m²?", "1 ÷ the area of one stone. That is 11.1 stones of 30 × 30 cm, 25 of 20 × 20 cm or about 45 brick pavers of 21 × 10.5 cm, before waste."),
+               ("How much sand goes under pavers?", "A bedding layer of 3 to 5 cm: 20 m² at 5 cm is 1 m³ of sand, on top of the sub-base.")],
+        "nl": [("Hoeveel stenen heb ik nodig per m²?", "1 ÷ het oppervlak van één steen. Dat is 11,1 tegels van 30 × 30 cm, 25 van 20 × 20 cm of zo'n 45 klinkers van 21 × 10,5 cm, zonder snijverlies."),
+               ("Hoeveel zand gaat er onder bestrating?", "Een straatzandlaag van 3 tot 5 cm: 20 m² bij 5 cm is 1 m³ zand, bovenop de fundering.")],
+    },
+    "roof": {
+        "en": [("How do I get the roof area from the floor area?", "Divide by the cosine of the pitch. 100 m² of floor under a 35° roof gives 100 ÷ cos 35° = 122 m² of roof."),
+               ("What is a 30 degree roof pitch in percent?", "tan(30°) × 100 = 58%, so the roof rises 58 cm per metre."),
+               ("How many roof tiles are in a square metre?", "It depends on the tile: large interlocking tiles are about 10 per m², smaller tiles more. The manufacturer gives the number per batten spacing.")],
+        "nl": [("Hoe kom je van vloeroppervlak naar dakoppervlak?", "Deel door de cosinus van de helling. 100 m² vloer onder een dak van 35° geeft 100 ÷ cos 35° = 122 m² dak."),
+               ("Hoeveel procent is een dakhelling van 30 graden?", "tan(30°) × 100 = 58%, het dak stijgt dus 58 cm per meter."),
+               ("Hoeveel dakpannen gaan er in een m²?", "Dat hangt af van de pan: grote betonpannen zijn er zo'n 10 per m², kleinere pannen meer. De fabrikant geeft het aantal per latafstand.")],
+    },
+    "stairs": {
+        "en": [("How many steps for a floor height of 2.7 m?", "With a rise of about 18 cm: 270 ÷ 18 = 15 steps."),
+               ("What is the 2 × rise + going rule?", "Twice the rise plus the going should be about 60 to 65 cm, the length of a normal step. 2 × 18 + 26 = 62 cm is comfortable.")],
+        "nl": [("Hoeveel treden bij een verdiepingshoogte van 2,7 m?", "Met een optrede van ongeveer 18 cm: 270 ÷ 18 = 15 treden."),
+               ("Wat is de trapregel 2 × optrede + aantrede?", "Twee keer de optrede plus de aantrede is bij een prettige trap 60 tot 65 cm, de lengte van een gewone pas. 2 × 18 + 26 = 62 cm loopt prettig.")],
+    },
+    "wood": {
+        "en": [("How do I calculate cubic metres of timber?", "Length × width × thickness, all in metres. A beam of 4.2 m × 45 × 145 mm is 4.2 × 0.045 × 0.145 = 0.0274 m³."),
+               ("How many planks are in a cubic metre?", "1 ÷ the volume of one plank. Planks of 18 × 140 mm and 2.4 m long are 0.00605 m³ each, so about 165 per m³.")],
+        "nl": [("Hoe bereken je kubieke meters hout?", "Lengte × breedte × dikte, alles in meters. Een balk van 4,2 m × 45 × 145 mm is 4,2 × 0,045 × 0,145 = 0,0274 m³."),
+               ("Hoeveel planken gaan er in een kuub?", "1 ÷ het volume van één plank. Planken van 18 × 140 mm en 2,4 m lang zijn elk 0,00605 m³, dus zo'n 165 per m³.")],
+    },
+    "drilling": {
+        "en": [("What does core drilling cost?", "It depends on diameter, depth, material and your region. Enter your own price per hole; the calculator adds 40% for reinforced concrete."),
+               ("Can I core drill through a load-bearing wall?", "Only after checking with a structural engineer. Holes through beams, columns and floor slabs can weaken the structure.")],
+        "nl": [("Wat kost een kernboring?", "Dat hangt af van diameter, diepte, materiaal en regio. Vul je eigen prijs per gat in; de calculator rekent 40% extra voor gewapend beton."),
+               ("Mag ik een kernboring maken in een dragende muur?", "Alleen na overleg met een constructeur. Gaten door balken, kolommen en vloeren kunnen de constructie verzwakken.")],
+    },
+}
+for _slug, _langs in FAQ.items():
+    for _lang, _items in _langs.items():
+        HAND[_slug][_lang]["faq"] = _items

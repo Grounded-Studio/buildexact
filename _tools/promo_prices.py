@@ -24,11 +24,11 @@ NOTE_NL = '<span class="price-note">eenmalig, geen abonnement</span>'
 
 # (normal text, discount text). The normal text must not occur in the discount text.
 PAIRS = [
-    # Calculator pages
-    ("(one-off &euro;7.99 in the app)", "(&euro;5.99 one-time in the app, no subscription)"),
-    ("(one-off €7.99 in the app)", "(€5.99 one-time in the app, no subscription)"),
-    ("(&euro;7,99 eenmalig in de app)", "(&euro;5,99 eenmalig in de app, geen abonnement)"),
-    ("(€7,99 eenmalig in de app)", "(€5,99 eenmalig in de app, geen abonnement)"),
+    # Calculator pages: install strip, and the fallback text in _helpers.js
+    ("branded quotes: <strong>&euro;7.99</strong> one-time", "branded quotes: <strong>&euro;5.99</strong> one-time"),
+    ("offertes met je logo: <strong>&euro;7,99</strong> eenmalig", "offertes met je logo: <strong>&euro;5,99</strong> eenmalig"),
+    ("PRO: €7.99 one-time, no subscription.", "PRO: €5.99 one-time, no subscription."),
+    ("PRO: €7,99 eenmalig, geen abonnement.", "PRO: €5,99 eenmalig, geen abonnement."),
     # Price cards on home and pricing
     ('margin:4px 0 14px;">€7.99</p>', f'margin:4px 0 14px;">€5.99 {NOTE_EN}</p>'),
     ('margin:4px 0 14px;">€7,99</p>', f'margin:4px 0 14px;">€5,99 {NOTE_NL}</p>'),
