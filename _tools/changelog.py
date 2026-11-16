@@ -7,6 +7,17 @@ Each item is (title, text); keep the text to one or two sentences.
 """
 
 RELEASES = [
+    dict(version="2.2.9", date_en="November 2026", date_nl="november 2026",
+         en=dict(title="See your fence, in feet too", items=[
+             ("Fence drawing", "Under the fence result you now see every line to scale: posts, panels, the cut end panel and where the gate goes."),
+             ("Feet and inches", "Tiles, concrete, fence, floor covering, excavation, sheets, tank and round column now work in feet and inches. Tap \"m\" or \"ft\" at the top to switch."),
+             ("Fence against a wall", "A fence ending against a wall or corner post with an end panel now gets the post it needs before that end panel."),
+         ]),
+         nl=dict(title="Zie je schutting voor je", items=[
+             ("Tekening van je schutting", "Onder de uitkomst van de schutting zie je nu elke lijn op schaal: palen, schermen, het pasvak en waar de poort komt."),
+             ("Feet en inches", "Tegels, beton, schutting, vloerbedekking, grondwerk, plaatmateriaal, tank en ronde kolom werken nu ook in feet en inches. Tik bovenin op \"m\" of \"ft\" om te wisselen."),
+             ("Schutting tegen een muur", "Een schutting die met een pasvak tegen een muur of hoekpaal eindigt, krijgt nu de paal die vóór dat pasvak nodig is."),
+         ])),
     dict(version="2.2.8", date_en="November 2026", date_nl="november 2026",
          en=dict(title="Calculate faster", items=[
              ("Clearer input fields", "Every field shows what to enter, such as \"Enter meters\" or \"Enter cm\"."),
