@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Volume Calculator (m³): Cubic Metres &amp; Litres | BuildExact</title>
-<meta name="description" content="Calculate cubic metres for blocks and cylinders, in litres and tonnes, for soil, sand, gravel or concrete. Free, straight in your browser.">
+<title>Volume Calculator: Box, Cube &amp; Cylinder in m³ and Litres | BuildExact</title>
+<meta name="description" content="Free volume calculator for a box, cube or cylinder. Enter length, width and height to get cubic metres and litres, plus the weight of sand, gravel or concrete. No sign-up.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BuildExact">
 <meta property="og:url" content="https://buildexact.app/calculators/volume/">
-<meta property="og:title" content="Volume Calculator (m³): Cubic Metres &amp; Litres | BuildExact">
-<meta property="og:description" content="Calculate cubic metres for blocks and cylinders, in litres and tonnes, for soil, sand, gravel or concrete. Free, straight in your browser.">
+<meta property="og:title" content="Volume Calculator: Box, Cube &amp; Cylinder in m³ and Litres | BuildExact">
+<meta property="og:description" content="Free volume calculator for a box, cube or cylinder. Enter length, width and height to get cubic metres and litres, plus the weight of sand, gravel or concrete. No sign-up.">
 <meta property="og:image" content="https://buildexact.app/assets/og/og-en.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -36,8 +36,8 @@
 
 <section class="section" style="padding-top:40px;">
   <div class="container">
-    <h1>Volume Calculator (m³): Cubic Metres &amp; Litres</h1>
-    <p class="lede" style="margin-bottom:32px;">Blocks and cylinders in m³ and litres, with the weight of sand, gravel, topsoil or concrete.</p>
+    <h1>Volume Calculator: Box, Cube &amp; Cylinder</h1>
+    <p class="lede" style="margin-bottom:32px;">Volume of a box, cube or cylinder in m³ and litres, with the weight of sand, gravel, topsoil or concrete.</p>
     <div class="calc-shell">
       <form class="calc-form" novalidate>
         <h3>Shapes</h3><div id="shapes"></div><button type="button" class="btn btn-ghost btn-sm add-row" id="shapesAdd">+ Add shape</button><h3 style="margin-top:28px;">Material</h3><div class="chips" id="matChips"><button type="button" class="chip active" data-value="none" data-t="0">Just m³</button><button type="button" class="chip" data-value="sand" data-t="1.6">Sand</button><button type="button" class="chip" data-value="gravel" data-t="1.7">Gravel</button><button type="button" class="chip" data-value="soil" data-t="1.3">Topsoil</button><button type="button" class="chip" data-value="concrete" data-t="2.4">Concrete</button></div><div class="field-row"><div class="field"><label for="waste">Extra (%)</label><input type="number" id="waste" value="5" min="0" step="1"></div><div class="field"><label for="density">Weight (t/m³)</label><input type="number" id="density" value="0" min="0" step="0.1"></div></div>
@@ -111,8 +111,16 @@
       <h3>How much gravel do I need for 10 m² at 5 cm deep?</h3>
       <p>10 × 0.05 = 0.5 m³, which weighs about 0.75 to 0.85 tonnes.</p>
     </div>
+    <div class="faq-item">
+      <h3>How do I calculate the volume of a cube?</h3>
+      <p>Multiply the side by itself three times: side × side × side. A cube of 0.5 m has 0.5 × 0.5 × 0.5 = 0.125 m³, which is 125 litres. In the calculator, pick Block / layer and enter the same value for length, width and height.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many litres is 1 m³?</h3>
+      <p>1 m³ is 1,000 litres. So 0.25 m³ is 250 litres, and 1 litre is 0.001 m³.</p>
+    </div>
     <!-- faq-extra:end -->
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate cubic metres?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply length × width × height, all in metres. 4 m × 2 m × 0.25 m = 2 m³."}}, {"@type": "Question", "name": "How do I convert cm depth to metres?", "acceptedAnswer": {"@type": "Answer", "text": "Divide by 100. 30 cm is 0.3 m, 5 cm is 0.05 m."}}, {"@type": "Question", "name": "How much does one cubic metre of sand weigh?", "acceptedAnswer": {"@type": "Answer", "text": "Roughly 1.5 to 1.7 tonnes, depending on moisture. Gravel is similar; topsoil is a little lighter."}}, {"@type": "Question", "name": "How many tonnes is 1 m³ of sand?", "acceptedAnswer": {"@type": "Answer", "text": "About 1.5 to 1.6 tonnes when dry, and up to 2 tonnes when wet."}}, {"@type": "Question", "name": "How do I convert m³ to cubic yards?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply by 1.308. One cubic yard is 0.765 m³, so 5 m³ is about 6.5 cubic yards."}}, {"@type": "Question", "name": "How much gravel do I need for 10 m² at 5 cm deep?", "acceptedAnswer": {"@type": "Answer", "text": "10 × 0.05 = 0.5 m³, which weighs about 0.75 to 0.85 tonnes."}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate cubic metres?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply length × width × height, all in metres. 4 m × 2 m × 0.25 m = 2 m³."}}, {"@type": "Question", "name": "How do I convert cm depth to metres?", "acceptedAnswer": {"@type": "Answer", "text": "Divide by 100. 30 cm is 0.3 m, 5 cm is 0.05 m."}}, {"@type": "Question", "name": "How much does one cubic metre of sand weigh?", "acceptedAnswer": {"@type": "Answer", "text": "Roughly 1.5 to 1.7 tonnes, depending on moisture. Gravel is similar; topsoil is a little lighter."}}, {"@type": "Question", "name": "How many tonnes is 1 m³ of sand?", "acceptedAnswer": {"@type": "Answer", "text": "About 1.5 to 1.6 tonnes when dry, and up to 2 tonnes when wet."}}, {"@type": "Question", "name": "How do I convert m³ to cubic yards?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply by 1.308. One cubic yard is 0.765 m³, so 5 m³ is about 6.5 cubic yards."}}, {"@type": "Question", "name": "How much gravel do I need for 10 m² at 5 cm deep?", "acceptedAnswer": {"@type": "Answer", "text": "10 × 0.05 = 0.5 m³, which weighs about 0.75 to 0.85 tonnes."}}, {"@type": "Question", "name": "How do I calculate the volume of a cube?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the side by itself three times: side × side × side. A cube of 0.5 m has 0.5 × 0.5 × 0.5 = 0.125 m³, which is 125 litres. In the calculator, pick Block / layer and enter the same value for length, width and height."}}, {"@type": "Question", "name": "How many litres is 1 m³?", "acceptedAnswer": {"@type": "Answer", "text": "1 m³ is 1,000 litres. So 0.25 m³ is 250 litres, and 1 litre is 0.001 m³."}}]}</script>
   </div>
 </section>
 
