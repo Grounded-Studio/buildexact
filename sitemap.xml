@@ -5,8 +5,8 @@
   <url><loc>https://buildexact.app/</loc><lastmod>2026-11-16</lastmod><priority>1.0</priority></url>
   <url><loc>https://buildexact.app/nl/</loc><lastmod>2026-11-16</lastmod><priority>1.0</priority></url>
 
-  <url><loc>https://buildexact.app/calculators/</loc><lastmod>2026-10-22</lastmod><priority>0.9</priority></url>
-  <url><loc>https://buildexact.app/nl/calculators/</loc><lastmod>2026-10-22</lastmod><priority>0.9</priority></url>
+  <url><loc>https://buildexact.app/calculators/</loc><lastmod>2026-11-16</lastmod><priority>0.9</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/</loc><lastmod>2026-11-16</lastmod><priority>0.9</priority></url>
 
   <url><loc>https://buildexact.app/calculators/fence/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/tiles/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -21,7 +21,7 @@
   <url><loc>https://buildexact.app/calculators/roof/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/perimeter/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/area/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/calculators/volume/</loc><lastmod>2026-11-20</lastmod><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/volume/</loc><lastmod>2026-11-21</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/linear/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/wall-area/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/cost/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -40,7 +40,7 @@
   <url><loc>https://buildexact.app/nl/calculators/roof/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/perimeter/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/area/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/nl/calculators/volume/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/volume/</loc><lastmod>2026-11-21</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/linear/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/wall-area/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/cost/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -48,24 +48,24 @@
 
   <url><loc>https://buildexact.app/features/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/pricing/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/support/</loc><lastmod>2026-11-05</lastmod><priority>0.6</priority></url>
-  <url><loc>https://buildexact.app/contact/</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/support/</loc><lastmod>2026-11-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/contact/</loc><lastmod>2026-11-16</lastmod><priority>0.6</priority></url>
   <url><loc>https://buildexact.app/about/</loc><lastmod>2026-11-16</lastmod><priority>0.5</priority></url>
-  <url><loc>https://buildexact.app/privacy/</loc><lastmod>2026-11-05</lastmod><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/privacy/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
   <url><loc>https://buildexact.app/terms/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
-  <url><loc>https://buildexact.app/delete-data/</loc><lastmod>2026-10-25</lastmod><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/delete-data/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
 
   <url><loc>https://buildexact.app/nl/features/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/pricing/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/nl/support/</loc><lastmod>2026-11-05</lastmod><priority>0.6</priority></url>
-  <url><loc>https://buildexact.app/nl/contact/</loc><lastmod>2026-10-24</lastmod><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/nl/support/</loc><lastmod>2026-11-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://buildexact.app/nl/contact/</loc><lastmod>2026-11-16</lastmod><priority>0.6</priority></url>
   <url><loc>https://buildexact.app/nl/about/</loc><lastmod>2026-11-16</lastmod><priority>0.5</priority></url>
-  <url><loc>https://buildexact.app/nl/privacy/</loc><lastmod>2026-11-05</lastmod><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/nl/privacy/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
   <url><loc>https://buildexact.app/nl/terms/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
-  <url><loc>https://buildexact.app/nl/delete-data/</loc><lastmod>2026-10-25</lastmod><priority>0.3</priority></url>
+  <url><loc>https://buildexact.app/nl/delete-data/</loc><lastmod>2026-11-16</lastmod><priority>0.3</priority></url>
 
-  <url><loc>https://buildexact.app/blog/</loc><lastmod>2026-11-14</lastmod><priority>0.7</priority></url>
-  <url><loc>https://buildexact.app/nl/blog/</loc><lastmod>2026-11-14</lastmod><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/blog/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/blog/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
 
   <url><loc>https://buildexact.app/blog/send-quotes-invoices-whatsapp/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
   <url><loc>https://buildexact.app/blog/how-to-write-construction-quote/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
@@ -105,8 +105,8 @@
   <url><loc>https://buildexact.app/nl/calculators/sheets/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/steel/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/steel/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/calculators/tank/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
-  <url><loc>https://buildexact.app/nl/calculators/tank/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/calculators/tank/</loc><lastmod>2026-11-21</lastmod><priority>0.8</priority></url>
+  <url><loc>https://buildexact.app/nl/calculators/tank/</loc><lastmod>2026-11-21</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/flooring/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/nl/calculators/flooring/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://buildexact.app/calculators/converter/</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -125,6 +125,6 @@
   <url><loc>https://buildexact.app/nl/blog/schutting-berekenen-hoeveel-palen-en-schermen/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
   <url><loc>https://buildexact.app/blog/how-many-bricks-per-m2/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
   <url><loc>https://buildexact.app/nl/blog/hoeveel-stenen-per-m2-metselwerk/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
-  <url><loc>https://buildexact.app/video/</loc><lastmod>2026-11-14</lastmod><priority>0.7</priority></url>
-  <url><loc>https://buildexact.app/nl/video/</loc><lastmod>2026-11-14</lastmod><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/video/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://buildexact.app/nl/video/</loc><lastmod>2026-11-16</lastmod><priority>0.7</priority></url>
 </urlset>

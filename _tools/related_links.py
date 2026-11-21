@@ -192,8 +192,17 @@ def articles_for(lang, slug):
     return picks
 
 
+# Hand-picked related calculators where the trade grouping misses the obvious topic neighbours.
+RELATED_OVERRIDE = {
+    "volume": ["tank", "round-column", "concrete", "excavation", "area", "converter"],
+    "tank": ["volume", "round-column", "excavation", "converter", "concrete", "cost"],
+}
+
+
 def related_calcs(info, slug):
     """Same trade first, then the neighbours in the catalogue order."""
+    if slug in RELATED_OVERRIDE:
+        return [s for s in RELATED_OVERRIDE[slug] if s in info and s != slug][:6]
     order = [c[0] for c in CATALOG]
     group = info[slug][2]
     same = [s for s in order if info[s][2] == group and s != slug]
