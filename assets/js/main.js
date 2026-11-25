@@ -281,3 +281,137 @@
   }
   setTimeout(show, 6000);
 })();
+
+// ─── Gift popup: 5 extra free website credits, once per account ───────
+// Server side: api.buildexact.app/gift.php (ledger reason 'website_gift').
+// Shown after 20 s or half-way down the page, at most once per 14 days,
+// never while typing and never on login/account/credits/legal pages.
+// Not logged in: "Claim" remembers the wish and goes to the login page;
+// back on the site the gift is claimed automatically.
+(function () {
+  if (typeof HTMLDialogElement === 'undefined' || !window.BEAuth) return;
+  const SEEN = 'be_gift_seen', DONE = 'be_gift_done', PENDING = 'be_gift_pending';
+  const REPEAT_MS = 14 * 24 * 60 * 60 * 1000;
+  const A = window.BEAuth;
+  const nl = A.isNl;
+  const calcUrl = nl ? '/nl/calculators/' : '/calculators/';
+  const t = nl ? {
+    tag: 'Cadeautje', title: '5 extra gratis credits',
+    textOut: 'Log in met alleen je e-mailadres en reken 10 keer gratis met de calculators op deze website: 5 credits bij je eerste login, plus 5 extra van ons. Geen wachtwoord, geen betaalgegevens.',
+    textIn: 'Bedankt voor je bezoek! Claim 5 extra credits voor de calculators op deze website.',
+    btn: 'Claim mijn 5 credits', later: 'Nee, bedankt', close: 'Sluiten',
+    note: 'Eén keer per account. Credits zijn voor de calculators op buildexact.app.',
+    okTitle: 'Gelukt! +5 credits', okText: (n) => 'Je saldo is nu ' + n + ' credits.', go: 'Ga rekenen',
+    already: (n) => 'Je hebt dit cadeau al ontvangen. Je saldo is ' + n + ' credits.',
+    err: 'Dat lukte niet. Probeer het later nog eens.',
+  } : {
+    tag: 'A small gift', title: '5 extra free credits',
+    textOut: 'Log in with just your email and calculate 10 times for free with the calculators on this website: 5 credits on your first login, plus 5 extra from us. No password, no payment details.',
+    textIn: 'Thanks for visiting! Claim 5 extra credits for the calculators on this website.',
+    btn: 'Claim my 5 credits', later: 'No, thanks', close: 'Close',
+    note: 'Once per account. Credits are for the calculators on buildexact.app.',
+    okTitle: 'Done! +5 credits', okText: (n) => 'Your balance is now ' + n + ' credits.', go: 'Start calculating',
+    already: (n) => 'You already received this gift. Your balance is ' + n + ' credits.',
+    err: 'That did not work. Please try again later.',
+  };
+  const get = (k) => { try { return localStorage.getItem(k); } catch (_) { return undefined; } };
+  const set = (k, v) => { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (_) {} };
+
+  function dialog(html) {
+    const d = document.createElement('dialog');
+    d.className = 'promo-dialog gift-dialog';
+    d.setAttribute('aria-labelledby', 'giftTitle');
+    d.innerHTML = '<button type="button" class="promo-close" aria-label="' + t.close + '">&times;</button>' + html;
+    d.querySelector('.promo-close').addEventListener('click', () => d.close());
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+    d.addEventListener('close', () => d.remove());
+    document.body.appendChild(d);
+    d.tabIndex = -1;
+    d.showModal();
+    d.focus();
+    return d;
+  }
+
+  function result(r) {
+    const n = r.data && typeof r.data.credits === 'number' ? r.data.credits : null;
+    if (n !== null) A.setCredits(n);
+    if (r.ok && r.data.added > 0) {
+      set(DONE, '1');
+      return dialog('<div class="gift-icon" aria-hidden="true">🎁</div><h2 id="giftTitle">' + t.okTitle + '</h2>' +
+        '<p>' + t.okText(n) + '</p><a class="btn btn-primary" href="' + calcUrl + '">' + t.go + '</a>');
+    }
+    if (r.ok) {
+      set(DONE, '1');
+      return dialog('<h2 id="giftTitle">' + t.title + '</h2><p>' + t.already(n) + '</p>');
+    }
+    return dialog('<h2 id="giftTitle">' + t.title + '</h2><p>' + t.err + '</p>');
+  }
+
+  async function claim() {
+    let r;
+    try {
+      const res = await fetch('https://api.buildexact.app/gift.php', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: '{}',
+      });
+      const data = await res.json().catch(() => ({}));
+      r = { status: res.status, ok: res.ok && data.ok !== false, data: data };
+    } catch (_) {
+      r = { status: 0, ok: false, data: {} };
+    }
+    if (r.status === 401) { set(PENDING, String(Date.now())); location.href = A.loginUrl(); return; }
+    result(r);
+  }
+
+  const blocked = /\/(login|account|credits|privacy|terms|delete-data)(\/|$)/.test(location.pathname);
+
+  // Back from the login page with a claim waiting (max. 1 day old).
+  const pending = Number(get(PENDING) || 0);
+  if (pending && !/\/login(\/|$)/.test(location.pathname)) {
+    if (Date.now() - pending > 24 * 60 * 60 * 1000) {
+      set(PENDING, null);
+    } else {
+      A.me(true).then((me) => {
+        if (me && me.loggedIn) { set(PENDING, null); claim(); }
+      });
+      return;
+    }
+  }
+
+  if (blocked || get(DONE)) return;
+  const seen = get(SEEN);
+  if (seen === undefined) return;                       // no storage: we can't remember a "no", so stay quiet
+  if (Date.now() - Number(seen || 0) < REPEAT_MS) return;
+
+  let shown = false;
+  async function show() {
+    if (shown || document.querySelector('dialog[open]')) return;
+    if (document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+      setTimeout(show, 5000);
+      return;
+    }
+    shown = true;
+    window.removeEventListener('scroll', onScroll);
+    set(SEEN, String(Date.now()));
+    const me = await A.me();
+    const d = dialog('<span class="badge">' + t.tag + '</span>' +
+      '<div class="gift-icon" aria-hidden="true">🎁</div>' +
+      '<h2 id="giftTitle">' + t.title + '</h2>' +
+      '<p>' + (me && me.loggedIn ? t.textIn : t.textOut) + '</p>' +
+      '<button type="button" class="btn btn-primary gift-claim">' + t.btn + '</button>' +
+      '<button type="button" class="gift-later">' + t.later + '</button>' +
+      '<p class="promo-note">' + t.note + '</p>');
+    d.querySelector('.gift-later').addEventListener('click', () => d.close());
+    d.querySelector('.gift-claim').addEventListener('click', (e) => {
+      e.currentTarget.disabled = true;
+      d.close();
+      claim();
+    });
+  }
+  function onScroll() {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    if (h > 400 && scrollY / h > 0.5) show();
+  }
+  setTimeout(show, 20000);
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();

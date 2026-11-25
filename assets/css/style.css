@@ -685,6 +685,15 @@ p  { margin: 0 0 1em; color: var(--ink-2); }
 }
 .promo-close:hover { background: var(--surface); color: var(--ink); }
 
+/* Gift popup (5 extra website credits) */
+.gift-dialog .gift-icon { font-size: 2.6rem; line-height: 1; margin: 14px 0 4px; }
+.gift-dialog .btn { width: 100%; justify-content: center; }
+.gift-later {
+  display: block; margin: 10px auto 0; padding: 8px 12px; border: 0; background: none;
+  color: var(--muted); font: inherit; font-size: .9rem; cursor: pointer;
+}
+.gift-later:hover { color: var(--ink); text-decoration: underline; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
