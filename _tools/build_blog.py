@@ -228,3 +228,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Cross-promo block for the other Grounded Studio apps (re-added after every build).
+if __name__ == "__main__":
+    import os as _os, subprocess as _sp, sys as _sys
+    _XP = r"C:\meten_weten_bouw\scripts\cross_promo.py"
+    if _os.path.exists(_XP):
+        _sp.run([_sys.executable, "-I", _XP, "buildexact"], check=False)

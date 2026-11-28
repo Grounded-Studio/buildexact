@@ -19,51 +19,41 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://buildexact.app"
 PLAY = "https://play.google.com/store/apps/details?id=com.metenweten.bouw"
 
-VIDEO = dict(id="ArBX3mV-2jI", upload="2026-11-12T13:41:40-08:00", seconds=110)
+VIDEO = dict(id="OyRu-W6PEFg", upload="2026-11-23T15:19:04-08:00", seconds=74)
 
 # start second, (title en, nl), (what you see en, nl)
 CHAPTERS = [
-    (0, ("Intro", "Intro"), ("Measure, quote and get paid in one app.", "Meten, offreren en betaald worden in één app.")),
-    (4, ("Business overview", "Bedrijfsoverzicht"),
-     ("Open quotes, unpaid and overdue invoices and this month's income at a glance.",
-      "Open offertes, onbetaalde en te late facturen en je omzet van deze maand in één oogopslag.")),
-    (11, ("Calculators", "Calculators"),
-     ("Type a size and get the materials: tiles, paint, concrete, paving, bricks and more.",
-      "Vul een maat in en krijg het materiaal: tegels, verf, beton, bestrating, stenen en meer.")),
-    (28, ("Fence planner", "Schuttingplanner"),
-     ("Posts, panels, end panels and gates counted exactly, shared as a neat result card.",
-      "Palen, schermen, pasvakken en poorten exact geteld, gedeeld als nette resultaatkaart.")),
-    (37, ("Projects", "Projecten"),
-     ("All measurements of a job in one project, with a material list and totals.",
-      "Alle metingen van een klus in één project, met een materiaallijst en totalen.")),
-    (47, ("Quotes", "Offertes"),
-     ("Tap a line, add a price and send a quote PDF with your logo, VAT and signature.",
-      "Tik een regel aan, vul de prijs in en verstuur een offerte-PDF met je logo, btw en handtekening.")),
-    (73, ("Invoices", "Facturen"),
-     ("Turn the quote into an invoice, see what is paid or overdue and send a reminder.",
-      "Maak van de offerte een factuur, zie wat betaald of te laat is en stuur een herinnering.")),
-    (83, ("My Day", "Mijn Dag"),
-     ("This week's earnings, what needs attention today and a trade tip.",
-      "De omzet van deze week, wat vandaag aandacht nodig heeft en een vak-tip.")),
-    (89, ("Clients & branding", "Klanten & bedrijf"),
-     ("Your clients with call, WhatsApp and e-mail, and your logo on every PDF.",
-      "Je klanten met bellen, WhatsApp en e-mail, en je logo op elke PDF.")),
-    (101, ("Private & offline", "Privé & offline"),
-     ("Your data stays on your phone. Works without internet, with dark mode.",
-      "Je gegevens blijven op je telefoon. Werkt zonder internet, met donkere modus.")),
-    (104, ("Get BuildExact", "BuildExact downloaden"),
+    (0, ("Tile calculator", "Tegelcalculator"),
+     ("How many tiles do I need? Type the size and pattern: 75 tiles, with boxes and adhesive.",
+      "Hoeveel tegels heb ik nodig? Typ de maat en het patroon: 75 tegels, met dozen en lijm.")),
+    (11, ("Fence planner", "Schuttingplanner"),
+     ("Enter the length: 9 posts and 7 panels, end panels and gates included, shared in one tap.",
+      "Vul de lengte in: 9 palen en 7 schermen, met pasvakken en poorten, in één tik gedeeld.")),
+    (21, ("Quotes", "Offertes"),
+     ("Write the quote on site: tap a line, add a price, and send a PDF with your logo and VAT.",
+      "Maak de offerte op de bouw: tik een regel aan, vul de prijs in en verstuur een PDF met je logo en btw.")),
+    (37, ("Payment reminder", "Betalingsherinnering"),
+     ("Overdue invoices stand out and a reminder PDF goes out in one tap.",
+      "Verlopen facturen vallen op en een herinnering-PDF verstuur je met één tik.")),
+    (46, ("My Day", "Mijn Dag"),
+     ("What you earned this week and what needs attention, at a glance.",
+      "Wat je deze week verdiende en wat aandacht nodig heeft, in één oogopslag.")),
+    (56, ("25 calculators", "25 calculators"),
+     ("Concrete, fence, tiles, paint and more, collected per project in a material list.",
+      "Beton, schutting, tegels, verf en meer, per project verzameld in een materiaallijst.")),
+    (65, ("Get BuildExact", "BuildExact downloaden"),
      ("Free on Google Play.", "Gratis in Google Play.")),
 ]
 
 T = {
     "en": dict(
         path="/video/", other="/nl/video/", base="/", locale="en_US", crumb="Breadcrumb",
-        title="BuildExact Video: The App in 2 Minutes",
-        name="BuildExact – Measure, Quote & Get Paid | The All-in-One App for Builders",
-        desc="Watch BuildExact in under two minutes: calculators, fence planner, projects, quote PDFs, invoices and reminders, step by step in the real app.",
-        h1="BuildExact in 2 minutes",
-        lede="The whole workflow in the real app: from the first measurement and the materials to a quote, an invoice and getting paid.",
-        play="Play video: BuildExact in 2 minutes", badge="1:50 · Watch on YouTube",
+        title="BuildExact Video: The App in Just Over a Minute",
+        name="BuildExact: Construction Calculators, Quotes & Invoices in One Free App",
+        desc="Watch BuildExact in just over a minute: tiles and fence posts worked out, a quote on site, a payment reminder, your week on one screen and 25 building calculators, in the real app.",
+        h1="BuildExact in just over a minute",
+        lede="Six things BuildExact does for you, in the real app: work out tiles and fence posts, write a quote on site, send a payment reminder, see your week and pick from 25 calculators.",
+        play="Play video: BuildExact in just over a minute", badge="1:14 · Watch on YouTube",
         note="The video loads from YouTube (privacy-enhanced mode) once you press play.",
         chapters="Chapters", time="Time", part="Part", seen="What you see",
         about="About BuildExact",
@@ -73,12 +63,12 @@ T = {
         thumb_alt="BuildExact video: measure, quote, get paid"),
     "nl": dict(
         path="/nl/video/", other="/video/", base="/nl/", locale="nl_NL", crumb="Kruimelpad",
-        title="BuildExact video: de app in 2 minuten",
-        name="BuildExact – Meten, offreren en betaald worden | De alles-in-één app voor bouwers",
-        desc="Bekijk BuildExact in nog geen twee minuten: calculators, schuttingplanner, projecten, offerte-PDF's, facturen en herinneringen in de echte app.",
-        h1="BuildExact in 2 minuten",
-        lede="De hele werkwijze in de echte app: van de eerste meting en het materiaal tot een offerte, een factuur en betaald worden.",
-        play="Video afspelen: BuildExact in 2 minuten", badge="1:50 · Bekijk op YouTube",
+        title="BuildExact video: de app in ruim een minuut",
+        name="BuildExact: bouwcalculators, offertes en facturen in één gratis app",
+        desc="Bekijk BuildExact in ruim een minuut: tegels en schuttingpalen berekenen, een offerte op de bouw, een betalingsherinnering, je week in één scherm en 25 bouwcalculators, in de echte app (Engelstalig).",
+        h1="BuildExact in ruim een minuut",
+        lede="Zes dingen die BuildExact voor je doet, in de echte app: tegels en schuttingpalen berekenen, een offerte op de bouw, een betalingsherinnering, je week in één scherm en 25 calculators. De video is Engelstalig.",
+        play="Video afspelen: BuildExact in ruim een minuut", badge="1:14 · Engelstalig · Bekijk op YouTube",
         note="De video laadt van YouTube (privacyvriendelijke modus) zodra je op afspelen drukt.",
         chapters="Hoofdstukken", time="Tijd", part="Onderdeel", seen="Wat je ziet",
         about="Over BuildExact",
@@ -282,3 +272,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Cross-promo block for the other Grounded Studio apps (re-added after every build).
+if __name__ == "__main__":
+    import os as _os, subprocess as _sp, sys as _sys
+    _XP = r"C:\meten_weten_bouw\scripts\cross_promo.py"
+    if _os.path.exists(_XP):
+        _sp.run([_sys.executable, "-I", _XP, "buildexact"], check=False)
